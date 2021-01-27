@@ -1,0 +1,35 @@
+<% layout('layouts/base') -%>
+<%- include('../partials/flash') %>
+
+<main class="container">
+
+    <div class="row d-flex flex-row vh-100 align-items-center">
+        <div class="col-6 offset-3">
+            <h1 class="text-center mb-5">Create a new account</h1>
+            <form class="needs-validation" action="/user/register" method="POST" novalidate>
+                <div class="mb-3">
+                    <label for="username" class="form-label">Username </label>
+                    <input id="username" class="form-control" type="text" name="userDetails[username]" required>
+                </div>
+                <div class="mb-3">
+                    <label for="firstname" class="form-label">First Name: </label>
+                    <input id="firstname" class="form-control" type="text" name="userDetails[firstname]" required>
+                </div>
+                <div class="mb-3">
+                    <label for="lastname" class="form-label">Last Name </label>
+                    <input id="lastname" class="form-control" type="text" name="userDetails[lastname]" required>
+                </div>
+                <div class="mb-3">
+                    <label for="password" class="form-label">Password </label>
+                    <input id="password" class="form-control" type="password" name="userDetails[password]" required>
+                </div>
+                <div class="mb-3">
+                    <button class="btn btn-primary me-3" type="submit">Register</button>
+                    <b>or</b>
+                    <a class="btn btn-info ms-3" href="/user/login">Log in</a>
+                </div>
+            </form>
+        </div>
+    </div>
+
+</main>

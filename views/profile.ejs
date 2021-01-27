@@ -1,0 +1,45 @@
+<% layout('layouts/base') -%>
+
+<div class="row">
+    <div class="col-12">
+        <table class="table table-striped text-center">
+            <thead>
+              <tr>
+                <th scope="col" rowspan="2">Company Name</th>
+                <th scope="col" rowspan="2">Company Address</th>
+                <th scope="col" colspan="2">Company Contacts</th>
+                <th scope="col" rowspan="2">Last Modified By</th>
+              </tr>
+              <tr>
+                <th scope="col">Landline</th>
+                <th scope="col">Phone</th>
+              </tr>
+            </thead>
+            <tbody>
+                <% for(let profile of profiles) { %> 
+                <tr>
+                    <td><%= profile.name %></td>
+                    <td><%= profile.address %></td>
+                    <td><%= profile.contacts.landline %></td>
+                    <td><%= profile.contacts.phone %></td>
+                    <td><%= profile.modified.by %></td>
+                    <td>
+                      <form action="/profile/edit/<%= profile._id %>">
+                          <button class="btn btn-primary my-1" type="submit">Edit</button>
+                      </form>
+                    </td>
+                    <td>
+                      <form action="/profile/delete/<%= profile._id %>?_method=DELETE" method="POST">
+                          <button class="btn-close my-2" type="submit"></button>
+                      </form>
+                    </td>
+                </tr> 
+                <% } %>  
+            </tbody>
+          </table>
+    </div>
+</div>
+
+<form action="/profile/add" method="GET">
+    <button class="btn btn-primary" type="submit">Add Company</button>
+</form>

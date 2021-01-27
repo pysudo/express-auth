@@ -1,0 +1,42 @@
+<% layout('layouts/base') -%>
+
+<div class="row">
+    <div class="col-12">
+        <table class="table table-striped text-center">
+            <thead>
+              <tr>
+                <th scope="col">Vendor Name</th>
+                <th scope="col">Vendor Address</th>
+                <th scope="col">Vendor Email</th>
+                <th scope="col">Vendor Contact</th>
+                <th scope="col">Last Modified By</th>
+              </tr>
+            </thead>
+            <tbody>
+                <% for(let purchase of purchases) { %> 
+                <tr>
+                    <td><%= purchase.name %></td>
+                    <td><%= purchase.address %></td>
+                    <td><%= purchase.email %></td>
+                    <td><%= purchase.contact %></td>
+                    <td><%= purchase.modified.by %></td>
+                    <td>
+                      <form action="/purchase/edit/<%= purchase._id %>">
+                          <button class="btn btn-primary my-1" type="submit">Edit</button>
+                      </form>
+                    </td>
+                    <td>
+                      <form action="/purchase/delete/<%= purchase._id %>?_method=DELETE" method="POST">
+                          <button class="btn-close my-2" type="submit"></button>
+                      </form>
+                    </td>
+                </tr> 
+                <% } %>  
+            </tbody>
+          </table>
+    </div>
+</div>
+
+<form action="/purchase/add" method="GET">
+    <button class="btn btn-primary" type="submit">Add Details</button>
+</form>

@@ -11,6 +11,12 @@ const userSchema = Joi.object({
         password: Joi.string()
             .min(8)
             .max(128)
+            .required(),
+        firstname: Joi.string()
+            .max(100)
+            .required(),
+        lastname: Joi.string()
+            .max(100)
             .required()
     }).required()
 })

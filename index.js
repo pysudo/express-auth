@@ -59,11 +59,11 @@ const checkAuthentication = async (request, response, next) => {
 
 const validateRegistration = (request, response, next) => {
     const validatedResult = userSchema.validate(request.body);
-    if (validatedResult.error.details[0].context.key == 'username') {
+    if (validatedResult.error && validatedResult.error.details[0].context.key == 'username') {
         request.flash('error', "Username must be between 6 to 30 characters long.");
         return response.redirect('/register');
     }
-    else if (validatedResult.error.details[0].context.key == 'password') {
+    else if (validatedResult.error && validatedResult.error.details[0].context.key == 'password') {
         request.flash('error', "Password must be between 8 to 128 characters long.");
         return response.redirect('/register');
     }
@@ -99,7 +99,7 @@ app.get('/register', (request, response) => {
 // Registers a user
 app.post('/register', validateRegistration, async (request, response) => {
 
-    const { username, password } = request.body;
+    const { username, password } = request.body.userDetails;
     const user = new User({ username, password });
     await user.save();
     request.session.userID = user._id;

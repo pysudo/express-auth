@@ -3,7 +3,7 @@
 
 <div class="row">
     <div class="col-12">
-        <table class="table table-borderless align-middle text-center table-sortable" id="myTable">
+        <table class="table align-middle text-center border-secondary table-striped">
             <thead>
               <tr>
                 <th scope="col" id="name">Vendor Name</th>
@@ -12,8 +12,8 @@
                 <th scope="col" id="contact">Vendor Contact</th>
                 <th scope="col" id="modified">Last Modified By</th>
                 <th scope="col" id="activeStatus">Active Status</th>
-                <th></th>
-                <th></th>
+                <th class="border-0" id="edit"></th>
+                <th class="border-0" id="remove"></th>
               </tr>
             </thead>
             <tbody>
@@ -30,12 +30,12 @@
                         <input class="form-check-input px-4 toggleStatus" id="<%= i %>" type="checkbox" value="<%= purchase._id %>" <%= purchase.activeStatus == 'on' ? "checked" : "" %> >
                       </div>
                     </td>
-                    <td>
+                    <td class="border-0">
                       <form action="/purchase/edit/<%= purchase._id %>">
                           <button class="btn btn-primary" type="submit">Edit</button>
                       </form>
                     </td>
-                    <td>
+                    <td class="border-0">
                       <form action="/purchase/delete/<%= purchase._id %>?_method=PATCH" method="POST">
                           <button class="btn-close" type="submit"></button>
                       </form>
@@ -51,3 +51,4 @@
     <button class="btn btn-primary" type="submit">Add Details</button>
 </form>
 
+<script src="/scripts/sortTable.js"></script>

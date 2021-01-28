@@ -1,37 +1,37 @@
 .container {
-    margin-top: 100px;
+    margin-top: 75px;
 }
 
-table {
-    border: 2px solid black !important;
-    border-collapse: collapse !important ;
+table tbody tr:hover {
+    background-color: silver;
 }
 
-tr {
-    
-    border: 2px solid black;
-    
-}
-
-.table-sortable th {
+table th {
     cursor: pointer;
-  }
+}
+
+#activeStatus, #edit, #remove {
+    cursor:auto;
+}
   
-  .table-sortable .th-sort-asc::after {
+table .asc::after {
     content: "\25b4";
-  }
+}
   
-  .table-sortable .th-sort-desc::after {
+table .dsc::after {
     content: "\25be";
-  }
-  
-  .table-sortable .th-sort-asc::after,
-  .table-sortable .th-sort-desc::after {
-    margin-left: 5px;
-  }
-  
-  .table-sortable .th-sort-asc,
-  .table-sortable .th-sort-desc {
-    background: rgba(0, 0, 0, 0.1);
-  }
-  
+}
+
+
+@media (max-width: 820px) {
+    td, th{
+        font-size: 0.6em;
+    }
+
+
+
+@media (max-width: 420px) {
+    td, th{
+        font-size: 0.5em;
+    }
+}

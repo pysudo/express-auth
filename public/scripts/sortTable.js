@@ -28,6 +28,7 @@ function createEditButton(id, rowRecords) {
     const button = document.createElement('button');
 
     button.type = "submit";
+    data.className = "border-0";
     button.className = "btn btn-primary";
     button.innerHTML = "Edit";
     form.action = `/purchase/edit/${id}`;
@@ -45,6 +46,7 @@ function createDeleteMarker(id, rowRecords) {
     const button = document.createElement('button');
 
     button.type = "submit";
+    data.className = "border-0";
     button.className = "btn-close";
     form.action = `/purchase/edit/${id}/?_method=PATCH`;
     form.method = "POST";
@@ -59,7 +61,7 @@ function createDeleteMarker(id, rowRecords) {
 function loadPurchaseDetails(json) {
 
     let tBody = document.querySelector('tBody');
-    
+
     // Clears static purchase detail entries
     while (tBody.firstChild) {
         tBody.removeChild(tBody.firstChild);
@@ -95,7 +97,7 @@ function loadPurchaseDetails(json) {
         createDeleteMarker(entry._id, rowRecords);
 
         tBody.appendChild(rowRecords);
-        activeStatusID ++;
+        activeStatusID++;
     })
 }
 
@@ -109,15 +111,39 @@ for (let i = 0; i < tableHeader.length - 3; i++) {
     // Listens for user clicks on the table headers
     tableHeader[i].addEventListener('click', function () {
 
-
         if (!this.className) {
-            this.className = "asc";
+            for (let j = 0; j < tableHeader.length - 3; j++) {
+
+                if (i == j) {
+                    tableHeader[j].className = "asc";
+                }
+                else {
+                    tableHeader[j].className = "";
+                }
+            }
         }
         else if (this.className == "asc") {
-            this.className = "dsc";
+
+            for (let j = 0; j < tableHeader.length - 3; j++) {
+
+                if (i == j) {
+                    tableHeader[j].className = "dsc";
+                }
+                else {
+                    tableHeader[j].className = "";
+                }
+            }
         }
         else if (this.className == "dsc") {
-            this.className = "asc";
+            for (let j = 0; j < tableHeader.length - 3; j++) {
+
+                if (i == j) {
+                    tableHeader[j].className = "asc";
+                }
+                else {
+                    tableHeader[j].className = "";
+                }
+            }
         }
 
         // Table header id and the sort order sent with the request

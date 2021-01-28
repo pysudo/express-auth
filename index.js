@@ -10,6 +10,7 @@ var methodOverride = require('method-override')
 const user = require('./routes/authentication');
 const profile = require('./routes/profile');
 const purchase = require('./routes/purchase');
+const User = require('./models/user');
 
 
 
@@ -60,7 +61,7 @@ app.use('/purchase', purchase);
 const checkAuthentication = async (request, response, next) => {
 
     if (!request.session.userID) {
-        request.flash('error', "You must log in to continue.");
+        // request.flash('error', "You must log in to continue.");
         return response.redirect('/user/login');
     }
     next();
@@ -68,9 +69,11 @@ const checkAuthentication = async (request, response, next) => {
 
 
 // Renders home page
-app.get('/', checkAuthentication, (request, response) => {
+app.get('/', checkAuthentication, async (request, response) => {
 
-    response.render('index', { title: "Home" });
+    const user = await User.findById(request.session.userID);
+    const fullname = `${user.firstname} ${user.lastname}`;
+    response.render('index', { title: "Home", fullname });
 });
 
 

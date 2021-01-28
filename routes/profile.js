@@ -7,8 +7,19 @@ const Profile = require('../models/companyProfile');
 router = express.Router();
 
 
+// Checks user authentication before resource access
+const checkAuthentication = async (request, response, next) => {
+
+    if (!request.session.userID) {
+        // request.flash('error', "You must log in to continue.");
+        return response.redirect('/user/login');
+    }
+    next();
+}
+
+
 // Renders page for company profiles
-router.get('/', async (request, response) => {
+router.get('/', checkAuthentication, async (request, response) => {
 
     profiles = await Profile.find({ delRec: { $ne: true } });
     response.render('profile', { title: "Company Profile", profiles });
@@ -16,14 +27,14 @@ router.get('/', async (request, response) => {
 
 
 // Renders a form for appending company profile
-router.get('/add', (request, response) => {
+router.get('/add', checkAuthentication, (request, response) => {
 
     response.render('addProfile', { title: "Add Profile" });
 });
 
 
 // Appends company profile to database
-router.post('/', async (request, response) => {
+router.post('/', checkAuthentication, async (request, response) => {
 
     const profile = new Profile(request.body);
     const user = await User.findOne({ _id: request.session.userID });
@@ -35,7 +46,7 @@ router.post('/', async (request, response) => {
 
 
 // Renders a form to edit an exisiting profile entry
-router.get('/edit/:id', async (request, response) => {
+router.get('/edit/:id', checkAuthentication, async (request, response) => {
     const { id } = request.params;
     const profile = await Profile.findById(id);
 
@@ -45,7 +56,7 @@ router.get('/edit/:id', async (request, response) => {
 
 
 // Edits an exisiting profile entry
-router.patch('/edit/:id', async (request, response) => {
+router.patch('/edit/:id', checkAuthentication, async (request, response) => {
 
     const { id } = request.params;
     const user = await User.findById(request.session.userID);
@@ -60,8 +71,8 @@ router.patch('/edit/:id', async (request, response) => {
 
 
 // Deletes an exisiting profile entry
-router.patch('/delete/:id', async (request, response) => {
-    
+router.patch('/delete/:id', checkAuthentication, async (request, response) => {
+
     const { id } = request.params;
     await Profile.findByIdAndUpdate(id, { delRec: true });
 

@@ -1,18 +1,23 @@
 <% layout('layouts/base') -%>
 
+
 <div class="row">
     <div class="col-12">
-        <table class="table table-striped text-center">
+        <table class="table table-borderless align-middle text-center table-sortable" id="myTable">
             <thead>
               <tr>
-                <th scope="col">Vendor Name</th>
-                <th scope="col">Vendor Address</th>
-                <th scope="col">Vendor Email</th>
-                <th scope="col">Vendor Contact</th>
-                <th scope="col">Last Modified By</th>
+                <th scope="col" id="name">Vendor Name</th>
+                <th scope="col" id="address">Vendor Address</th>
+                <th scope="col" id="email">Vendor Email</th>
+                <th scope="col" id="contact">Vendor Contact</th>
+                <th scope="col" id="modified">Last Modified By</th>
+                <th scope="col" id="activeStatus">Active Status</th>
+                <th></th>
+                <th></th>
               </tr>
             </thead>
             <tbody>
+              <% let i = 0; %> 
                 <% for(let purchase of purchases) { %> 
                 <tr>
                     <td><%= purchase.name %></td>
@@ -21,13 +26,18 @@
                     <td><%= purchase.contact %></td>
                     <td><%= purchase.modified.by %></td>
                     <td>
+                      <div class="form-check form-switch">
+                        <input class="form-check-input px-4 toggleStatus" id="<%= i %>" type="checkbox" value="<%= purchase._id %>" <%= purchase.activeStatus == 'on' ? "checked" : "" %> >
+                      </div>
+                    </td>
+                    <td>
                       <form action="/purchase/edit/<%= purchase._id %>">
-                          <button class="btn btn-primary my-1" type="submit">Edit</button>
+                          <button class="btn btn-primary" type="submit">Edit</button>
                       </form>
                     </td>
                     <td>
-                      <form action="/purchase/delete/<%= purchase._id %>?_method=DELETE" method="POST">
-                          <button class="btn-close my-2" type="submit"></button>
+                      <form action="/purchase/delete/<%= purchase._id %>?_method=PATCH" method="POST">
+                          <button class="btn-close" type="submit"></button>
                       </form>
                     </td>
                 </tr> 
@@ -40,3 +50,7 @@
 <form action="/purchase/add" method="GET">
     <button class="btn btn-primary" type="submit">Add Details</button>
 </form>
+
+<script src="/scripts/sortTables.js"></script>
+<script src="/scripts/statusCheck.js"></script>
+

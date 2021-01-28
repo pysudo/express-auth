@@ -2,6 +2,7 @@ const express = require('express');
 
 const User = require('../models/user');
 const Purchase = require('../models/purchaseDetails');
+const { request, response } = require('express');
 
 
 
@@ -11,16 +12,16 @@ router = express.Router();
 // Renders page for purchase details
 router.get('/', async (request, response) => {
 
-    purchases = await Purchase.find({});
+    purchases = await Purchase.find({ delRec: { $ne: true } });
 
-    response.render('purchaseDetails', {title: "Purchase Details", purchases});
+    response.render('purchaseDetails', { title: "Purchase Details", purchases });
 })
 
 
 // Renders a form for appending a purchase profile
 router.get('/add', (request, response) => {
 
-    response.render('addPurchaseDetails', {title: "Add Details"});
+    response.render('addPurchaseDetails', { title: "Add Details" });
 })
 
 
@@ -28,8 +29,8 @@ router.get('/add', (request, response) => {
 router.post('/', async (request, response) => {
 
     const purchase = new Purchase(request.body);
-    const user = await User.findOne({_id: request.session.userID});
-    purchase.modified.by = `${user.firstname} ${user.lastname}`; 
+    const user = await User.findOne({ _id: request.session.userID });
+    purchase.modified.by = `${user.firstname} ${user.lastname}`;
     await purchase.save();
 
     response.redirect('/purchase');
@@ -62,9 +63,10 @@ router.patch('/edit/:id', async (request, response) => {
 
 
 // Deletes an exisiting purchase entry
-router.delete('/delete/:id', async (request, response) => {
+router.patch('/delete/:id', async (request, response) => {
+
     const { id } = request.params;
-    await Purchase.findByIdAndRemove(id);
+    await Purchase.findByIdAndUpdate(id, { delRec: true });
 
     response.redirect('/purchase')
 

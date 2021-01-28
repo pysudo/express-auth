@@ -10,11 +10,10 @@ var methodOverride = require('method-override')
 const user = require('./routes/authentication');
 const profile = require('./routes/profile');
 const purchase = require('./routes/purchase');
-const { urlencoded } = require('express');
 
 
 
-mongoose.connect('mongodb://localhost:27017/portfolio', { useNewUrlParser: true, useUnifiedTopology: true });
+mongoose.connect('mongodb://localhost:27017/portfolio', { useNewUrlParser: true, useUnifiedTopology: true, useFindAndModify: false });
 const db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
 db.once('open', function () {
@@ -38,7 +37,7 @@ app.use(session({
     cookie: {
         expires: Date.now() + 1000 * 60 * 60 * 24,
         maxAge: 1000 * 60 * 60 * 24,
-        httpOnly: true 
+        httpOnly: true
     }
 }))
 app.use(flash());
@@ -59,7 +58,7 @@ app.use('/purchase', purchase);
 
 // Checks user authentication before resource access
 const checkAuthentication = async (request, response, next) => {
-    
+
     if (!request.session.userID) {
         request.flash('error', "You must log in to continue.");
         return response.redirect('/user/login');
@@ -70,7 +69,7 @@ const checkAuthentication = async (request, response, next) => {
 
 // Renders home page
 app.get('/', checkAuthentication, (request, response) => {
-    console.log('asddasdads')
+
     response.render('index', { title: "Home" });
 });
 

@@ -43,10 +43,6 @@ const purchaseSchema = mongoose.Schema({
         type: Boolean,
         default: false,
     },
-    activeStatus: {
-        type: String,
-        required: true
-    },
     modified: {
         by: {
             type: String,
@@ -57,7 +53,11 @@ const purchaseSchema = mongoose.Schema({
             default: Date.now,
             required:true
         }
-    }
+    },
+    activeStatus: {
+        type: String,
+        required: true
+    },
 });
 
 

@@ -10,7 +10,7 @@ router = express.Router();
 // Renders page for company profiles
 router.get('/', async (request, response) => {
 
-    profiles = await Profile.find({});
+    profiles = await Profile.find({ delRec: { $ne: true } });
     response.render('profile', { title: "Company Profile", profiles });
 });
 
@@ -60,12 +60,14 @@ router.patch('/edit/:id', async (request, response) => {
 
 
 // Deletes an exisiting profile entry
-router.delete('/delete/:id', async (request, response) => {
+router.patch('/delete/:id', async (request, response) => {
+    
     const { id } = request.params;
-    await Profile.findByIdAndRemove(id);
+    await Profile.findByIdAndUpdate(id, { delRec: true });
 
-    response.redirect('/profile')
-
+    response.redirect('/profile');
 });
+
+
 
 module.exports = router;

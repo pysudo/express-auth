@@ -2,8 +2,6 @@ const express = require('express');
 
 const User = require('../models/user');
 const Purchase = require('../models/purchaseDetails');
-const { request, response } = require('express');
-
 
 
 router = express.Router();
@@ -31,6 +29,9 @@ router.post('/', async (request, response) => {
     const purchase = new Purchase(request.body);
     const user = await User.findOne({ _id: request.session.userID });
     purchase.modified.by = `${user.firstname} ${user.lastname}`;
+    if (!purchase.activeStatus) {
+        purchase.activeStatus = "off";
+    }
     await purchase.save();
 
     response.redirect('/purchase');
@@ -71,6 +72,70 @@ router.patch('/delete/:id', async (request, response) => {
     response.redirect('/purchase')
 
 });
+
+
+// Dynamically updates active status after user toggle
+router.patch('/statuschange/:ischecked/:id', async (request, response) => {
+
+    const { id, ischecked } = request.params;
+    const user = await User.findById(request.session.userID);
+    const modified = {
+        by: `${user.firstname} ${user.lastname}`,
+        at: Date.now()
+    }
+
+    await Purchase.findByIdAndUpdate(id, { activeStatus: ischecked, modified });
+});
+
+
+// Sorts purchase details either ascending or descending
+router.get('/sort/:name/:order', async (request, response) => {
+
+    let { name, order } = request.params;
+
+    if (order == "asc") {
+        order = 1;
+    }
+    else {
+        order = -1;
+    }
+
+    let purchase;
+    let displayHeader = ['name', 'address', 'email', 'contact', 'modified', 'activeStatus', 'delRec'];
+    switch (name) {
+        case 'name':
+            purchase = await Purchase.find({},
+                displayHeader,
+                { sort: { name: order } }
+            );
+            break;
+        case 'address':
+            purchase = await Purchase.find({},
+                displayHeader,
+                { sort: { address: order } }
+            );
+            break;
+        case 'email':
+            purchase = await Purchase.find({},
+                displayHeader,
+                { sort: { email: order } }
+            );
+            break;
+        case 'contact':
+            purchase = await Purchase.find({},
+                displayHeader,
+                { sort: { contact: order } }
+            );
+            break;
+        case 'modified':
+            purchase = await Purchase.find({},
+                displayHeader,
+                { sort: { modified: order } }
+            );
+            break;
+    }
+    response.send(purchase);
+})
 
 
 module.exports = router;

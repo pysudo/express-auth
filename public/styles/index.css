@@ -1,4 +1,4 @@
-.container {
+.main {
     margin-top: 75px;
 }
 
@@ -28,7 +28,7 @@ table .dsc::after {
         font-size: 0.6em;
     }
 
-
+}
 
 @media (max-width: 420px) {
     td, th{

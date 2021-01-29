@@ -61,7 +61,7 @@ app.use('/purchase', purchase);
 const checkAuthentication = async (request, response, next) => {
 
     if (!request.session.userID) {
-        // request.flash('error', "You must log in to continue.");
+        request.flash('error', "You must log in to continue.");
         return response.redirect('/user/login');
     }
     next();

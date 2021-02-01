@@ -20,7 +20,7 @@ router.post('/register', middlewares.validateRegistration, async (request, respo
     const user = new User(request.body.userDetails);
     await user.save();
     request.session.userID = user._id;
-    request.session.username = username;
+    request.session.username = user.username;
     request.flash('success', "Successfully registered");
 
     response.redirect('/');

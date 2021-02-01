@@ -3,7 +3,6 @@ const express = require('express');
 const User = require('../models/user');
 const Profile = require('../models/companyProfile');
 const middlewares = require('../utils/middlewares');
-const { request, response } = require('express');
 
 
 router = express.Router();
@@ -61,14 +60,29 @@ router.patch('/edit/:id', middlewares.checkAuthentication, async (request, respo
 });
 
 
-// Deletes an exisiting profile entry
-router.patch('/delete/:id', middlewares.checkAuthentication, async (request, response) => {
+// Renders a form to state reason for company profile deletion
+router.get('/confirm-deletion/:id', middlewares.checkAuthentication, (request, response) => {
 
     const { id } = request.params;
-    await Profile.findByIdAndUpdate(id, { delRec: true });
+    response.render('confirmDeletion', { title: "Confirm Deletion", profileID: id, purchaseID: false });
+})
+
+
+// Renders a form to state reason for company profile deletion
+// If confirmed, deletes an exisiting profile entry
+router.post('/confirm-deletion/:id', middlewares.checkAuthentication, async (request, response) => {
+
+    const { id } = request.params;
+    const { reason, choice } = request.body;
+    if (choice == "confirm") {
+        await Profile.findByIdAndUpdate(id, { deleteReason: reason, delRec: true });
+        request.flash('success', "Profile successfully deleted.")
+
+        return response.redirect('/profile');
+    }
 
     response.redirect('/profile');
-});
+})
 
 
 module.exports = router;

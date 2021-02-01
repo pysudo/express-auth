@@ -44,6 +44,9 @@ const profileSchema = mongoose.Schema({
             default: Date.now,
             required: true
         }
+    },
+    deleteReason: {
+        type: String,
     }
 });
 

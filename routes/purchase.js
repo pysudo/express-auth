@@ -44,7 +44,7 @@ router.get('/edit/:id', middlewares.checkAuthentication, async (request, respons
     const { id } = request.params;
     const purchase = await Purchase.findById(id);
 
-    response.render('editPurchaseDetails', { title: "Edit Profile", purchase })
+    response.render('editPurchaseDetails', { title: "Edit Purchase", purchase })
 
 });
 
@@ -73,6 +73,31 @@ router.patch('/delete/:id', middlewares.checkAuthentication, async (request, res
     response.redirect('/purchase')
 
 });
+
+
+// Renders a form to state reason for purchase detail deletion
+router.get('/confirm-deletion/:id', (request, response) => {
+
+    const { id } = request.params;
+    response.render('confirmDeletion', { title: "Confirm Deletion", purchaseID: id, profileID: false });
+})
+
+
+// Renders a form to state reason for purchase detail deletion
+// If confirmed, deletes an exisiting purchase detail entry
+router.post('/confirm-deletion/:id', async (request, response) => {
+
+    const { id } = request.params;
+    const { reason, choice } = request.body;
+    if (choice == "confirm") {
+        await Purchase.findByIdAndUpdate(id, { deleteReason: reason, delRec: true });
+        request.flash('success', "Purchase successfully deleted.")
+
+        return response.redirect('/purchase');
+    }
+
+    response.redirect('/purchase');
+})
 
 
 // Dynamically updates active status after user toggle

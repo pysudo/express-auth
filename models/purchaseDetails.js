@@ -28,7 +28,7 @@ const purchaseSchema = mongoose.Schema({
         accountType: {
             type: String,
             enum: ["savings", "current", "others"],
-            
+
         },
         accountNumber: {
             type: Number,
@@ -51,13 +51,16 @@ const purchaseSchema = mongoose.Schema({
         at: {
             type: Date,
             default: Date.now,
-            required:true
+            required: true
         }
     },
     activeStatus: {
         type: String,
         required: true
     },
+    deleteReason: {
+        type: String,
+    }
 });
 
 

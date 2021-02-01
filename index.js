@@ -45,8 +45,6 @@ app.use(session({
 app.use(flash());
 app.use(async (request, response, next) => {
 
-    console.log(request.path)
-
     response.locals.currentUser = request.session.username;
     response.locals.success = request.flash('success');
     response.locals.error = request.flash('error');

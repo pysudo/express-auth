@@ -1,8 +1,9 @@
 <% layout('layouts/base') -%>
 
-    <div class="row m-5">
-        <div class="col-6 offset-3">
-            <form action="/purchase" method="POST">
+    <form action="/purchase" method="POST">
+
+        <div class="row m-5">
+            <div class="col-12">
                 <div class="mb-3">
                     <label class="form-label" for="name">Vendor Name</label>
                     <input class="form-control" type="text" name="name">
@@ -26,11 +27,13 @@
                         <label class="form-label" for="bankName">Bank Name</label>
                         <input class="form-control" id="bankName" type="text" name="bankDetails[bankName]">
                     </div>
-                    <div class="input-group mb-3">
-                        <span class="input-group-text">Account Number</span>
+                    <div class="mb-3">
+                        <label class="form-label">Account Number</label>
                         <input type="number" class="form-control" aria-label="Account Number"
                             name="bankDetails[accountNumber]">
-                        <span class="input-group-text">Type</span>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Type</label>
                         <select class="form-select" id="accountType" name="bankDetails[accountType]">
                             <option value="savings">Savings</option>
                             <option value="current">Current</option>
@@ -50,6 +53,6 @@
                 </div>
 
                 <button class="btn btn-success" type="submit">Submit</button>
-            </form>
+            </div>
         </div>
-    </div>
+    </form>

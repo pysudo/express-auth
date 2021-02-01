@@ -11,6 +11,7 @@ const user = require('./routes/authentication');
 const profile = require('./routes/profile');
 const purchase = require('./routes/purchase');
 const User = require('./models/user');
+const middlewares = require('./utils/middlewares')
 
 
 
@@ -42,8 +43,11 @@ app.use(session({
     }
 }))
 app.use(flash());
-app.use((request, response, next) => {
+app.use(async (request, response, next) => {
 
+    console.log(request.path)
+
+    response.locals.currentUser = request.session.username;
     response.locals.success = request.flash('success');
     response.locals.error = request.flash('error');
 
@@ -57,19 +61,8 @@ app.use('/profile', profile);
 app.use('/purchase', purchase);
 
 
-// Checks user authentication before resource access
-const checkAuthentication = async (request, response, next) => {
-
-    if (!request.session.userID) {
-        request.flash('error', "You must log in to continue.");
-        return response.redirect('/user/login');
-    }
-    next();
-}
-
-
 // Renders home page
-app.get('/', checkAuthentication, async (request, response) => {
+app.get('/', middlewares.checkAuthentication, async (request, response) => {
 
     const user = await User.findById(request.session.userID);
     const fullname = `${user.firstname} ${user.lastname}`;

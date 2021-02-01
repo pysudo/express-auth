@@ -2,24 +2,14 @@ const express = require('express');
 
 const User = require('../models/user');
 const Purchase = require('../models/purchaseDetails');
+const middlewares = require('../utils/middlewares')
 
 
 router = express.Router();
 
 
-// Checks user authentication before resource access
-const checkAuthentication = async (request, response, next) => {
-
-    if (!request.session.userID) {
-        // request.flash('error', "You must log in to continue.");
-        return response.redirect('/user/login');
-    }
-    next();
-}
-
-
 // Renders page for purchase details
-router.get('/', checkAuthentication, async (request, response) => {
+router.get('/', middlewares.checkAuthentication, async (request, response) => {
 
     purchases = await Purchase.find({ delRec: { $ne: true } });
 
@@ -28,14 +18,14 @@ router.get('/', checkAuthentication, async (request, response) => {
 
 
 // Renders a form for appending a purchase profile
-router.get('/add', checkAuthentication, (request, response) => {
+router.get('/add', middlewares.checkAuthentication, (request, response) => {
 
     response.render('addPurchaseDetails', { title: "Add Details" });
 })
 
 
 // Appends purchase detail to database
-router.post('/', checkAuthentication, async (request, response) => {
+router.post('/', middlewares.checkAuthentication, async (request, response) => {
 
     const purchase = new Purchase(request.body);
     const user = await User.findOne({ _id: request.session.userID });
@@ -50,7 +40,7 @@ router.post('/', checkAuthentication, async (request, response) => {
 
 
 // Renders a form to edit an exisiting purchase
-router.get('/edit/:id', checkAuthentication, async (request, response) => {
+router.get('/edit/:id', middlewares.checkAuthentication, async (request, response) => {
     const { id } = request.params;
     const purchase = await Purchase.findById(id);
 
@@ -60,7 +50,7 @@ router.get('/edit/:id', checkAuthentication, async (request, response) => {
 
 
 // Edits an exisiting purchase
-router.patch('/edit/:id', checkAuthentication, async (request, response) => {
+router.patch('/edit/:id', middlewares.checkAuthentication, async (request, response) => {
 
     const { id } = request.params;
     const user = await User.findById(request.session.userID);
@@ -75,7 +65,7 @@ router.patch('/edit/:id', checkAuthentication, async (request, response) => {
 
 
 // Deletes an exisiting purchase entry
-router.patch('/delete/:id', checkAuthentication, async (request, response) => {
+router.patch('/delete/:id', middlewares.checkAuthentication, async (request, response) => {
 
     const { id } = request.params;
     await Purchase.findByIdAndUpdate(id, { delRec: true });
@@ -86,7 +76,7 @@ router.patch('/delete/:id', checkAuthentication, async (request, response) => {
 
 
 // Dynamically updates active status after user toggle
-router.patch('/statuschange/:ischecked/:id', checkAuthentication, async (request, response) => {
+router.patch('/statuschange/:ischecked/:id', middlewares.checkAuthentication, async (request, response) => {
 
     const { id, ischecked } = request.params;
     const user = await User.findById(request.session.userID);
@@ -100,7 +90,7 @@ router.patch('/statuschange/:ischecked/:id', checkAuthentication, async (request
 
 
 // Sorts purchase details either ascending or descending
-router.get('/sort/:name/:order', checkAuthentication, async (request, response) => {
+router.get('/sort/:name/:order', middlewares.checkAuthentication, async (request, response) => {
 
     let { name, order } = request.params;
 

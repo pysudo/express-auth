@@ -13,7 +13,6 @@ document.addEventListener('readystatechange', () => {
             else {
                 isChecked = "off";
             }
-
             const path = `/purchase/statuschange/${isChecked}/${toggleStatus.value}`
             const config = {
                 method: 'PATCH'

@@ -23,7 +23,22 @@ const userSchema = mongoose.Schema({
         type: String,
         required: true,
         max: 100
-    }
+    },
+    isAdmin: {
+        type: Boolean,
+        default: false,
+        required: true,
+    },
+    isApproved: {
+        type: Boolean,
+        default: false,
+        required: true
+    },
+    grantLevel: {
+        type: Number,
+        default: 3,
+        enum: [1, 2, 3]
+    },
 });
 
 

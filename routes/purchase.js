@@ -2,14 +2,14 @@ const express = require('express');
 
 const User = require('../models/user');
 const Purchase = require('../models/purchaseDetails');
-const middlewares = require('../utils/middlewares')
+const { checkAuthentication, accessGrant } = require('../utils/middlewares');
 
 
 router = express.Router();
 
 
 // Renders page for purchase details
-router.get('/', middlewares.checkAuthentication, async (request, response) => {
+router.get('/', checkAuthentication, async (request, response) => {
 
     purchases = await Purchase.find({ delRec: { $ne: true } });
 
@@ -18,14 +18,14 @@ router.get('/', middlewares.checkAuthentication, async (request, response) => {
 
 
 // Renders a form for appending a purchase profile
-router.get('/add', middlewares.checkAuthentication, (request, response) => {
+router.get('/add', checkAuthentication, accessGrant, (request, response) => {
 
     response.render('addPurchaseDetails', { title: "Add Details" });
 })
 
 
 // Appends purchase detail to database
-router.post('/', middlewares.checkAuthentication, async (request, response) => {
+router.post('/', checkAuthentication, accessGrant, async (request, response) => {
 
     const purchase = new Purchase(request.body);
     const user = await User.findOne({ _id: request.session.userID });
@@ -40,7 +40,7 @@ router.post('/', middlewares.checkAuthentication, async (request, response) => {
 
 
 // Renders a form to edit an exisiting purchase
-router.get('/edit/:id', middlewares.checkAuthentication, async (request, response) => {
+router.get('/edit/:id', checkAuthentication, accessGrant, async (request, response) => {
     const { id } = request.params;
     const purchase = await Purchase.findById(id);
 
@@ -50,7 +50,7 @@ router.get('/edit/:id', middlewares.checkAuthentication, async (request, respons
 
 
 // Edits an exisiting purchase
-router.patch('/edit/:id', middlewares.checkAuthentication, async (request, response) => {
+router.patch('/edit/:id', checkAuthentication, accessGrant, async (request, response) => {
 
     const { id } = request.params;
     const user = await User.findById(request.session.userID);
@@ -65,7 +65,7 @@ router.patch('/edit/:id', middlewares.checkAuthentication, async (request, respo
 
 
 // Deletes an exisiting purchase entry
-router.patch('/delete/:id', middlewares.checkAuthentication, async (request, response) => {
+router.patch('/delete/:id', checkAuthentication, accessGrant, async (request, response) => {
 
     const { id } = request.params;
     await Purchase.findByIdAndUpdate(id, { delRec: true });
@@ -76,7 +76,7 @@ router.patch('/delete/:id', middlewares.checkAuthentication, async (request, res
 
 
 // Renders a form to state reason for purchase detail deletion
-router.get('/confirm-deletion/:id', (request, response) => {
+router.get('/confirm-deletion/:id', accessGrant, (request, response) => {
 
     const { id } = request.params;
     response.render('confirmDeletion', { title: "Confirm Deletion", purchaseID: id, profileID: false });
@@ -85,7 +85,7 @@ router.get('/confirm-deletion/:id', (request, response) => {
 
 // Renders a form to state reason for purchase detail deletion
 // If confirmed, deletes an exisiting purchase detail entry
-router.post('/confirm-deletion/:id', async (request, response) => {
+router.delete('/confirm-deletion/:id', accessGrant, async (request, response) => {
 
     const { id } = request.params;
     const { reason, choice } = request.body;
@@ -101,7 +101,7 @@ router.post('/confirm-deletion/:id', async (request, response) => {
 
 
 // Dynamically updates active status after user toggle
-router.patch('/statuschange/:ischecked/:id', middlewares.checkAuthentication, async (request, response) => {
+router.patch('/statuschange/:ischecked/:id', checkAuthentication, accessGrant, async (request, response) => {
 
     const { id, ischecked } = request.params;
     const user = await User.findById(request.session.userID);
@@ -115,7 +115,7 @@ router.patch('/statuschange/:ischecked/:id', middlewares.checkAuthentication, as
 
 
 // Sorts purchase details either ascending or descending
-router.get('/sort/:name/:order', middlewares.checkAuthentication, async (request, response) => {
+router.get('/sort/:name/:order', checkAuthentication, async (request, response) => {
 
     let { name, order } = request.params;
 

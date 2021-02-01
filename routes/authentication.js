@@ -1,7 +1,7 @@
 const express = require('express');
 
 const User = require('../models/user');
-const middlewares = require('../utils/middlewares')
+const { validateRegistration, checkAuthentication } = require('../utils/middlewares');
 
 
 router = express.Router();
@@ -15,7 +15,7 @@ router.get('/register', (request, response) => {
 
 
 // Registers a user
-router.post('/register', middlewares.validateRegistration, async (request, response) => {
+router.post('/register', validateRegistration, async (request, response) => {
 
     const user = new User(request.body.userDetails);
     await user.save();
@@ -62,13 +62,13 @@ router.post('/logout', (request, response) => {
 
 
 // Renders a change password form
-router.get('/password', middlewares.checkAuthentication, (request, response) => {
+router.get('/password', checkAuthentication, (request, response) => {
 
     response.render('auth/changePassword', {title: "Change Password"});
 })
 
 
-router.post('/password', middlewares.checkAuthentication, async (request, response) => {
+router.post('/password', checkAuthentication, async (request, response) => {
 
     const { currentPassword, newPassword } = request.body;
     const user = await User.findById(request.session.userID);

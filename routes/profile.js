@@ -2,14 +2,14 @@ const express = require('express');
 
 const User = require('../models/user');
 const Profile = require('../models/companyProfile');
-const middlewares = require('../utils/middlewares');
+const { checkAuthentication, accessGrant } = require('../utils/middlewares');
 
 
 router = express.Router();
 
 
 // Renders page for company profiles
-router.get('/', middlewares.checkAuthentication, async (request, response) => {
+router.get('/', checkAuthentication, async (request, response) => {
 
     profiles = await Profile.find({ delRec: { $ne: true } });
     response.render('profile', { title: "Company Profile", profiles });
@@ -17,14 +17,14 @@ router.get('/', middlewares.checkAuthentication, async (request, response) => {
 
 
 // Renders a form for appending company profile
-router.get('/add', middlewares.checkAuthentication, (request, response) => {
+router.get('/add', checkAuthentication, accessGrant, (request, response) => {
 
     response.render('addProfile', { title: "Add Profile" });
 });
 
 
 // Appends company profile to database
-router.post('/', middlewares.checkAuthentication, async (request, response) => {
+router.post('/', checkAuthentication, accessGrant, async (request, response) => {
 
     const profile = new Profile(request.body);
     const user = await User.findOne({ _id: request.session.userID });
@@ -36,7 +36,7 @@ router.post('/', middlewares.checkAuthentication, async (request, response) => {
 
 
 // Renders a form to edit an exisiting profile entry
-router.get('/edit/:id', middlewares.checkAuthentication, async (request, response) => {
+router.get('/edit/:id', checkAuthentication, accessGrant, async (request, response) => {
     const { id } = request.params;
     const profile = await Profile.findById(id);
 
@@ -46,7 +46,7 @@ router.get('/edit/:id', middlewares.checkAuthentication, async (request, respons
 
 
 // Edits an exisiting profile entry
-router.patch('/edit/:id', middlewares.checkAuthentication, async (request, response) => {
+router.patch('/edit/:id', checkAuthentication, accessGrant, async (request, response) => {
 
     const { id } = request.params;
     const user = await User.findById(request.session.userID);
@@ -61,7 +61,7 @@ router.patch('/edit/:id', middlewares.checkAuthentication, async (request, respo
 
 
 // Renders a form to state reason for company profile deletion
-router.get('/confirm-deletion/:id', middlewares.checkAuthentication, (request, response) => {
+router.get('/confirm-deletion/:id', checkAuthentication, accessGrant, (request, response) => {
 
     const { id } = request.params;
     response.render('confirmDeletion', { title: "Confirm Deletion", profileID: id, purchaseID: false });
@@ -70,7 +70,7 @@ router.get('/confirm-deletion/:id', middlewares.checkAuthentication, (request, r
 
 // Renders a form to state reason for company profile deletion
 // If confirmed, deletes an exisiting profile entry
-router.post('/confirm-deletion/:id', middlewares.checkAuthentication, async (request, response) => {
+router.delete('/confirm-deletion/:id', checkAuthentication, accessGrant, async (request, response) => {
 
     const { id } = request.params;
     const { reason, choice } = request.body;

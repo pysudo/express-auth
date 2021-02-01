@@ -1,0 +1,42 @@
+<% layout('layouts/base') -%>
+
+    <div class="row main">
+        <div class="col-12">
+            <table class="table align-middle text-center border-secondary table-striped">
+                <thead>
+                    <tr>
+                        <th scope="col">Username</th>
+                        <th scope="col">Full Name</th>
+                        <th scope="col">Access Grant</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% for(let user of users) { %>
+                            <% if(!user.isApproved) { %> 
+                                <tr>
+                                    <td>
+                                        <%= user.username %>
+                                    </td>
+                                    <td>
+                                        <%= user.firstname %> <%= user.lastname %>
+                                    </td>
+                                    <form action="/admin/approve/<%= user._id %>" method="POST">
+                                        <td>
+                                            <select class="form-select form-select-sm" name="grantLevel" aria-label=".form-select-sm example">
+                                                <option value="1">Level 1</option>
+                                                <option value="2">Level 2</option>
+                                                <option value="3" selected>Level 3</option>
+                                            </select>
+                                        </td>
+                                        <td class="border-0 d-flex justify-content-evenly">
+                                            <button  class="btn btn-success my-1" type="submit" name="isApproved" value="true">Approve</button>
+                                            <button class="btn btn-danger my-1" type="submit" name="isApproved" value="false">Reject</button>
+                                        </td>
+                                    </form>
+                                </tr>
+                            <% } %> 
+                        <% } %>
+                </tbody>
+            </table>
+        </div>
+    </div>

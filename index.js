@@ -10,8 +10,9 @@ var methodOverride = require('method-override')
 const user = require('./routes/authentication');
 const profile = require('./routes/profile');
 const purchase = require('./routes/purchase');
+const admin = require('./routes/admin');
 const User = require('./models/user');
-const middlewares = require('./utils/middlewares')
+const { checkAuthentication } = require('./utils/middlewares');
 
 
 
@@ -57,10 +58,11 @@ app.use(methodOverride('_method'));
 app.use('/user', user);
 app.use('/profile', profile);
 app.use('/purchase', purchase);
+app.use('/admin', admin);
 
 
 // Renders home page
-app.get('/', middlewares.checkAuthentication, async (request, response) => {
+app.get('/', checkAuthentication, async (request, response) => {
 
     const user = await User.findById(request.session.userID);
     const fullname = `${user.firstname} ${user.lastname}`;

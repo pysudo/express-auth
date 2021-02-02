@@ -1,4 +1,4 @@
-const { userSchema, profileSchema, purchaseSchema } = require('../utils/userSchema');
+const { userSchema, profileSchema, purchaseSchema, transactionSchema } = require('./schemasValidations');
 const User = require('../models/user');
 
 
@@ -26,7 +26,7 @@ module.exports.validateProfile = (request, response, next) => {
         const errorNames = validatedProfile.error.details[0].path;
         const originalMessage = validatedProfile.error.details[0].message;
         const noOfDots = errorNames.length - 1;
-        
+
         let errorName;
         switch (errorNames[1]) {
             case "name":
@@ -77,11 +77,9 @@ module.exports.validatePurchase = (request, response, next) => {
 
     const validatedPurchase = purchaseSchema.validate(request.body);
     if (validatedPurchase.error) {
-        console.log(validatedPurchase.error)
+
         const errorNames = validatedPurchase.error.details[0].path;
-        console.log(errorNames)
         const originalMessage = validatedPurchase.error.details[0].message;
-        console.log(originalMessage)
         const noOfDots = errorNames.length - 1;
 
         let errorName;
@@ -128,6 +126,49 @@ module.exports.validatePurchase = (request, response, next) => {
 
         request.flash('error', modifiedErrorMessage);
         return response.redirect('/purchase/add');
+    }
+    else {
+        next();
+    }
+}
+
+
+// Server side transaction validation
+module.exports.validateTransaction = (request, response, next) => {
+
+    const { id } = request.params;
+    const validateTransaction = transactionSchema.validate(request.body);
+
+    if (validateTransaction.error) {
+
+        const errorNames = validateTransaction.error.details[0].path;
+        const originalMessage = validateTransaction.error.details[0].message;
+        const noOfDots = errorNames.length - 1;
+
+        let errorName;
+        switch (errorNames[1]) {
+            case "date":
+                errorName = "Purchase Name";
+                break;
+            case "amount":
+                errorName = "Purchase Amount";
+                break;
+            case "description":
+                errorName = "Item Description";
+                break;
+            case "mode":
+                errorName = "Mode of Payment";
+                break;
+            case "referenceNumber":
+                errorName = "Reference Number";
+                break;
+        }
+
+        const slicedLength = `"${errorNames[0]} "`.length + errorNames[1].length + noOfDots;
+        const modifiedErrorMessage = `${errorName} ${originalMessage.slice(slicedLength)}`;
+
+        request.flash('error', modifiedErrorMessage);
+        return response.redirect(`/purchase/purchase-transactions/add/${id}`);
     }
     else {
         next();

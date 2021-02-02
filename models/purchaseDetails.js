@@ -60,7 +60,10 @@ const purchaseSchema = mongoose.Schema({
     },
     deleteReason: {
         type: String,
-    }
+    },
+    transactions: [{
+        type: mongoose.Schema.Types.ObjectId, ref: 'Transaction'
+    }]
 });
 
 

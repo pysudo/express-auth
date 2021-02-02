@@ -1,0 +1,49 @@
+<% layout('layouts/base') -%>
+
+
+
+    <form action="/purchase/purchase-transactions/add/<%= purchase._id %>" method="POST">
+        <div class="row m-5">
+            <div class="col-12">
+                <div class="mb-3">
+                    <label class="form-label" for="name">Purchase Date</label>
+                    <input class="form-control" id="name" type="date" name="transaction[date]">
+                </div>
+                <div class="mb-3">
+                    <label class="form-label" for="amount">Purchase Amount</label>
+                    <input class="form-control" id="amount" type="number" name="transaction[amount]">
+                </div>
+                <div class="form-floating mb-3">
+                    <textarea class="form-control" placeholder="Description" name="transaction[description]" id="description"
+                        style="height: 100px"></textarea>
+                    <label for="description">Description</label>
+                </div>
+                <div class="mb-3">
+                    <h6>Mode of Payments</h6>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="transaction[mode]" id="online" value="online">
+                        <label class="form-check-label" for="online">
+                            Online
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="transaction[mode]" id="cash" value="cash">
+                        <label class="form-check-label" for="cash">
+                            Cash
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="transaction[mode]" id="others" value="others">
+                        <label class="form-check-label" for="others">
+                            Others
+                        </label>
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label" for="amount">Reference Number</label>
+                    <input class="form-control" id="amount" type="number" name="transaction[referenceNumber]">
+                </div>
+                <button class="btn btn-success" type="submit">Submit</button>
+            </div>
+
+    </form>

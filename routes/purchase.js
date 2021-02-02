@@ -2,7 +2,8 @@ const express = require('express');
 
 const User = require('../models/user');
 const Purchase = require('../models/purchaseDetails');
-const { checkAuthentication, accessGrant, validatePurchase } = require('../utils/middlewares');
+const Transaction = require('../models/transaction');
+const { checkAuthentication, accessGrant, validatePurchase, validateTransaction } = require('../utils/middlewares');
 
 
 router = express.Router();
@@ -27,7 +28,7 @@ router.get('/add', checkAuthentication, accessGrant, (request, response) => {
 // Appends purchase detail to database
 router.post('/', checkAuthentication, accessGrant, validatePurchase, async (request, response) => {
 
-    const purchase = new Purchase(request.body);
+    const purchase = new Purchase(request.body.purchase);
     const user = await User.findOne({ _id: request.session.userID });
     purchase.modified.by = `${user.firstname} ${user.lastname}`;
     if (!purchase.activeStatus) {
@@ -164,9 +165,42 @@ router.get('/sort/:name/:order', checkAuthentication, async (request, response) 
 })
 
 
-router.get('/purchase-transactions', (request, response) => {
+// Renders a form to enter the transaction to a particular vendor
+router.get('/purchase-transactions/add/:id', checkAuthentication, async (request, response) => {
 
-    response.render('transactions');
+    const { id } = request.params;
+    const purchase = await Purchase.findById(id);
+
+    response.render('addTransaction', { title: "Add Transaction", purchase });
+})
+
+
+// Appends the transaction to a particular vendor to the database
+router.post('/purchase-transactions/add/:id', checkAuthentication, validateTransaction, async (request, response) => {
+
+    const { id } = request.params;
+    const purchase = await Purchase.findById(id);
+    const transaction = new Transaction(request.body.transaction);
+    purchase.transactions.push(transaction);
+
+    await transaction.save();
+    await purchase.save();
+
+    response.redirect(`/purchase/purchase-transactions/${id}`);
+})
+
+
+// Displays the list of transactions to a particular vendor
+router.get('/purchase-transactions/:id', async (request, response) => {
+
+
+    const { id } = request.params;
+
+    const purchase = await Purchase.findById(id).populate('transactions');
+    console.log(purchase)
+
+    response.render('transactions', { title: "Transaction", purchase});
 })
 
 module.exports = router;
+

@@ -82,7 +82,13 @@ router.post('/password', checkAuthentication, async (request, response) => {
     const { currentPassword, newPassword } = request.body;
     const user = await User.findById(request.session.userID);
     if(user.password != currentPassword) {
+
         request.flash('error', "The current password is incorrect.")
+        return response.redirect('/user/password');    
+    }
+    else if(newPassword.length < 8 ) {
+        
+        request.flash('error', "Password must atleast 8 characters long.")
         return response.redirect('/user/password');    
     }
 

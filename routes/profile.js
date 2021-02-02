@@ -9,7 +9,7 @@ router = express.Router();
 
 
 // Renders page for company profiles
-router.get('/', checkAuthentication, async (request, response) => {
+router.get('/', checkAuthentication, accessGrant, async (request, response) => {
 
     profiles = await Profile.find({ delRec: { $ne: true } });
     response.render('profile', { title: "Company Profile", profiles });
@@ -51,11 +51,11 @@ router.patch('/edit/:id', checkAuthentication, accessGrant, validateProfile , as
 
     const { id } = request.params;
     const user = await User.findById(request.session.userID);
-    request.body.modified = {
+    request.body.profile.modified = {
         by: `${user.firstname} ${user.lastname}`,
         at: Date.now()
     };
-    await Profile.findByIdAndUpdate(id, request.body);
+    await Profile.findByIdAndUpdate(id, request.body.profile);
 
     response.redirect('/profile')
 });

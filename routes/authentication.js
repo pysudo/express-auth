@@ -18,6 +18,15 @@ router.get('/register', (request, response) => {
 router.post('/register', validateRegistration, async (request, response) => {
 
     const user = new User(request.body.userDetails);
+    
+    // Check if the username is taken
+    const isTaken = await User.find({username: user.username}); 
+    if (isTaken.length) {
+        console.log(isTaken)
+        request.flash('error', "Username is already taken.");
+        return response.redirect('/user/register');
+    }
+
     await user.save();
     request.session.userID = user._id;
     request.session.username = user.username;

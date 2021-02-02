@@ -12,11 +12,16 @@ const profile = require('./routes/profile');
 const purchase = require('./routes/purchase');
 const admin = require('./routes/admin');
 const User = require('./models/user');
-const { checkAuthentication } = require('./utils/middlewares');
+const { checkAuthentication, accessGrant} = require('./utils/middlewares');
 
 
 
-mongoose.connect('mongodb://localhost:27017/portfolio', { useNewUrlParser: true, useUnifiedTopology: true, useFindAndModify: false });
+mongoose.connect('mongodb://localhost:27017/portfolio', {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+    useFindAndModify: false,
+    useCreateIndex: true
+});
 const db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
 db.once('open', function () {
@@ -62,7 +67,7 @@ app.use('/admin', admin);
 
 
 // Renders home page
-app.get('/', checkAuthentication, async (request, response) => {
+app.get('/', checkAuthentication, accessGrant, async (request, response) => {
 
     const user = await User.findById(request.session.userID);
     const fullname = `${user.firstname} ${user.lastname}`;

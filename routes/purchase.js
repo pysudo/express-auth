@@ -10,7 +10,7 @@ router = express.Router();
 
 
 // Renders page for purchase details
-router.get('/', checkAuthentication, async (request, response) => {
+router.get('/', checkAuthentication, accessGrant, async (request, response) => {
 
     purchases = await Purchase.find({ delRec: { $ne: true } });
 
@@ -51,15 +51,16 @@ router.get('/edit/:id', checkAuthentication, accessGrant, async (request, respon
 
 
 // Edits an exisiting purchase
-router.patch('/edit/:id', checkAuthentication, accessGrant, validatePurchase, async (request, response) => {
+router.patch('/edit/:id', checkAuthentication, accessGrant, async (request, response) => {
 
     const { id } = request.params;
     const user = await User.findById(request.session.userID);
-    request.body.modified = {
+
+    request.body.purchase.modified = {
         by: `${user.firstname} ${user.lastname}`,
         at: Date.now()
     };
-    await Purchase.findByIdAndUpdate(id, request.body);
+    const edited = await Purchase.findByIdAndUpdate(id, request.body.purchase);
 
     response.redirect('/purchase')
 });
@@ -80,6 +81,7 @@ router.patch('/delete/:id', checkAuthentication, accessGrant, async (request, re
 router.get('/confirm-deletion/:id', accessGrant, (request, response) => {
 
     const { id } = request.params;
+    console.log("asdjajsd")
     response.render('confirmDeletion', { title: "Confirm Deletion", purchaseID: id, profileID: false });
 })
 
@@ -197,7 +199,6 @@ router.get('/purchase-transactions/:id', async (request, response) => {
     const { id } = request.params;
 
     const purchase = await Purchase.findById(id).populate('transactions');
-    console.log(purchase)
 
     response.render('transactions', { title: "Transaction", purchase});
 })

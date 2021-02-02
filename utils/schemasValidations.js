@@ -51,8 +51,6 @@ module.exports.purchaseSchema = Joi.object({
 
     purchase: Joi.object({
         name: Joi.string()
-            .min(6)
-            .max(30)
             .required(),
         address: Joi.string()
             .required(),
@@ -71,9 +69,7 @@ module.exports.purchaseSchema = Joi.object({
                 .required(),
             ifsc: Joi.string()
                 .required(),
-        }).required(),
-        activeStatus: Joi.string()
-            .required()
+        }).required()
     }).required()
 });
 

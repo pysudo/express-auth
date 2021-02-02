@@ -24,14 +24,14 @@
 
                     <div class="mb-3">
                         <label class="form-label" for="bankName">Bank Name</label>
-                        <input class="form-control" id="bankName" type="text" name="urchase[bankDetails][bankName]" value="<%= purchase.bankDetails.bankName %>">
+                        <input class="form-control" id="bankName" type="text" name="purchase[bankDetails][bankName]" value="<%= purchase.bankDetails.bankName %>">
                     </div>
                     <div class="mb-3">
                         <label class="form-label" for="accountNumber">Account Number</label>
                         <input class="form-control" id="accountNumber" type="number" aria-label="Account Number"
                             name="purchase[bankDetails][accountNumber]" value="<%= purchase.bankDetails.accountNumber %>">
                         <label class="form-label" for="accountType">Type</label>
-                        <select class="form-select" id="accountType" name="bpurchase[bankDetails][accountType]">
+                        <select class="form-select" id="accountType" name="purchase[bankDetails][accountType]">
                             <option selected>Select</option>
                             <option value="savings" <%= purchase.bankDetails.accountType==="savings" ? "selected" : "" %>>Savings</option>
                             <option value="current" <%= purchase.bankDetails.accountType==="current" ? "selected" : "" %>>Current</option>

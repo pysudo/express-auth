@@ -163,7 +163,7 @@ module.exports.validateTransaction = (request, response, next) => {
         let errorName;
         switch (errorNames[1]) {
             case "date":
-                errorName = "Purchase Name";
+                errorName = "Purchase Date";
                 break;
             case "amount":
                 errorName = "Purchase Amount";
@@ -224,7 +224,7 @@ module.exports.accessGrant = async (request, response, next) => {
 
         request.session.userID = null;
         request.session.username = null;
-        request.flash('error', "Your credentials have not been approved. Please contact the administrator");
+        request.flash('error', "Your credentials have not been approved, please wait for the administrator approval or contact the administrator");
         return response.redirect('/user/login');
     }
 

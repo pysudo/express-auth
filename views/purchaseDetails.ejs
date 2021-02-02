@@ -2,6 +2,9 @@
 
 
 <div class="row main">
+  <form class="mb-5" action="/purchase/add" method="GET">
+    <button class="btn btn-success" type="submit">Add Details</button>
+  </form>
     <div class="col-12">
         <table class="table align-middle text-center border-secondary table-striped">
             <thead>
@@ -14,6 +17,7 @@
                 <th scope="col" id="activeStatus">Active Status</th>
                 <th class="border-0" id="edit"></th>
                 <th class="border-0" id="remove"></th>
+                <th class="border-0" id="report"></th>
               </tr>
             </thead>
             <tbody id="purchaseDetails">
@@ -42,15 +46,12 @@
                       </form>
                     </td>
                 </tr>
-
                 <% } %>
             </tbody>
           </table>
     </div>
 </div>
 
-<form action="/purchase/add" method="GET">
-    <button class="btn btn-primary" type="submit">Add Details</button>
-</form>
 
 <script src="/scripts/sortTable.js"></script>
+<script src="/scripts/vendorTransactions.js"></script>

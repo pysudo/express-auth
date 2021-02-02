@@ -1,6 +1,10 @@
 <% layout('layouts/base') -%>
 
+
 <div class="row main">
+  <form class="mb-5" action="/profile/add" method="GET">
+    <button class="btn btn-success" type="submit">Add Company</button>
+  </form>
     <div class="col-12">
         <table class="table align-middle text-center border-secondary table-striped">
             <thead>
@@ -39,7 +43,3 @@
           </table>
     </div>
 </div>
-
-<form action="/profile/add" method="GET">
-    <button class="btn btn-primary" type="submit">Add Company</button>
-</form>

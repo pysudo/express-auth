@@ -13,16 +13,18 @@
                 </div>
                 <fieldset class="contact input-group mb-3">
                     <legend>Contacts</legend>
-
-                    <label for="landline">
-                        <span class="input-group-text">Landline</span>
-                    </label>
-                    <input class="form-control" id="landline" type="text" name="contacts[landline]" aria-label="Landline" aria-describedby="landine" value="<%= profile.contacts.landline %>">
-
-                    <label for="phone">
-                        <span class="input-group-text">Phone</span>
-                    </label>
-                    <input class="form-control" id="phone" type="text" name="contacts[phone]" aria-label="Phone" aria-describedby="phone" value="<%= profile.contacts.phone %>">
+                    <div class="mb-3">
+                        <label for="landline">
+                            <label class="form-label">Landline</label>
+                        </label>
+                        <input class="form-control" id="landline" type="text" name="contacts[landline]" aria-label="Landline" aria-describedby="landine" value="<%= profile.contacts.landline %>">
+                    </div>
+                    <div class="mb-3">
+                        <label for="phone">
+                            <span class="form-label">Phone</span>
+                        </label>
+                        <input class="form-control" id="phone" type="text" name="contacts[phone]" aria-label="Phone" aria-describedby="phone" value="<%= profile.contacts.phone %>">
+                    </div>        
                 </fieldset>
                 <div class="mb-3">
                     <label class="form-label" for="pan">Permanent Account Number</label>

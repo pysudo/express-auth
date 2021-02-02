@@ -6,35 +6,35 @@
             <div class="col-12">
                 <div class="mb-3">
                     <label class="form-label" for="name">Vendor Name</label>
-                    <input class="form-control" type="text" name="name">
+                    <input class="form-control" type="text" name="purchase[name]">
                 </div>
                 <div class="mb-3">
                     <label class="form-label" for="address">Vendor Address</label>
-                    <textarea class="form-control" type="text" name="address"></textarea>
+                    <textarea class="form-control" type="text" name="purchase[address]"></textarea>
                 </div>
                 <div class="mb-3">
                     <label class="form-label" for="email">Email</label>
-                    <input class="form-control" id="email" type="email" name="email">
+                    <input class="form-control" id="email" type="email" name="purchase[email]">
                 </div>
                 <div class="mb-3">
                     <label class="form-label" for="contact">Contact</label>
-                    <input class="form-control" id="contact" type="number" name="contact">
+                    <input class="form-control" id="contact" type="number" name="purchase[contact]">
                 </div>
                 <fieldset class="contact mb-3">
                     <legend class="text-center">Bank Details</legend>
 
                     <div class="mb-3">
                         <label class="form-label" for="bankName">Bank Name</label>
-                        <input class="form-control" id="bankName" type="text" name="bankDetails[bankName]">
+                        <input class="form-control" id="bankName" type="text" name="purchase[bankDetails][bankName]">
                     </div>
                     <div class="mb-3">
                         <label class="form-label">Account Number</label>
                         <input type="number" class="form-control" aria-label="Account Number"
-                            name="bankDetails[accountNumber]">
+                            name="purchase[bankDetails][accountNumber]">
                     </div>
                     <div class="mb-3">
                         <label class="form-label">Type</label>
-                        <select class="form-select" id="accountType" name="bankDetails[accountType]">
+                        <select class="form-select" id="accountType" name="purchase[bankDetails][accountType]">
                             <option value="savings">Savings</option>
                             <option value="current">Current</option>
                             <option value="others">Others</option>
@@ -42,12 +42,12 @@
                     </div>
                     <div class="mb-3">
                         <label class="form-label" for="ifsc">IFSC Code</label>
-                        <input class="form-control" id="ifsc" type="text" name="bankDetails[ifsc]">
+                        <input class="form-control" id="ifsc" type="text" name="purchase[bankDetails][ifsc]">
                     </div>
                 </fieldset>
                 <div class="mb-3">
                     <div class="form-check form-switch">
-                        <input class="form-check-input" id="activeState" type="checkbox" name="activeStatus" checked>
+                        <input class="form-check-input" id="activeState" type="checkbox" name="purchase[activeStatus]" checked>
                         <label class="form-check-label" for="activeState">Active Status</label>
                     </div>
                 </div>

@@ -5,19 +5,19 @@
             <div class="col-12">
                 <div class="mb-3">
                     <label class="form-label" for="name">Company Name</label>
-                    <input class="form-control" type="text" name="name">
+                    <input class="form-control" type="text" name="profile[name]">
                 </div>
                 <div class="mb-3">
                     <label class="form-label" for="address">Company Address</label>
-                    <textarea class="form-control" id="address" name="address" cols="30" rows="5"></textarea>
+                    <textarea class="form-control" id="address" name="profile[address]" cols="30" rows="5"></textarea>
                 </div>
                 <div class="mb-3">
                     <label class="form-label" for="pan">Permanent Account Number</label>
-                    <input class="form-control" id="pan" type="text" name="pan">
+                    <input class="form-control" id="pan" type="text" name="profile[pan]">
                 </div>
                 <div class="mb-3">
                     <label class="form-label" for="gst">GST Identification Number</label>
-                    <input class="form-control" id="gst" type="text" name="gst">
+                    <input class="form-control" id="gst" type="text" name="profile[gst]">
                 </div>
                 <fieldset class="contact mb-3">
                     <legend class="text-center">Contacts</legend>
@@ -25,14 +25,14 @@
                         <label class="form-label" for="landline">
                             Landline
                         </label>
-                        <input class="form-control" id="landline" type="number" name="contacts[landline]"
+                        <input class="form-control" id="landline" type="number" name="profile[contacts][landline]"
                             aria-label="Landline" aria-describedby="landine">
                     </div>
                     <div class="mb-3">
                         <label class="form-label" for="phone">
                             Phone
                         </label>
-                        <input class="form-control" id="phone" type="number" name="contacts[phone]" aria-label="Phone"
+                        <input class="form-control" id="phone" type="number" name="profile[contacts][phone]" aria-label="Phone"
                             aria-describedby="phone">
                     </div>
                 </fieldset>

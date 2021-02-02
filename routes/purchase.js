@@ -2,7 +2,7 @@ const express = require('express');
 
 const User = require('../models/user');
 const Purchase = require('../models/purchaseDetails');
-const { checkAuthentication, accessGrant } = require('../utils/middlewares');
+const { checkAuthentication, accessGrant, validatePurchase } = require('../utils/middlewares');
 
 
 router = express.Router();
@@ -25,7 +25,7 @@ router.get('/add', checkAuthentication, accessGrant, (request, response) => {
 
 
 // Appends purchase detail to database
-router.post('/', checkAuthentication, accessGrant, async (request, response) => {
+router.post('/', checkAuthentication, accessGrant, validatePurchase, async (request, response) => {
 
     const purchase = new Purchase(request.body);
     const user = await User.findOne({ _id: request.session.userID });
@@ -163,5 +163,10 @@ router.get('/sort/:name/:order', checkAuthentication, async (request, response) 
     response.send(purchase);
 })
 
+
+router.get('/purchase-transactions', (request, response) => {
+
+    response.render('transactions');
+})
 
 module.exports = router;

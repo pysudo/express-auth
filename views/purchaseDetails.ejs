@@ -16,10 +16,11 @@
                 <th class="border-0" id="remove"></th>
               </tr>
             </thead>
-            <tbody>
+            <tbody id="purchaseDetails">
               <% let i = 0; %> 
-                <% for(let purchase of purchases) { %> 
-                <tr>
+                <% for(let purchase of purchases) { %>
+                
+                <tr id="<%= purchase._id %>">
                     <td><%= purchase.name %></td>
                     <td><%= purchase.address %></td>
                     <td><%= purchase.email %></td>
@@ -40,7 +41,8 @@
                           <button class="btn-close" type="submit"></button>
                       </form>
                     </td>
-                </tr> 
+                </tr>
+
                 <% } %>
             </tbody>
           </table>

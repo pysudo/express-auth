@@ -11,27 +11,29 @@ table th {
 }
 
 #activeStatus, #edit, #remove {
-    cursor:auto;
+    cursor: auto;
 }
-  
+
 table .asc::after {
     content: "\25b4";
 }
-  
+
 table .dsc::after {
     content: "\25be";
 }
 
+tbody#purchaseDetails {
+    cursor: pointer;
+}
 
 @media (max-width: 820px) {
-    td, th{
+    td, th {
         font-size: 0.6em;
     }
-
 }
 
 @media (max-width: 420px) {
-    td, th{
+    td, th {
         font-size: 0.5em;
     }
 }

@@ -2,7 +2,7 @@ const express = require('express');
 
 const User = require('../models/user');
 const Profile = require('../models/companyProfile');
-const { checkAuthentication, accessGrant } = require('../utils/middlewares');
+const { validateProfile, checkAuthentication, accessGrant } = require('../utils/middlewares');
 
 
 router = express.Router();
@@ -24,9 +24,10 @@ router.get('/add', checkAuthentication, accessGrant, (request, response) => {
 
 
 // Appends company profile to database
-router.post('/', checkAuthentication, accessGrant, async (request, response) => {
+router.post('/', checkAuthentication, accessGrant, validateProfile, async (request, response) => {
 
-    const profile = new Profile(request.body);
+    const profile = new Profile(request.body.profile);
+    console.log(request.body);
     const user = await User.findOne({ _id: request.session.userID });
     profile.modified.by = `${user.firstname} ${user.lastname}`;
     await profile.save();

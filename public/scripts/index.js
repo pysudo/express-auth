@@ -12,3 +12,13 @@ window.addEventListener('load', function() {
         form.submit();
     });
 });
+
+document.addEventListener('readystatechange', () => {
+    let transactions = document.getElementById('purchaseDetails').children;
+for (let transaction of transactions) {
+    transaction.addEventListener('click', () => {
+
+        window.location = '/purchase/purchase-transactions';
+    })
+}
+})

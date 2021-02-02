@@ -5,8 +5,6 @@ const profileSchema = mongoose.Schema({
     name: {
         type: String,
         required: true,
-        min: 6,
-        max: 30
     },
     address: {
         type: String,
@@ -14,11 +12,11 @@ const profileSchema = mongoose.Schema({
     },
     contacts: {
         landline: {
-            type: Number,
+            type: String,
             required: true,
         },
         phone: {
-            type: Number,
+            type: String,
             required: true
         }
     },

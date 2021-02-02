@@ -20,7 +20,9 @@ module.exports.validateRegistration = (request, response, next) => {
 // Server side company profile  validation
 module.exports.validateProfile = (request, response, next) => {
 
+    const { id } = request.params;
     const validatedProfile = profileSchema.validate(request.body);
+
     if (validatedProfile.error) {
 
         const errorNames = validatedProfile.error.details[0].path;
@@ -62,9 +64,15 @@ module.exports.validateProfile = (request, response, next) => {
                 modifiedErrorMessage = `${errorName} ${originalMessage.slice(slicedLength)}`;
                 break;
         }
-
-        request.flash('error', modifiedErrorMessage);
-        return response.redirect('/profile/add');
+        
+        if (request.method === 'POST') {
+            request.flash('error', modifiedErrorMessage);
+            return response.redirect('/profile/add');
+        }
+        else if (request.method === 'PATCH') {
+            request.flash('error', modifiedErrorMessage);
+            return response.redirect(`/profile/edit/${id}`);
+        }
     }
     else {
         next();
@@ -75,6 +83,7 @@ module.exports.validateProfile = (request, response, next) => {
 // Server side purchase validation
 module.exports.validatePurchase = (request, response, next) => {
 
+    const { id } = request.params;
     const validatedPurchase = purchaseSchema.validate(request.body);
     if (validatedPurchase.error) {
 
@@ -124,8 +133,14 @@ module.exports.validatePurchase = (request, response, next) => {
                 break;
         }
 
-        request.flash('error', modifiedErrorMessage);
-        return response.redirect('/purchase/add');
+        if (request.method === 'POST') {
+            request.flash('error', modifiedErrorMessage);
+            return response.redirect('/purchase/add');
+        }
+        else if (request.method === 'PATCH') {
+            request.flash('error', modifiedErrorMessage);
+            return response.redirect(`/purchase/edit/${id}`);
+        }
     }
     else {
         next();

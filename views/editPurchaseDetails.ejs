@@ -5,33 +5,33 @@
             <form action="/purchase/edit/<%= purchase._id %>?_method=PATCH" method="POST">
                 <div class="mb-3">
                     <label class="form-label" for="name">Vendor Name</label>
-                    <input class="form-control" type="text" name="name" value="<%= purchase.name %>">
+                    <input class="form-control" type="text" name="purchase[name]" value="<%= purchase.name %>">
                 </div>
                 <div class="mb-3">
                     <label class="form-label" for="address">Vendor Address</label>
-                    <textarea class="form-control" type="text" name="address" cols="30" rows="5"><%= purchase.address %></textarea>
+                    <textarea class="form-control" type="text" name="purchase[address]" cols="30" rows="5"><%= purchase.address %></textarea>
                 </div>
                 <div class="mb-3">
                     <label class="form-label" for="email">Email</label>
-                    <input class="form-control" id="email" type="text" name="email" value="<%= purchase.email %>">
+                    <input class="form-control" id="email" type="text" name="purchase[email]" value="<%= purchase.email %>">
                 </div>
                 <div class="mb-3">
                     <label class="form-label" for="contact">Contact</label>
-                    <input class="form-control" id="contact" type="text" name="contact" value="<%= purchase.contact %>">
+                    <input class="form-control" id="contact" type="text" name="purchase[contact]" value="<%= purchase.contact %>">
                 </div>
                 <fieldset class="contact mb-3">
                     <legend class="text-center">Bank Details</legend>
 
                     <div class="mb-3">
                         <label class="form-label" for="bankName">Bank Name</label>
-                        <input class="form-control" id="bankName" type="text" name="bankDetails[bankName]" value="<%= purchase.bankDetails.bankName %>">
+                        <input class="form-control" id="bankName" type="text" name="urchase[bankDetails][bankName]" value="<%= purchase.bankDetails.bankName %>">
                     </div>
                     <div class="mb-3">
                         <label class="form-label" for="accountNumber">Account Number</label>
                         <input class="form-control" id="accountNumber" type="number" aria-label="Account Number"
-                            name="bankDetails[accountNumber]" value="<%= purchase.bankDetails.accountNumber %>">
+                            name="purchase[bankDetails][accountNumber]" value="<%= purchase.bankDetails.accountNumber %>">
                         <label class="form-label" for="accountType">Type</label>
-                        <select class="form-select" id="accountType" name="bankDetails[accountType]">
+                        <select class="form-select" id="accountType" name="bpurchase[bankDetails][accountType]">
                             <option selected>Select</option>
                             <option value="savings" <%= purchase.bankDetails.accountType==="savings" ? "selected" : "" %>>Savings</option>
                             <option value="current" <%= purchase.bankDetails.accountType==="current" ? "selected" : "" %>>Current</option>
@@ -40,7 +40,7 @@
                     </div>
                     <div class="mb-3">
                         <label class="form-label" for="ifsc">IFSC Code</label>
-                        <input class="form-control" id="ifsc" type="text" name="bankDetails[ifsc]" value="<%= purchase.bankDetails.ifsc %>">
+                        <input class="form-control" id="ifsc" type="text" name="purchase[bankDetails][ifsc]" value="<%= purchase.bankDetails.ifsc %>">
                     </div>
                 </fieldset>
                 <button class="btn btn-success" type="submit">Submit</button>

@@ -5,34 +5,34 @@
             <form action="/profile/edit/<%= profile._id %>?_method=PATCH" method="POST">
                 <div class="mb-3">
                     <label class="form-label" for="name">Company Name</label>
-                    <input class="form-control" type="text" name="name" value="<%= profile.name %>">
+                    <input class="form-control" type="text" name="profile[name]" value="<%= profile.name %>">
                 </div>
                 <div class="mb-3">
                     <label class="form-label" for="address">Company Address</label>
-                    <textarea class="form-control" id="address" name="address" cols="30" rows="5"><%= profile.address %></textarea>
+                    <textarea class="form-control" id="address" name="profile[address]" cols="30" rows="5"><%= profile.address %></textarea>
                 </div>
                 <fieldset class="contact input-group mb-3">
                     <legend>Contacts</legend>
-                    <div class="mb-3">
+                    <div class="mb-3 me-5">
                         <label for="landline">
                             <label class="form-label">Landline</label>
                         </label>
-                        <input class="form-control" id="landline" type="text" name="contacts[landline]" aria-label="Landline" aria-describedby="landine" value="<%= profile.contacts.landline %>">
+                        <input class="form-control" id="landline" type="text" name="profile[contacts][landline]" aria-label="Landline" aria-describedby="landine" value="<%= profile.contacts.landline %>">
                     </div>
                     <div class="mb-3">
                         <label for="phone">
-                            <span class="form-label">Phone</span>
+                            <label class="form-label">Phone</label>
                         </label>
-                        <input class="form-control" id="phone" type="text" name="contacts[phone]" aria-label="Phone" aria-describedby="phone" value="<%= profile.contacts.phone %>">
+                        <input class="form-control" id="phone" type="text" name="profile[contacts][phone]" aria-label="Phone" aria-describedby="phone" value="<%= profile.contacts.phone %>">
                     </div>        
                 </fieldset>
                 <div class="mb-3">
                     <label class="form-label" for="pan">Permanent Account Number</label>
-                    <input class="form-control" id="pan" type="text" name="pan" value="<%= profile.pan %>">
+                    <input class="form-control" id="pan" type="text" name="profile[pan]" value="<%= profile.pan %>">
                 </div>
                 <div class="mb-3">
                     <label class="form-label" for="gst">GST Identification Number</label>
-                    <input class="form-control" id="gst" type="text" name="gst" value="<%= profile.gst %>">
+                    <input class="form-control" id="gst" type="text" name="profile[gst]" value="<%= profile.gst %>">
                 </div>
                 <button class="btn btn-success" type="submit">Edit Profile</button>
             </form>

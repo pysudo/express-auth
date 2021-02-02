@@ -51,7 +51,7 @@ router.get('/edit/:id', checkAuthentication, accessGrant, async (request, respon
 
 
 // Edits an exisiting purchase
-router.patch('/edit/:id', checkAuthentication, accessGrant, async (request, response) => {
+router.patch('/edit/:id', checkAuthentication, accessGrant, validatePurchase, async (request, response) => {
 
     const { id } = request.params;
     const user = await User.findById(request.session.userID);

@@ -47,7 +47,7 @@ router.get('/edit/:id', checkAuthentication, accessGrant, async (request, respon
 
 
 // Edits an exisiting profile entry
-router.patch('/edit/:id', checkAuthentication, accessGrant, async (request, response) => {
+router.patch('/edit/:id', checkAuthentication, accessGrant, validateProfile , async (request, response) => {
 
     const { id } = request.params;
     const user = await User.findById(request.session.userID);

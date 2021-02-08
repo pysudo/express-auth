@@ -1,5 +1,11 @@
 <% layout('layouts/base') -%>
 
+<nav class="mt-5" aria-label="breadcrumb">
+  <ol class="breadcrumb">
+    <li><a href="/purchase">Purchase Details</a></li>
+    <li class="breadcrumbs"><a href="/purchase/purchase-transactions/<%= purchase._id %>">Transactions</a></li>
+  </ol>
+</nav>
 
 <div class="row main">
 
@@ -41,18 +47,38 @@
               <th scope="col">Purchase Amount</th>
               <th scope="col">Mode of Payment</th>
               <th scope="col">Reference Number</th>
+              <th scope="col"></th>
+              <th scope="col"></th>
+              <th scope="col"></th>
             </tr>
           </thead>
           <tbody>
-              <% for( let transaction of purchase.transactions) { %> 
-              <tr>
-                  <td><%= transaction.date.toLocaleDateString() %></td>
-                  <td><%= transaction.amount %></td>
-                  <td><%= transaction.description %></td>
-                  <td><%= transaction.mode %></td>
-                  <td><%= transaction.referenceNumber %></td>
-              </tr>
-              <% } %> 
+              <% for( let transaction of purchase.transactions) { %>
+                <% if(transaction.delRec === false) { %> 
+                  <tr>
+                    <td><%= transaction.date.toLocaleDateString() %></td>
+                    <td><%= transaction.description %></td>
+                    <td><%= transaction.amount %></td>
+                    <td><%= transaction.mode %></td>
+                    <td><%= transaction.referenceNumber %></td>
+                    <td class="border-0">
+                      <form action="/purchase/purchase-transactions/<%= purchase._id %>/edit/<%= transaction._id %>">
+                          <button class="btn btn-primary" type="submit">Edit</button>
+                      </form>
+                    </td>
+                    <td class="border-0">
+                      <form action="/purchase/purchase-transactions/send/<%= transaction._id %>">
+                          <button class="btn btn-primary" type="submit">Send</button>
+                      </form>
+                    </td>
+                    <td class="border-0">
+                      <form action="/purchase/purchase-transactions/confirm-deletion/<%= transaction._id %>" method="GET">
+                          <button class="btn-close" type="submit"></button>
+                      </form>
+                    </td>
+                  </tr>
+                <% } %> 
+              <% } %>
           </tbody>
         </table>
   </div>

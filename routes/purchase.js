@@ -2,11 +2,13 @@ const express = require('express');
 
 const User = require('../models/user');
 const Purchase = require('../models/purchaseDetails');
-const Transaction = require('../models/transaction');
-const { checkAuthentication, accessGrant, validatePurchase, validateTransaction } = require('../utils/middlewares');
+const { checkAuthentication, accessGrant, validatePurchase } = require('../utils/middlewares');
+const transaction = require('./transaction');
 
 
 router = express.Router();
+
+router.use('/purchase-transactions', transaction);
 
 
 // Renders page for purchase details
@@ -14,14 +16,14 @@ router.get('/', checkAuthentication, accessGrant, async (request, response) => {
 
     purchases = await Purchase.find({ delRec: { $ne: true } });
 
-    response.render('purchaseDetails', { title: "Purchase Details", purchases });
+    response.render('purchase/purchaseDetails', { title: "Purchase Details", purchases });
 })
 
 
 // Renders a form for appending a purchase profile
 router.get('/add', checkAuthentication, accessGrant, (request, response) => {
 
-    response.render('addPurchaseDetails', { title: "Add Details" });
+    response.render('purchase/addPurchaseDetails', { title: "Add Details" });
 })
 
 
@@ -45,7 +47,7 @@ router.get('/edit/:id', checkAuthentication, accessGrant, async (request, respon
     const { id } = request.params;
     const purchase = await Purchase.findById(id);
 
-    response.render('editPurchaseDetails', { title: "Edit Purchase", purchase })
+    response.render('purchase/editPurchaseDetails', { title: "Edit Purchase", purchase })
 
 });
 
@@ -82,11 +84,10 @@ router.get('/confirm-deletion/:id', accessGrant, (request, response) => {
 
     const { id } = request.params;
     console.log("asdjajsd")
-    response.render('confirmDeletion', { title: "Confirm Deletion", purchaseID: id, profileID: false });
+    response.render('confirmDeletion', { title: "Confirm Deletion", purchaseID: id, profileID: false, transactionID: false });
 })
 
 
-// Renders a form to state reason for purchase detail deletion
 // If confirmed, deletes an exisiting purchase detail entry
 router.delete('/confirm-deletion/:id', accessGrant, async (request, response) => {
 
@@ -167,41 +168,4 @@ router.get('/sort/:name/:order', checkAuthentication, async (request, response) 
 })
 
 
-// Renders a form to enter the transaction to a particular vendor
-router.get('/purchase-transactions/add/:id', checkAuthentication, async (request, response) => {
-
-    const { id } = request.params;
-    const purchase = await Purchase.findById(id);
-
-    response.render('addTransaction', { title: "Add Transaction", purchase });
-})
-
-
-// Appends the transaction to a particular vendor to the database
-router.post('/purchase-transactions/add/:id', checkAuthentication, validateTransaction, async (request, response) => {
-
-    const { id } = request.params;
-    const purchase = await Purchase.findById(id);
-    const transaction = new Transaction(request.body.transaction);
-    purchase.transactions.push(transaction);
-
-    await transaction.save();
-    await purchase.save();
-
-    response.redirect(`/purchase/purchase-transactions/${id}`);
-})
-
-
-// Displays the list of transactions to a particular vendor
-router.get('/purchase-transactions/:id', async (request, response) => {
-
-
-    const { id } = request.params;
-
-    const purchase = await Purchase.findById(id).populate('transactions');
-
-    response.render('transactions', { title: "Transaction", purchase});
-})
-
 module.exports = router;
-

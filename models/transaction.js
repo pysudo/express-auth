@@ -22,6 +22,13 @@ const transactionSchema = mongoose.Schema({
     referenceNumber: {
         type: Number,
         required: true
+    },
+    delRec: {
+        type: Boolean,
+        default: false,
+    },
+    deleteReason: {
+        type: String,
     }
 });
 

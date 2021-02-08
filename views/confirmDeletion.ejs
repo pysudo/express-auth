@@ -1,6 +1,15 @@
 <% layout('layouts/base') -%>
 
+
     <% if(profileID) { %>
+
+        <nav class="mt-5" aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li><a href="/profile">Profile Details</a></li>
+                <li class="breadcrumbs"><a href="/profile/confirm-deletion/<%= profileID %>">Delete Company Profile</a></li>
+            </ol>
+        </nav>
+
         <form action="/profile/confirm-deletion/<%= profileID %>?_method=DELETE" method="POST">
             <div class="row d-flex flex-column vh-100 align-content-center justify-content-center">
                 <div class="col-6">
@@ -13,9 +22,41 @@
                 </div>
             </div>
         </form>
-    <% } else { %>
+    <% } %>
+
+    <% if(purchaseID) { %>
+
+        <nav class="mt-5" aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li><a href="/purchase">Purchase Details</a></li>
+                <li class="breadcrumbs"><a href="/purchase/confirm-deletion/<%= purchaseID %>">Delete Purchase Detail</a></li>
+            </ol>
+        </nav>
 
         <form action="/purchase/confirm-deletion/<%= purchaseID %>?_method=DELETE" method="POST">
+            <div class="row d-flex flex-column vh-100 align-content-center justify-content-center">
+                <div class="col-6">
+                    <div class="mb-3">
+                        <label class="form-label" for="reason">Reason:</label>
+                        <textarea class="form-control" id="reason" type="text" name="reason" required></textarea>
+                    </div>
+                    <button class="btn btn-danger" name="choice" type="submit" value="confirm">Confirm Deletion</button>
+                    <button class="btn btn-secondary" name="choice" type="submit" value="cancel">Cancel</button>
+                </div>
+            </div>
+        </form>
+    <% } %>
+
+    <% if(transactionID) { %>
+
+        <nav class="mt-5" aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li><a href="/purchase/purchase-transactions/<%= purchaseTransactionID %>">Purchase Details</a></li>
+                <li class="breadcrumbs"><a href="/purchase/purchase-transactions/confirm-deletion/<%= transactionID %>">Delete Transaction</a></li>
+            </ol>
+        </nav> 
+        
+        <form action="/purchase/purchase-transactions/confirm-deletion/<%= transactionID %>?_method=DELETE" method="POST">
             <div class="row d-flex flex-column vh-100 align-content-center justify-content-center">
                 <div class="col-6">
                     <div class="mb-3">

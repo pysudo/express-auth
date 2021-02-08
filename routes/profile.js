@@ -12,14 +12,14 @@ router = express.Router();
 router.get('/', checkAuthentication, accessGrant, async (request, response) => {
 
     profiles = await Profile.find({ delRec: { $ne: true } });
-    response.render('profile', { title: "Company Profile", profiles });
+    response.render('profile/profile', { title: "Company Profile", profiles });
 });
 
 
 // Renders a form for appending company profile
 router.get('/add', checkAuthentication, accessGrant, (request, response) => {
 
-    response.render('addProfile', { title: "Add Profile" });
+    response.render('profile/addProfile', { title: "Add Profile" });
 });
 
 
@@ -41,13 +41,13 @@ router.get('/edit/:id', checkAuthentication, accessGrant, async (request, respon
     const { id } = request.params;
     const profile = await Profile.findById(id);
 
-    response.render('editProfile', { title: "Edit Profile", profile })
+    response.render('profile/editProfile', { title: "Edit Profile", profile })
 
 });
 
 
 // Edits an exisiting profile entry
-router.patch('/edit/:id', checkAuthentication, accessGrant, validateProfile , async (request, response) => {
+router.patch('/edit/:id', checkAuthentication, accessGrant, validateProfile, async (request, response) => {
 
     const { id } = request.params;
     const user = await User.findById(request.session.userID);
@@ -65,11 +65,10 @@ router.patch('/edit/:id', checkAuthentication, accessGrant, validateProfile , as
 router.get('/confirm-deletion/:id', checkAuthentication, accessGrant, (request, response) => {
 
     const { id } = request.params;
-    response.render('confirmDeletion', { title: "Confirm Deletion", profileID: id, purchaseID: false });
+    response.render('confirmDeletion', { title: "Confirm Deletion", profileID: id, purchaseID: false, transactionID: false });
 })
 
 
-// Renders a form to state reason for company profile deletion
 // If confirmed, deletes an exisiting profile entry
 router.delete('/confirm-deletion/:id', checkAuthentication, accessGrant, async (request, response) => {
 

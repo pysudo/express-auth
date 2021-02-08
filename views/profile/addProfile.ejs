@@ -3,6 +3,14 @@
     <form action="/profile" method="POST">
         <div class="row m-5">
             <div class="col-12">
+
+                <nav class="mt-5 my-5" aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                        <li><a href="/profile">Company Profile</a></li>
+                        <li class="breadcrumbs"><a href="/profile/add">Add Company Profile</a></li>
+                    </ol>
+                </nav>
+
                 <div class="mb-3">
                     <label class="form-label" for="name">Company Name</label>
                     <input class="form-control" id="name" type="text" name="profile[name]">

@@ -6,7 +6,12 @@ table tbody tr:hover {
     background-color: silver;
 }
 
-table th {
+li.breadcrumbs::before {
+    content: '>';
+    padding: 5px;
+}
+
+/* table th {
     cursor: pointer;
 }
 
@@ -20,7 +25,7 @@ table .asc::after {
 
 table .dsc::after {
     content: "\25be";
-}
+} */
 
 tbody#purchaseDetails {
     cursor: pointer;

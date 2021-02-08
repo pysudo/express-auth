@@ -85,6 +85,7 @@ module.exports.validatePurchase = (request, response, next) => {
 
     const { id } = request.params;
     const validatedPurchase = purchaseSchema.validate(request.body);
+    console.log(validatedPurchase);
     if (validatedPurchase.error) {
 
         const errorNames = validatedPurchase.error.details[0].path;

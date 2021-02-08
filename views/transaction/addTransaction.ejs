@@ -1,6 +1,13 @@
 <% layout('layouts/base') -%>
 
 
+    <nav class="mt-5" aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li><a href="/purchase">Purchase Details</a></li>
+            <li class="breadcrumbs"><a href="/purchase/purchase-transactions/<%= purchase._id %>">Transactions</a></li>
+            <li class="breadcrumbs"><a href="/purchase/purchase-transactions/add/<%= purchase._id %>">Add Transaction</a></li>
+        </ol>
+    </nav>
 
     <form action="/purchase/purchase-transactions/add/<%= purchase._id %>" method="POST">
         <div class="row m-5">
@@ -14,14 +21,15 @@
                     <input class="form-control" id="amount" type="number" name="transaction[amount]">
                 </div>
                 <div class="form-floating mb-3">
-                    <textarea class="form-control" placeholder="Description" name="transaction[description]" id="description"
-                        style="height: 100px"></textarea>
+                    <textarea class="form-control" placeholder="Description" name="transaction[description]"
+                        id="description" style="height: 100px"></textarea>
                     <label for="description">Description</label>
                 </div>
                 <div class="mb-3">
                     <h6>Mode of Payments</h6>
                     <div class="form-check">
-                        <input class="form-check-input" type="radio" name="transaction[mode]" id="online" value="online">
+                        <input class="form-check-input" type="radio" name="transaction[mode]" id="online"
+                            value="online">
                         <label class="form-check-label" for="online">
                             Online
                         </label>
@@ -33,7 +41,8 @@
                         </label>
                     </div>
                     <div class="form-check">
-                        <input class="form-check-input" type="radio" name="transaction[mode]" id="others" value="others">
+                        <input class="form-check-input" type="radio" name="transaction[mode]" id="others"
+                            value="others">
                         <label class="form-check-label" for="others">
                             Others
                         </label>

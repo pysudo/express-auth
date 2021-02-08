@@ -1,0 +1,59 @@
+<% layout('layouts/base') -%>
+
+
+    <form action="/purchase/purchase-transactions/<%= purchaseId %>/edit/<%= transaction._id %>?_method=PATCH" method="POST">
+        <div class="row m-5">
+            <div class="col-12">
+                
+                <nav class="my-5" aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                        <li><a href="/purchase">Purchase Details</a></li>
+                        <li class="breadcrumbs"><a href="/purchase/purchase-transactions/<%= purchaseId %>">Transactions</a></li>
+                        <li class="breadcrumbs"><a href="/purchase/purchase-transactions/<%= purchaseId %>/edit/<%= transaction._id %>">Edit Transaction</a></li>
+                    </ol>
+                </nav>
+
+                <h1 class="text-center my-5">Edit Transaction</h1>
+
+                <div class="mb-3">
+                    <label class="form-label" for="name">Purchase Date</label>
+                    <input class="form-control" id="name" type="date" name="transaction[date]" value="<%= fortmattedDate %>">
+                </div>
+                <div class="mb-3">
+                    <label class="form-label" for="amount">Purchase Amount</label>
+                    <input class="form-control" id="amount" type="number" name="transaction[amount]" value="<%= transaction.amount %>">
+                </div>
+                <div class="form-floating mb-3">
+                    <textarea class="form-control" placeholder="Description" name="transaction[description]" id="description"
+                        style="height: 100px"><%= transaction.description %></textarea>
+                    <label for="description">Description</label>
+                </div>
+                <div class="mb-3">
+                    <h6>Mode of Payments</h6>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="transaction[mode]" id="online" value="online" <%= transaction.mode === "online" ? "checked" : ""%>>
+                        <label class="form-check-label" for="online">
+                            Online
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="transaction[mode]" id="cash" value="cash" <%= transaction.mode === "cash" ? "checked" : ""%>>
+                        <label class="form-check-label" for="cash">
+                            Cash
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="transaction[mode]" id="others" value="others" <%= transaction.mode === "others" ? "checked" : ""%>>
+                        <label class="form-check-label" for="others">
+                            Others
+                        </label>
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label" for="amount">Reference Number</label>
+                    <input class="form-control" id="amount" type="number" name="transaction[referenceNumber]" value="<%= transaction.referenceNumber %>">
+                </div>
+                <button class="btn btn-success" type="submit">Submit</button>
+            </div>
+
+    </form>

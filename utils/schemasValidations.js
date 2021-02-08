@@ -69,7 +69,8 @@ module.exports.purchaseSchema = Joi.object({
                 .required(),
             ifsc: Joi.string()
                 .required(),
-        }).required()
+        }).required(),
+        activeStatus: Joi.string()
     }).required()
 });
 

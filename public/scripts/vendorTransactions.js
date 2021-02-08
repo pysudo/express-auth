@@ -1,10 +1,10 @@
 document.addEventListener('readystatechange', () => {
-    let transactions = document.getElementById('purchaseDetails').children;
-    for (let transaction of transactions) {
+    let purchaseDetails = document.getElementById('purchaseDetails').children;
+    for (let purchaseDetail of purchaseDetails) {
 
-        for (let data = 0; data < transaction.children.length - 3; data++)
-            transaction.children[data].addEventListener('click', () => {
-                window.location = `/purchase/purchase-transactions/${transaction.id}`;
+        for (let data = 0; data < purchaseDetail.children.length - 3; data++)
+        purchaseDetail.children[data].addEventListener('click', () => {
+                window.location = `/purchase/purchase-transactions/${purchaseDetail.id}`;
             })
     }
 })

@@ -18,7 +18,7 @@
                         <tr>
                             <th scope="col">Items</th>
                             <th scope="col">Quantity</th>
-                            <th scope="col">GST</th>
+                            <th scope="col">GST (in %)</th>
                             <th scope="col">Price</th>
                             <th scope="col">Grand Price</th>
                         </tr>
@@ -29,16 +29,16 @@
                                 <input class="form-control" id="1-items" type="text" name="billing[items]">
                             </td>
                             <td>
-                                <input class="form-control" id="1-quantity" type="number" name="billing[quantity]">
+                                <input class="form-control" id="1-quantity" type="number" name="billing[quantity]" step="1" min="0">
                             </td>
                             <td>
-                                <input class="form-control" id="1-gst" type="number" name="billing[gst]">
+                                <input class="form-control" id="1-gst" type="number" name="billing[gst]" min="0" step="any">
                             </td>
                             <td>
-                                <input class="form-control" id="1-price" type="number" name="billing[price]">
+                                <input class="form-control" id="1-price" type="number" name="billing[price]" min="0" step="any">
                             </td>
                             <td>
-                                <input class="form-control" id="1-grandPrice" type="number" name="billing[grandPrice]">
+                                <input class="form-control" id="1-grandPrice" type="number" name="billing[grandPrice]" readonly>
                             </td>
                         </tr>
                     </tbody>

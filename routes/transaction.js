@@ -42,7 +42,7 @@ router.get('/confirm-deletion/:id', checkAuthentication, async (request, respons
     const purchase = await Purchase.findOne({transactions: mongoose.Types.ObjectId(id)});
     const purchaseTransactionID = purchase._id; 
 
-    response.render('confirmDeletion', { title: "Confirm Deletion", purchaseTransactionID, purchaseID: false, profileID: false, transactionID: id });
+    response.render('confirmDeletion', { title: "Confirm Deletion", purchaseTransactionID, purchaseID: false, profileID: false, transactionID: id, clientID: false });
 })
 
 

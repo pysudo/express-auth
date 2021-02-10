@@ -62,10 +62,10 @@ router.patch('/edit/:id', checkAuthentication, accessGrant, validateProfile, asy
 
 
 // Renders a form to state reason for company profile deletion
-router.get('/confirm-deletion/:id', checkAuthentication, accessGrant, (request, response) => {
+router.get('/confirm-deletion/:id', checkAuthentication, (request, response) => {
 
     const { id } = request.params;
-    response.render('confirmDeletion', { title: "Confirm Deletion", profileID: id, purchaseID: false, transactionID: false });
+    response.render('confirmDeletion', { title: "Confirm Deletion", profileID: id, purchaseID: false, transactionID: false, clientID: false });
 })
 
 
@@ -75,10 +75,9 @@ router.delete('/confirm-deletion/:id', checkAuthentication, accessGrant, async (
     const { id } = request.params;
     const { reason, choice } = request.body;
     if (choice == "confirm") {
+        
         await Profile.findByIdAndUpdate(id, { deleteReason: reason, delRec: true });
         request.flash('success', "Profile successfully deleted.")
-
-        return response.redirect('/profile');
     }
 
     response.redirect('/profile');

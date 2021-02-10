@@ -101,4 +101,29 @@ router.post('/edit/:id', checkAuthentication, accessGrant, validateClient, async
     response.redirect('/client')
 });
 
+
+// Renders a form to state reason for client detail deletion
+router.get('/confirm-deletion/:id', checkAuthentication, (request, response) => {
+
+    const { id } = request.params;
+
+    response.render('confirmDeletion', { title: "Confirm Deletion", purchaseID: false, profileID: false, transactionID: false, clientID: id });
+})
+
+
+// If confirmed, deletes an exisiting purchase detail entry
+router.delete('/confirm-deletion/:id', checkAuthentication, accessGrant, async (request, response) => {
+
+    const { id } = request.params;
+    const { reason, choice } = request.body;
+    if (choice == "confirm") {
+        
+        await Client.findByIdAndUpdate(id, { deleteReason: reason, delRec: true });
+        request.flash('success', "Client successfully deleted.")
+    }
+
+    response.redirect('/client');
+})
+
+
 module.exports = router;

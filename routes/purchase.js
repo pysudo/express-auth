@@ -84,7 +84,7 @@ router.get('/confirm-deletion/:id', checkAuthentication, (request, response) => 
 
     const { id } = request.params;
     console.log("asdjajsd")
-    response.render('confirmDeletion', { title: "Confirm Deletion", purchaseID: id, profileID: false, transactionID: false });
+    response.render('confirmDeletion', { title: "Confirm Deletion", purchaseID: id, profileID: false, transactionID: false, clientID: false });
 })
 
 
@@ -94,10 +94,9 @@ router.delete('/confirm-deletion/:id', checkAuthentication, accessGrant, async (
     const { id } = request.params;
     const { reason, choice } = request.body;
     if (choice == "confirm") {
+        
         await Purchase.findByIdAndUpdate(id, { deleteReason: reason, delRec: true });
         request.flash('success', "Purchase successfully deleted.")
-
-        return response.redirect('/purchase');
     }
 
     response.redirect('/purchase');

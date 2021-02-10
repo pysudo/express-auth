@@ -17,40 +17,30 @@
             <table class="table align-middle text-center border-secondary table-striped">
                 <thead>
                     <tr>
+                        <th scope="col">Invoice</th>
                         <th scope="col">Items</th>
-                        <th scope="col">Quantity</th>
-                        <th scope="col">Price Per Each</th>
-                        <th scope="col">GST Per Each</th>
                         <th scope="col">Grand Total</th>
+                        <th scope="col">Payment Status</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <% for(let profile of profiles) { %>
+                    <% for(let billing of clientDetail.billings) { %>
                         <tr>
                             <td>
-                                <%= profile.name %>
+                                <%= billing.invoice %>
                             </td>
                             <td>
-                                <%= profile.address %>
+                                <%= billing.itemList %>
                             </td>
                             <td>
-                                <%= profile.contacts.landline %>
+                                <%= billing.grandTotal %>
                             </td>
                             <td>
-                                <%= profile.contacts.phone %>
-                            </td>
-                            <td>
-                                <%= profile.modified.by %>
-                            </td>
-                            <td class="border-0">
-                                <form action="/profile/edit/<%= profile._id %>">
-                                    <button class="btn btn-primary my-1" type="submit">Edit</button>
-                                </form>
-                            </td>
-                            <td class="border-0">
-                                <form action="/profile/confirm-deletion/<%= profile._id %>" method="GET">
-                                    <button class="btn-close my-2" type="submit"></button>
-                                </form>
+                                <% if(billing.paymentStatus) { %>
+                                    Paid
+                                <% } else { %>
+                                    Unpaid
+                                <% } %>   
                             </td>
                         </tr>
                         <% } %>

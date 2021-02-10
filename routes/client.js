@@ -39,8 +39,7 @@ router.post('/', async (request, response) => {
 router.get('/billing/:id', async (request, response) => {
 
     const { id } = request.params;
-    const clientDetail = await Client.findById(id);
-    console.log(clientDetail)
+    const clientDetail = await Client.findById(id).populate('billings');
 
     response.render('client/billing', { title: "Billing", clientDetail })
 })
@@ -61,7 +60,10 @@ router.post('/billing/:id', async (request, response) => {
 
     const { id } = request.params;
     const client = await Client.findById(id);
+
     const billing = new Billing(request.body.billing);
+    billing.invoice = Math.floor(Math.random() * 1000000000000000);
+
     const user = await User.findOne({ _id: request.session.userID });
     billing.modified.by = `${user.firstname} ${user.lastname}`;
 

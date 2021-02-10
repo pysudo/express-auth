@@ -3,27 +3,33 @@ const mongoose = require('mongoose');
 
 const billingSchema = mongoose.Schema({
     items: {
-        type: String,
+        type: [String],
         required: true,
     },
     quantity: {
-        type: String,
+        type: [Number],
         required: true,
     },
     gst: {
-        type: String,
+        type: [Number],
         required: true
     },
     price: {
-        type: Number,
+        type: [Number],
         required: true
     },
     grandPrice: {
-        type: Number,
+        type: [Number],
         required: true
     },
     invoice: {
         type: String,
+        required: true
+    },
+    paymentStatus: {
+        type: Boolean,
+        default: false,
+        required: true
     },
     modified: {
         by: {
@@ -41,8 +47,18 @@ const billingSchema = mongoose.Schema({
     },
     client: {
         type: mongoose.Schema.Types.ObjectId, ref: 'Client'
-    }
+    },
 });
+
+
+billingSchema.virtual('itemList').get(function() {
+    return this.items.map((a) => (` ${a}`))
+});
+
+billingSchema.virtual('grandTotal').get(function() {
+    return this.grandPrice.reduce((x,y) => x + y, 0);
+});
+
 
 
 module.exports = mongoose.model('Billing', billingSchema);

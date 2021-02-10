@@ -20,7 +20,7 @@ const transactionSchema = mongoose.Schema({
         required: true
     },
     referenceNumber: {
-        type: Number,
+        type: String,
         required: true
     },
     delRec: {

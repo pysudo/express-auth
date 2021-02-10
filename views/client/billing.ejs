@@ -21,6 +21,7 @@
                         <th scope="col">Items</th>
                         <th scope="col">Grand Total</th>
                         <th scope="col">Payment Status</th>
+                        <th scope="col">Modified By</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -41,6 +42,9 @@
                                 <% } else { %>
                                     Unpaid
                                 <% } %>   
+                            </td>
+                            <td>
+                                <%= billing.modified.by %>
                             </td>
                         </tr>
                         <% } %>

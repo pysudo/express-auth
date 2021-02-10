@@ -1,7 +1,7 @@
 <% layout('layouts/base') -%>
 
 
-    <form action="/purchase/purchase-transactions/<%= purchaseId %>/edit/<%= transaction._id %>?_method=PATCH" method="POST">
+    <form class="needs-validation" action="/purchase/purchase-transactions/<%= purchaseId %>/edit/<%= transaction._id %>?_method=PATCH" method="POST" novalidate>
         <div class="row m-5">
             <div class="col-12">
                 
@@ -17,21 +17,21 @@
 
                 <div class="mb-3">
                     <label class="form-label" for="name">Purchase Date</label>
-                    <input class="form-control" id="name" type="date" name="transaction[date]" value="<%= fortmattedDate %>">
+                    <input class="form-control" id="name" type="date" name="transaction[date]" value="<%= fortmattedDate %>" required>
                 </div>
                 <div class="mb-3">
                     <label class="form-label" for="amount">Purchase Amount</label>
-                    <input class="form-control" id="amount" type="number" name="transaction[amount]" value="<%= transaction.amount %>">
+                    <input class="form-control" id="amount" type="number" name="transaction[amount]" value="<%= transaction.amount %>" required>
                 </div>
                 <div class="form-floating mb-3">
                     <textarea class="form-control" placeholder="Description" name="transaction[description]" id="description"
-                        style="height: 100px"><%= transaction.description %></textarea>
+                        style="height: 100px" required><%= transaction.description %></textarea>
                     <label for="description">Description</label>
                 </div>
                 <div class="mb-3">
                     <h6>Mode of Payments</h6>
                     <div class="form-check">
-                        <input class="form-check-input" type="radio" name="transaction[mode]" id="online" value="online" <%= transaction.mode === "online" ? "checked" : ""%>>
+                        <input class="form-check-input" type="radio" name="transaction[mode]" id="online" value="online" <%= transaction.mode === "online" ? "checked" : ""%> required>
                         <label class="form-check-label" for="online">
                             Online
                         </label>
@@ -51,7 +51,7 @@
                 </div>
                 <div class="mb-3">
                     <label class="form-label" for="amount">Reference Number</label>
-                    <input class="form-control" id="amount" type="number" name="transaction[referenceNumber]" value="<%= transaction.referenceNumber %>">
+                    <input class="form-control" id="amount" type="number" name="transaction[referenceNumber]" value="<%= transaction.referenceNumber %>" required>
                 </div>
                 <button class="btn btn-success" type="submit">Submit</button>
             </div>

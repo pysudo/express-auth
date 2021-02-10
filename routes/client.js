@@ -3,13 +3,14 @@ const express = require('express');
 const Client = require('../models/clientDetails');
 const User = require('../models/user');
 const Billing = require('../models/billing');
+const { validateClient, checkAuthentication, accessGrant } = require('../utils/middlewares');
 
 
 router = express.Router();
 
 
 // Renders a lists all the client details
-router.get('/', async (request, response) => {
+router.get('/', checkAuthentication, async (request, response) => {
 
     clients = await Client.find({ delRec: { $ne: true } });
     response.render('client/clientDetails', { title: "Client Details", clients })
@@ -17,14 +18,14 @@ router.get('/', async (request, response) => {
 
 
 // Renders a form to append a client to the database
-router.get('/add', (request, response) => {
+router.get('/add', checkAuthentication, (request, response) => {
 
     response.render('client/addClientDetails', { title: "Client Details" })
 })
 
 
 // Appends a client to the database
-router.post('/', async (request, response) => {
+router.post('/', checkAuthentication, accessGrant, validateClient, async (request, response) => {
 
     const user = await User.findOne({ _id: request.session.userID });
     const client = new Client(request.body.client);
@@ -36,7 +37,7 @@ router.post('/', async (request, response) => {
 
 
 // Renders list of all the billings of a specific client
-router.get('/billing/:id', async (request, response) => {
+router.get('/billing/:id', checkAuthentication, async (request, response) => {
 
     const { id } = request.params;
     const clientDetail = await Client.findById(id).populate('billings');
@@ -46,7 +47,7 @@ router.get('/billing/:id', async (request, response) => {
 
 
 // Renders a billing form for a specific client
-router.get('/billing/add/:id', async (request, response) => {
+router.get('/billing/add/:id', checkAuthentication, async (request, response) => {
 
     const { id } = request.params;
     const clientDetail = await Client.findById(id);
@@ -56,7 +57,7 @@ router.get('/billing/add/:id', async (request, response) => {
 
 
 // Stores a billing data for a specific client
-router.post('/billing/:id', async (request, response) => {
+router.post('/billing/:id', checkAuthentication, accessGrant, async (request, response) => {
 
     const { id } = request.params;
     const client = await Client.findById(id);
@@ -77,7 +78,7 @@ router.post('/billing/:id', async (request, response) => {
 
 
 // Renders a form to edit an exisiting client
-router.get('/edit/:id', async (request, response) => {
+router.get('/edit/:id', checkAuthentication, async (request, response) => {
 
     const { id } = request.params;
     const clientDetail = await Client.findById(id);
@@ -87,7 +88,7 @@ router.get('/edit/:id', async (request, response) => {
 
 
 // Renders a form to edit an exisiting client
-router.post('/edit/:id', async (request, response) => {
+router.post('/edit/:id', checkAuthentication, accessGrant, validateClient, async (request, response) => {
 
     const { id } = request.params;
     const user = await User.findById(request.session.userID);

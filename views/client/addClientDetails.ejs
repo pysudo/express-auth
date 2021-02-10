@@ -2,7 +2,7 @@
 
     <link rel="stylesheet" href="/styles/billing.css">
 
-    <form action="/client" method="POST">
+    <form class="needs-validation" action="/client" method="POST" novalidate>
         <div class="row m-3">
             <div class="col-12">
 
@@ -15,27 +15,27 @@
 
                 <div class="mb-3">
                     <label class="form-label" for="name">Client Name</label>
-                    <input class="form-control" id="name" type="text" name="client[name]">
+                    <input class="form-control" id="name" type="text" name="client[name]" required>
                 </div>
                 <div class="mb-3">
                     <label class="form-label" for="address">Client Address</label>
-                    <textarea class="form-control" id="address" name="client[address]" cols="30" rows="5"></textarea>
+                    <textarea class="form-control" id="address" name="client[address]" cols="30" rows="5" required></textarea>
                 </div>
                 <div class="mb-3">
                     <label class="form-label" for="pan">Client Email</label>
-                    <input class="form-control" id="pan" type="email" name="client[email]">
+                    <input class="form-control" id="emal" type="email" name="client[email]" required>
                 </div>
                 <div class="mb-3">
-                    <label class="form-label" for="pan">Client Contact</label>
-                    <input class="form-control" id="pan" type="number" name="client[contact]">
+                    <label class="form-label" for="contact">Client Contact</label>
+                    <input class="form-control" id="contact" type="text" name="client[contact]" maxlength="10" minlength="10" required>
                 </div>
                 <div class="mb-3">
                     <label class="form-label" for="gst">GST Identification Number</label>
-                    <input class="form-control" id="gst" type="text" name="client[gst]">
+                    <input class="form-control" id="gst" type="text" name="client[gst]" maxlength="15" minlength="15" required>
                 </div>
                 <div class="mb-3">
                     <label class="form-label" for="pan">Permanent Account Number</label>
-                    <input class="form-control" id="pan" type="text" name="client[pan]">
+                    <input class="form-control" id="pan" type="text" name="client[pan]" maxlength="10" minlength="10" required>
                 </div>
 
                 <button class="btn btn-success" type="submit">Submit</button>

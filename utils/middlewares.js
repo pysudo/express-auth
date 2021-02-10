@@ -1,4 +1,4 @@
-const { userSchema, profileSchema, purchaseSchema, transactionSchema } = require('./schemasValidations');
+const { userSchema, profileSchema, purchaseSchema, transactionSchema, clientSchema } = require('./schemasValidations');
 const User = require('../models/user');
 
 
@@ -85,7 +85,7 @@ module.exports.validatePurchase = (request, response, next) => {
 
     const { id } = request.params;
     const validatedPurchase = purchaseSchema.validate(request.body);
-    console.log(validatedPurchase);
+    
     if (validatedPurchase.error) {
 
         const errorNames = validatedPurchase.error.details[0].path;
@@ -185,6 +185,50 @@ module.exports.validateTransaction = (request, response, next) => {
 
         request.flash('error', modifiedErrorMessage);
         return response.redirect(`/purchase/purchase-transactions/add/${id}`);
+    }
+    else {
+        next();
+    }
+}
+
+
+// Server side transaction validation
+module.exports.validateClient = (request, response, next) => {
+
+    const validateClient = clientSchema.validate(request.body);
+
+    if (validateClient.error) {
+
+        const errorNames = validateClient.error.details[0].path;
+        const originalMessage = validateClient.error.details[0].message;
+        const noOfDots = errorNames.length - 1;
+        let errorName;
+        switch (errorNames[1]) {
+            case "name":
+                errorName = "Client Name";
+                break;
+            case "address":
+                errorName = "Client Address";
+                break;
+            case "email":
+                errorName = "Client Email";
+                break;
+            case "contact":
+                errorName = "Contact";
+                break;
+            case "gst":
+                errorName = "GST Identification Number";
+                break;
+            case "pan":
+                errorName = "Permanent Account Number";
+                break;
+        }
+
+        const slicedLength = `"${errorNames[0]} "`.length + errorNames[1].length + noOfDots;
+        const modifiedErrorMessage = `${errorName} ${originalMessage.slice(slicedLength)}`;
+
+        request.flash('error', modifiedErrorMessage);
+        return response.redirect(`/client/add`);
     }
     else {
         next();

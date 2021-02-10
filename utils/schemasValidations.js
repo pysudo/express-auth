@@ -93,7 +93,7 @@ module.exports.transactionSchema = Joi.object({
 });
 
 
-module.exports.purchaseSchema = Joi.object({
+module.exports.clientSchema = Joi.object({
 
     client: Joi.object({
         name: Joi.string()

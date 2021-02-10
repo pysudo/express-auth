@@ -2,7 +2,7 @@
 
     <link rel="stylesheet" href="/styles/billing.css">
 
-    <form action="/client/edit/<%= clientDetail._id %>" method="POST">
+    <form class="needs-validation" action="/client/edit/<%= clientDetail._id %>" method="POST" novalidate>
         <div class="row m-3">
             <div class="col-12">
 
@@ -15,27 +15,27 @@
 
                 <div class="mb-3">
                     <label class="form-label" for="name">Client Name</label>
-                    <input class="form-control" id="name" type="text" name="client[name]" value="<%= clientDetail.name %>">
+                    <input class="form-control" id="name" type="text" name="client[name]" value="<%= clientDetail.name %>" required>
                 </div>
                 <div class="mb-3">
                     <label class="form-label" for="address">Client Address</label>
-                    <textarea class="form-control" id="address" name="client[address]" cols="30" rows="5"><%= clientDetail.address %></textarea>
+                    <textarea class="form-control" id="address" name="client[address]" cols="30" rows="5" required><%= clientDetail.address %></textarea>
                 </div>
                 <div class="mb-3">
                     <label class="form-label" for="pan">Client Email</label>
-                    <input class="form-control" id="pan" type="email" name="client[email]" value="<%= clientDetail.email %>">
+                    <input class="form-control" id="pan" type="email" name="client[email]" value="<%= clientDetail.email %>" required>
                 </div>
                 <div class="mb-3">
                     <label class="form-label" for="pan">Client Contact</label>
-                    <input class="form-control" id="pan" type="number" name="client[contact]" value="<%= clientDetail.contact %>">
+                    <input class="form-control" id="pan" type="text" name="client[contact]" value="<%= clientDetail.contact %>" maxlength="10" minlength="10" required>
                 </div>
                 <div class="mb-3">
                     <label class="form-label" for="gst">GST Identification Number</label>
-                    <input class="form-control" id="gst" type="text" name="client[gst]" value="<%= clientDetail.gst %>">
+                    <input class="form-control" id="gst" type="text" name="client[gst]" value="<%= clientDetail.gst %>" maxlength="15" minlength="15" required>
                 </div>
                 <div class="mb-3">
                     <label class="form-label" for="pan">Permanent Account Number</label>
-                    <input class="form-control" id="pan" type="text" name="client[pan]" value="<%= clientDetail.pan %>">
+                    <input class="form-control" id="pan" type="text" name="client[pan]" value="<%= clientDetail.pan %>" maxlength="10" minlength="10" required>
                 </div>
 
                 <button class="btn btn-success" type="submit">Submit</button>

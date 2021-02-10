@@ -11,7 +11,7 @@ const user = require('./routes/authentication');
 const profile = require('./routes/profile');
 const purchase = require('./routes/purchase');
 const admin = require('./routes/admin');
-const transaction = require('./routes/transaction');
+const client = require('./routes/client');
 const User = require('./models/user');
 const { checkAuthentication, accessGrant} = require('./utils/middlewares');
 
@@ -64,8 +64,9 @@ app.use(methodOverride('_method'));
 app.use('/user', user);
 app.use('/profile', profile);
 app.use('/purchase', purchase);
-// app.use('/purchase/purchase-transactions', transaction);
 app.use('/admin', admin);
+app.use('/client', client);
+
 
 // Renders home page
 app.get('/', checkAuthentication, accessGrant, async (request, response) => {

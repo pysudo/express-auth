@@ -1,0 +1,60 @@
+<% layout('layouts/base') -%>
+
+    <nav class="mt-5" aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li><a href="/client">Client Details</a></li>
+            <li class="breadcrumbs"><a href="/client/billing/<%= clientDetail._id %>">Show Billings</a></li>
+        </ol>
+    </nav>
+
+    <div class="row main">
+
+        <form class="mb-5" action="/client/billing/add/<%= clientDetail._id %>">
+            <button class="btn btn-success me-3" type="submit">New Billing</button>
+        </form>
+
+        <div class="col-12">
+            <table class="table align-middle text-center border-secondary table-striped">
+                <thead>
+                    <tr>
+                        <th scope="col">Items</th>
+                        <th scope="col">Quantity</th>
+                        <th scope="col">Price Per Each</th>
+                        <th scope="col">GST Per Each</th>
+                        <th scope="col">Grand Total</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% for(let profile of profiles) { %>
+                        <tr>
+                            <td>
+                                <%= profile.name %>
+                            </td>
+                            <td>
+                                <%= profile.address %>
+                            </td>
+                            <td>
+                                <%= profile.contacts.landline %>
+                            </td>
+                            <td>
+                                <%= profile.contacts.phone %>
+                            </td>
+                            <td>
+                                <%= profile.modified.by %>
+                            </td>
+                            <td class="border-0">
+                                <form action="/profile/edit/<%= profile._id %>">
+                                    <button class="btn btn-primary my-1" type="submit">Edit</button>
+                                </form>
+                            </td>
+                            <td class="border-0">
+                                <form action="/profile/confirm-deletion/<%= profile._id %>" method="GET">
+                                    <button class="btn-close my-2" type="submit"></button>
+                                </form>
+                            </td>
+                        </tr>
+                        <% } %>
+                </tbody>
+            </table>
+        </div>
+    </div>

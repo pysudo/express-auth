@@ -92,3 +92,23 @@ module.exports.transactionSchema = Joi.object({
     }).required()
 });
 
+
+module.exports.purchaseSchema = Joi.object({
+
+    client: Joi.object({
+        name: Joi.string()
+            .required(),
+        address: Joi.string()
+            .required(),
+        email: Joi.string()
+            .required(),
+        contact: Joi.string()
+            .length(10)
+            .required(),
+        gst: Joi.string()
+            .required(),
+        pan: Joi.string()
+            .required(),
+    }).required()
+});
+

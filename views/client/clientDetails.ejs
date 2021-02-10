@@ -1,0 +1,42 @@
+<% layout('layouts/base') -%>
+
+
+    <div class="row main">
+        <form class="mb-5" action="/client/add" method="GET">
+            <button class="btn btn-success" type="submit">New Client</button>
+        </form>
+        <div class="col-12">
+            <table class="table align-middle text-center border-secondary table-striped">
+                <thead>
+                  <tr>
+                    <th scope="col">Client Name</th>
+                    <th scope="col">Client Address</th>
+                    <th scope="col">Client Email</th>
+                    <th scope="col">Client Contact</th>
+                  </tr>
+                </thead>
+                <tbody id="clientDetails">
+                    <% for(let client of clients) { %>
+                    <tr id="<%= client._id %>">
+                        <td><%= client.name %></td>
+                        <td><%= client.address %></td>
+                        <td><%= client.email %></td>
+                        <td><%= client.contact %></td>
+                        <td class="border-0">
+                          <form action="/client/edit/<%= client._id %>">
+                              <button class="btn btn-primary my-1" type="submit">Edit</button>
+                          </form>
+                        </td>
+                        <td class="border-0">
+                          <form action="/client/confirm-deletion/<%= client._id %>" method="GET">
+                              <button class="btn-close my-2" type="submit"></button>
+                          </form>
+                        </td>
+                    </tr> 
+                    <% } %>  
+                </tbody>
+              </table>
+        </div>
+    </div>
+
+    <script src="/scripts/clientBilling.js"></script>

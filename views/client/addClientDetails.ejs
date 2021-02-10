@@ -1,0 +1,44 @@
+<% layout('layouts/base') -%>
+
+    <link rel="stylesheet" href="/styles/billing.css">
+
+    <form action="/client" method="POST">
+        <div class="row m-3">
+            <div class="col-12">
+
+                <nav class="mt-5 my-5" aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                        <li><a href="/client">Client Details</a></li>
+                        <li class="breadcrumbs"><a href="/client/add">Add Client Detail</a></li>
+                    </ol>
+                </nav>
+
+                <div class="mb-3">
+                    <label class="form-label" for="name">Client Name</label>
+                    <input class="form-control" id="name" type="text" name="client[name]">
+                </div>
+                <div class="mb-3">
+                    <label class="form-label" for="address">Client Address</label>
+                    <textarea class="form-control" id="address" name="client[address]" cols="30" rows="5"></textarea>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label" for="pan">Client Email</label>
+                    <input class="form-control" id="pan" type="email" name="client[email]">
+                </div>
+                <div class="mb-3">
+                    <label class="form-label" for="pan">Client Contact</label>
+                    <input class="form-control" id="pan" type="number" name="client[contact]">
+                </div>
+                <div class="mb-3">
+                    <label class="form-label" for="gst">GST Identification Number</label>
+                    <input class="form-control" id="gst" type="text" name="client[gst]">
+                </div>
+                <div class="mb-3">
+                    <label class="form-label" for="pan">Permanent Account Number</label>
+                    <input class="form-control" id="pan" type="text" name="client[pan]">
+                </div>
+
+                <button class="btn btn-success" type="submit">Submit</button>
+            </div>
+        </div>
+    </form>

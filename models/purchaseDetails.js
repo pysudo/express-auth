@@ -5,8 +5,6 @@ const purchaseSchema = mongoose.Schema({
     name: {
         type: String,
         required: true,
-        min: 6,
-        max: 30
     },
     address: {
         type: String,

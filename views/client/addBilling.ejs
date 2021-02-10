@@ -1,0 +1,49 @@
+<% layout('layouts/base') -%>
+
+
+    <div class="row m-3 mt-5">
+        <div class="col-12">
+            <form action="/client/billing/<%= clientDetail._id %>" method="POST">
+                <table id="hello" class="table text-center">
+                    <thead>
+                        <tr>
+                            <!-- <th scope="col">Client ID</th> -->
+                            <th scope="col">Items</th>
+                            <th scope="col">Quantity</th>
+                            <th scope="col">GST</th>
+                            <th scope="col">Price</th>
+                            <th scope="col">Grand Price</th>
+                        </tr>
+                    </thead>
+                    <tbody id="invoice">
+                        <tr id="1-item">
+                            <!-- <td>
+                    <input class="form-control" id="clientId" type="text" name="clientId">
+                </td> -->
+                            <td>
+                                <input class="form-control" id="1-items" type="text" name="billing[items]">
+                            </td>
+                            <td>
+                                <input class="form-control" id="1-quantity" type="number" name="billing[quantity]">
+                            </td>
+                            <td>
+                                <input class="form-control" id="1-gst" type="number" name="billing[gst]">
+                            </td>
+                            <td>
+                                <input class="form-control" id="1-price" type="number" name="billing[price]">
+                            </td>
+                            <td>
+                                <input class="form-control" id="1-grandPrice" type="text" name="billing[grandPrice]">
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <button id="add-item" class="btn btn-secondary" type="button">Add Items</button>
+                <button id="add-item" class="btn btn-success" type="submit">Submit</button>
+            </form>
+        </div>
+    </div>
+
+
+    <script src="/scripts/billing.js"></script>

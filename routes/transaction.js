@@ -36,7 +36,7 @@ router.post('/add/:id', checkAuthentication, accessGrant, validateTransaction, a
 
 
 // Renders a form to state reason for transaction deletion
-router.get('/confirm-deletion/:id', accessGrant, async (request, response) => {
+router.get('/confirm-deletion/:id', checkAuthentication, async (request, response) => {
 
     const { id } = request.params;
     const purchase = await Purchase.findOne({transactions: mongoose.Types.ObjectId(id)});
@@ -47,7 +47,7 @@ router.get('/confirm-deletion/:id', accessGrant, async (request, response) => {
 
 
 // If confirmed, deletes an exisiting transaction entry
-router.delete('/confirm-deletion/:id', accessGrant, async (request, response) => {
+router.delete('/confirm-deletion/:id', checkAuthentication, accessGrant, async (request, response) => {
 
     const { id } = request.params;
     const { reason, choice } = request.body;

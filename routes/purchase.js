@@ -80,7 +80,7 @@ router.patch('/delete/:id', checkAuthentication, accessGrant, async (request, re
 
 
 // Renders a form to state reason for purchase detail deletion
-router.get('/confirm-deletion/:id', accessGrant, (request, response) => {
+router.get('/confirm-deletion/:id', checkAuthentication, (request, response) => {
 
     const { id } = request.params;
     console.log("asdjajsd")
@@ -89,7 +89,7 @@ router.get('/confirm-deletion/:id', accessGrant, (request, response) => {
 
 
 // If confirmed, deletes an exisiting purchase detail entry
-router.delete('/confirm-deletion/:id', accessGrant, async (request, response) => {
+router.delete('/confirm-deletion/:id', checkAuthentication, accessGrant, async (request, response) => {
 
     const { id } = request.params;
     const { reason, choice } = request.body;

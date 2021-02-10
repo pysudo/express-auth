@@ -1,6 +1,6 @@
 <% layout('layouts/base') -%>
 
-    <form action="/purchase" method="POST">
+    <form class="needs-validation" action="/purchase" method="POST" novalidate>
 
         <div class="row m-3">
             <div class="col-12">
@@ -14,35 +14,35 @@
 
                 <div class="mb-3">
                     <label class="form-label" for="name">Vendor Name</label>
-                    <input class="form-control" type="text" name="purchase[name]">
+                    <input class="form-control" type="text" name="purchase[name]" required>
                 </div>
                 <div class="mb-3">
                     <label class="form-label" for="address">Vendor Address</label>
-                    <textarea class="form-control" type="text" name="purchase[address]"></textarea>
+                    <textarea class="form-control" type="text" name="purchase[address]" required></textarea>
                 </div>
                 <div class="mb-3">
                     <label class="form-label" for="email">Email</label>
-                    <input class="form-control" id="email" type="email" name="purchase[email]">
+                    <input class="form-control" id="email" type="email" name="purchase[email]" required>
                 </div>
                 <div class="mb-3">
                     <label class="form-label" for="contact">Contact</label>
-                    <input class="form-control" id="contact" type="number" name="purchase[contact]">
+                    <input class="form-control" id="contact" type="text" name="purchase[contact]" maxlength="10" minlength="10" required>
                 </div>
                 <fieldset class="contact mb-3">
                     <legend class="text-center">Bank Details</legend>
 
                     <div class="mb-3">
                         <label class="form-label" for="bankName">Bank Name</label>
-                        <input class="form-control" id="bankName" type="text" name="purchase[bankDetails][bankName]">
+                        <input class="form-control" id="bankName" type="text" name="purchase[bankDetails][bankName]" required>
                     </div>
                     <div class="mb-3">
                         <label class="form-label">Account Number</label>
                         <input type="number" class="form-control" aria-label="Account Number"
-                            name="purchase[bankDetails][accountNumber]">
+                            name="purchase[bankDetails][accountNumber]" required>
                     </div>
                     <div class="mb-3">
                         <label class="form-label">Type</label>
-                        <select class="form-select" id="accountType" name="purchase[bankDetails][accountType]">
+                        <select class="form-select" id="accountType" name="purchase[bankDetails][accountType]" required>
                             <option value="savings">Savings</option>
                             <option value="current">Current</option>
                             <option value="others">Others</option>
@@ -50,7 +50,7 @@
                     </div>
                     <div class="mb-3">
                         <label class="form-label" for="ifsc">IFSC Code</label>
-                        <input class="form-control" id="ifsc" type="text" name="purchase[bankDetails][ifsc]">
+                        <input class="form-control" id="ifsc" type="text" name="purchase[bankDetails][ifsc]" required>
                     </div>
                 </fieldset>
                 <div class="mb-3">

@@ -10,14 +10,14 @@
                 </ol>
             </nav>
 
-            <form action="/profile/edit/<%= profile._id %>?_method=PATCH" method="POST">
+            <form class="needs-validation" action="/profile/edit/<%= profile._id %>?_method=PATCH" method="POST" novalidate>
                 <div class="mb-3">
                     <label class="form-label" for="name">Company Name</label>
-                    <input class="form-control" type="text" name="profile[name]" value="<%= profile.name %>">
+                    <input class="form-control" type="text" name="profile[name]" value="<%= profile.name %>" required>
                 </div>
                 <div class="mb-3">
                     <label class="form-label" for="address">Company Address</label>
-                    <textarea class="form-control" id="address" name="profile[address]" cols="30" rows="5"><%= profile.address %></textarea>
+                    <textarea class="form-control" id="address" name="profile[address]" cols="30" rows="5" required><%= profile.address %></textarea>
                 </div>
                 <fieldset class="contact input-group mb-3">
                     <legend>Contacts</legend>
@@ -25,22 +25,22 @@
                         <label for="landline">
                             <label class="form-label">Landline</label>
                         </label>
-                        <input class="form-control" id="landline" type="text" name="profile[contacts][landline]" aria-label="Landline" aria-describedby="landine" value="<%= profile.contacts.landline %>">
+                        <input class="form-control" id="landline" type="text" name="profile[contacts][landline]" maxlength="8" minlength="8" aria-label="Landline" aria-describedby="landine" value="<%= profile.contacts.landline %>" required>
                     </div>
                     <div class="mb-3">
                         <label for="phone">
                             <label class="form-label">Phone</label>
                         </label>
-                        <input class="form-control" id="phone" type="text" name="profile[contacts][phone]" aria-label="Phone" aria-describedby="phone" value="<%= profile.contacts.phone %>">
+                        <input class="form-control" id="phone" type="text" name="profile[contacts][phone]" maxlength="10" minlength="10" aria-label="Phone" aria-describedby="phone" value="<%= profile.contacts.phone %>" required>
                     </div>        
                 </fieldset>
                 <div class="mb-3">
                     <label class="form-label" for="pan">Permanent Account Number</label>
-                    <input class="form-control" id="pan" type="text" name="profile[pan]" value="<%= profile.pan %>">
+                    <input class="form-control" id="pan" type="text" name="profile[pan]" value="<%= profile.pan %>" required>
                 </div>
                 <div class="mb-3">
                     <label class="form-label" for="gst">GST Identification Number</label>
-                    <input class="form-control" id="gst" type="text" name="profile[gst]" value="<%= profile.gst %>">
+                    <input class="form-control" id="gst" type="text" name="profile[gst]" value="<%= profile.gst %>" required>
                 </div>
                 <button class="btn btn-success" type="submit">Edit Profile</button>
             </form>

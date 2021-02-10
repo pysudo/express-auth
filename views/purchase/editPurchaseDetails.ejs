@@ -10,36 +10,36 @@
                 </ol>
             </nav>
 
-            <form action="/purchase/edit/<%= purchase._id %>?_method=PATCH" method="POST">
+            <form class="needs-validation" action="/purchase/edit/<%= purchase._id %>?_method=PATCH" method="POST" novalidate>
                 <div class="mb-3">
                     <label class="form-label" for="name">Vendor Name</label>
-                    <input class="form-control" type="text" name="purchase[name]" value="<%= purchase.name %>">
+                    <input class="form-control" type="text" name="purchase[name]" value="<%= purchase.name %>" required>
                 </div>
                 <div class="mb-3">
                     <label class="form-label" for="address">Vendor Address</label>
-                    <textarea class="form-control" type="text" name="purchase[address]" cols="30" rows="5"><%= purchase.address %></textarea>
+                    <textarea class="form-control" type="text" name="purchase[address]" cols="30" rows="5" required><%= purchase.address %></textarea>
                 </div>
                 <div class="mb-3">
                     <label class="form-label" for="email">Email</label>
-                    <input class="form-control" id="email" type="text" name="purchase[email]" value="<%= purchase.email %>">
+                    <input class="form-control" id="email" type="text" name="purchase[email]" value="<%= purchase.email %>" required>
                 </div>
                 <div class="mb-3">
                     <label class="form-label" for="contact">Contact</label>
-                    <input class="form-control" id="contact" type="text" name="purchase[contact]" value="<%= purchase.contact %>">
+                    <input class="form-control" id="contact" type="text" name="purchase[contact]" maxlength="10" minlength="10" value="<%= purchase.contact %>" required>
                 </div>
                 <fieldset class="contact mb-3">
                     <legend class="text-center">Bank Details</legend>
 
                     <div class="mb-3">
                         <label class="form-label" for="bankName">Bank Name</label>
-                        <input class="form-control" id="bankName" type="text" name="purchase[bankDetails][bankName]" value="<%= purchase.bankDetails.bankName %>">
+                        <input class="form-control" id="bankName" type="text" name="purchase[bankDetails][bankName]" value="<%= purchase.bankDetails.bankName %>" required>
                     </div>
                     <div class="mb-3">
                         <label class="form-label" for="accountNumber">Account Number</label>
                         <input class="form-control" id="accountNumber" type="number" aria-label="Account Number"
-                            name="purchase[bankDetails][accountNumber]" value="<%= purchase.bankDetails.accountNumber %>">
+                            name="purchase[bankDetails][accountNumber]" value="<%= purchase.bankDetails.accountNumber %>" required>
                         <label class="form-label" for="accountType">Type</label>
-                        <select class="form-select" id="accountType" name="purchase[bankDetails][accountType]">
+                        <select class="form-select" id="accountType" name="purchase[bankDetails][accountType]" required>
                             <option selected>Select</option>
                             <option value="savings" <%= purchase.bankDetails.accountType==="savings" ? "selected" : "" %>>Savings</option>
                             <option value="current" <%= purchase.bankDetails.accountType==="current" ? "selected" : "" %>>Current</option>
@@ -48,7 +48,7 @@
                     </div>
                     <div class="mb-3">
                         <label class="form-label" for="ifsc">IFSC Code</label>
-                        <input class="form-control" id="ifsc" type="text" name="purchase[bankDetails][ifsc]" value="<%= purchase.bankDetails.ifsc %>">
+                        <input class="form-control" id="ifsc" type="text" name="purchase[bankDetails][ifsc]" value="<%= purchase.bankDetails.ifsc %>" required>
                     </div>
                 </fieldset>
                 <button class="btn btn-success" type="submit">Submit</button>

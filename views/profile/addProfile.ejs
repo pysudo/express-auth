@@ -1,6 +1,6 @@
 <% layout('layouts/base') -%>
 
-    <form action="/profile" method="POST">
+    <form class="needs-validation" action="/profile" method="POST" novalidate>
         <div class="row m-3">
             <div class="col-12">
 
@@ -13,19 +13,19 @@
 
                 <div class="mb-3">
                     <label class="form-label" for="name">Company Name</label>
-                    <input class="form-control" id="name" type="text" name="profile[name]">
+                    <input class="form-control" id="name" type="text" name="profile[name]" required>
                 </div>
                 <div class="mb-3">
                     <label class="form-label" for="address">Company Address</label>
-                    <textarea class="form-control" id="address" name="profile[address]" cols="30" rows="5"></textarea>
+                    <textarea class="form-control" id="address" name="profile[address]" cols="30" rows="5" required></textarea>
                 </div>
                 <div class="mb-3">
                     <label class="form-label" for="pan">Permanent Account Number</label>
-                    <input class="form-control" id="pan" type="text" name="profile[pan]">
+                    <input class="form-control" id="pan" type="text" name="profile[pan]" maxlength="10" minlength="10" required>
                 </div>
                 <div class="mb-3">
                     <label class="form-label" for="gst">GST Identification Number</label>
-                    <input class="form-control" id="gst" type="text" name="profile[gst]">
+                    <input class="form-control" id="gst" type="text" name="profile[gst]" maxlength="15" minlength="15" required>
                 </div>
                 <fieldset class="contact mb-3">
                     <legend class="text-center">Contacts</legend>
@@ -33,15 +33,15 @@
                         <label class="form-label" for="landline">
                             Landline
                         </label>
-                        <input class="form-control" id="landline" type="number" name="profile[contacts][landline]"
-                            aria-label="Landline" aria-describedby="landine">
+                        <input class="form-control" id="landline" type="text" name="profile[contacts][landline]"
+                            maxlength="8" minlength="8" aria-label="Landline" aria-describedby="landine" required>
                     </div>
                     <div class="mb-3">
                         <label class="form-label" for="phone">
                             Phone
                         </label>
-                        <input class="form-control" id="phone" type="number" name="profile[contacts][phone]" aria-label="Phone"
-                            aria-describedby="phone">
+                        <input class="form-control" id="phone" type="text" name="profile[contacts][phone]"
+                            maxlength="10" minlength="10" aria-label="Phone" aria-describedby="phone" required>
                     </div>
                 </fieldset>
                 <button class="btn btn-success" type="submit">Submit</button>

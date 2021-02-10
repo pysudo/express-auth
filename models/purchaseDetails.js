@@ -15,7 +15,7 @@ const purchaseSchema = mongoose.Schema({
         required: true
     },
     contact: {
-        type: Number,
+        type: String,
         required: true
     },
     bankDetails: {

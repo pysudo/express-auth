@@ -22,6 +22,11 @@ const billingSchema = mongoose.Schema({
         type: [Number],
         required: true
     },
+    billingDate: {
+        type: Date,
+        default: Date.now,
+        required: true
+    },
     invoice: {
         type: String,
         required: true
@@ -51,12 +56,17 @@ const billingSchema = mongoose.Schema({
 });
 
 
-billingSchema.virtual('itemList').get(function() {
-    return this.items.map((a) => (` ${a}`))
+billingSchema.virtual('paymentDue').get(function () {
+
+    return `${Math.floor((Date.now() - this.billingDate) / (1000 * 60 * 60 * 24))} days`;
 });
 
-billingSchema.virtual('grandTotal').get(function() {
-    return this.grandPrice.reduce((x,y) => x + y, 0);
+billingSchema.virtual('itemList').get(function () {
+    return this.items.map((a) => (` ${a}`));
+});
+
+billingSchema.virtual('grandTotal').get(function () {
+    return this.grandPrice.reduce((x, y) => x + y, 0);
 });
 
 

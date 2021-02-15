@@ -73,7 +73,7 @@ router.post('/billing/:id', checkAuthentication, accessGrant, async (request, re
     await client.save();
     await billing.save()
 
-    response.redirect('/client')
+    response.redirect(`/client/billing/${id}`)
 })
 
 
@@ -117,7 +117,7 @@ router.delete('/confirm-deletion/:id', checkAuthentication, accessGrant, async (
     const { id } = request.params;
     const { reason, choice } = request.body;
     if (choice == "confirm") {
-        
+
         await Client.findByIdAndUpdate(id, { deleteReason: reason, delRec: true });
         request.flash('success', "Client successfully deleted.")
     }

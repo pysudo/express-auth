@@ -9,10 +9,11 @@
         </ol>
     </nav>
 
-    
+    <h1 class="text-center">New Billing</h1>
+
     <div class="row m-3 mt-5">
         <div class="col-12">
-            <form action="/client/billing/<%= clientDetail._id %>" method="POST">
+            <form class="needs-validation" action="/client/billing/<%= clientDetail._id %>" method="POST" novalidate>
                 <table id="hello" class="table text-center">
                     <thead>
                         <tr>
@@ -26,19 +27,31 @@
                     <tbody id="invoice">
                         <tr id="1-item">
                             <td>
-                                <input class="form-control" id="1-items" type="text" name="billing[items]">
+                                <input class="form-control" id="1-items" type="text" name="billing[items]" required>
+                                <div class="invalid-feedback">
+                                    Must not be blank!
+                                </div>
                             </td>
                             <td>
-                                <input class="form-control" id="1-quantity" type="number" name="billing[quantity]" step="1" min="0">
+                                <input class="form-control" id="1-quantity" type="number" name="billing[quantity]" min="1" step="1" min="0" required>
+                                <div class="invalid-feedback">
+                                    Must be a whole number greater than 0!
+                                </div>
                             </td>
                             <td>
-                                <input class="form-control" id="1-gst" type="number" name="billing[gst]" min="0" step="any">
+                                <input class="form-control" id="1-gst" type="number" name="billing[gst]" min="0" max="100" step="0.01" required>
+                                <div class="invalid-feedback">
+                                    Should be between 0 to 100 and upto two decimal places!
+                                </div>
                             </td>
                             <td>
-                                <input class="form-control" id="1-price" type="number" name="billing[price]" min="0" step="any">
+                                <input class="form-control" id="1-price" type="number" name="billing[price]" min="0" step="0.01" required>
+                                <div class="invalid-feedback">
+                                    Must be greater than 0 and upto two decimal places!
+                                </div>
                             </td>
                             <td>
-                                <input class="form-control" id="1-grandPrice" type="number" name="billing[grandPrice]" readonly>
+                                <input class="form-control" id="1-grandPrice" type="number" name="billing[grandPrice]" step="0.01" readonly required>
                             </td>
                         </tr>
                     </tbody>

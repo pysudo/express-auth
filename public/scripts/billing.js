@@ -18,7 +18,7 @@ const calcGrandPrice = (quantityId, gstId, priceId, grandPriceId) => {
 
     if (quantity || gst || price) {
         const grandPrice = quantity * price * ((gst / 100) + 1);
-        document.getElementById('1-grandPrice').value = grandPrice;
+        document.getElementById('1-grandPrice').value = grandPrice.toFixed(2);
     }
 }
 const tempcalcGrandPrice = (quantityId, gstId, priceId, grandPriceId) => {
@@ -26,14 +26,11 @@ const tempcalcGrandPrice = (quantityId, gstId, priceId, grandPriceId) => {
     const quantity = document.getElementById(quantityId).value;
     const gst = document.getElementById(gstId).value;
     const price = document.getElementById(priceId).value;
-    console.log(quantity)
-    console.log(gst)
-    console.log(price)
 
     if (quantity || gst || price) {
-        console.log(`wait what: ${gst}`)
+        
         const grandPrice = quantity * price * ((gst / 100) + 1);
-        document.getElementById(grandPriceId).value = grandPrice;
+        document.getElementById(grandPriceId).value = grandPrice.toFixed(2);
     }
 }
 
@@ -59,22 +56,21 @@ document.addEventListener('DOMContentLoaded', () => {
         for (let i = 1; i < newRow.children.length; i++) {
             let newDataId = newRow.children[i].firstElementChild.id;
             newDataIds.push(newDataId)
-            console.log(newDataIds)
+            
         }
-
 
         for (let i = 1; i < newRow.children.length; i++) {
             newRow.children[i].addEventListener('keyup', () => {
-                console.log('asdad')
+                
                 tempcalcGrandPrice(newDataIds[0], newDataIds[1], newDataIds[2], newDataIds[3]);
             })
         }
     })
 
     '1-quantity 1-gst 1-price'.split(' ').forEach(function (e) {
-        console.log(e)
+        
         document.getElementById(e).addEventListener('keyup', () => {
-            console.log('asdad')
+            
             calcGrandPrice();
         })
     })

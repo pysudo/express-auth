@@ -47,6 +47,10 @@ const billingSchema = mongoose.Schema({
             required: true
         }
     },
+    delRec: {
+        type: Boolean,
+        default: false,
+    },
     deleteReason: {
         type: String,
     },

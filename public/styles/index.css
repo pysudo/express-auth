@@ -2,7 +2,7 @@
     margin-top: 75px;
 }
 
-table tbody tr:hover {
+tr:hover {
     background-color: silver;
 }
 
@@ -29,6 +29,10 @@ table .dsc::after {
 
 tbody#purchaseDetails, tbody#clientDetails {
     cursor: pointer;
+}
+
+tr.inactive {
+    background-color: #f94144;
 }
 
 

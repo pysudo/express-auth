@@ -92,3 +92,26 @@
             </div>
         </form>
     <% } %>
+
+    <% if(billingID) { %>
+        <nav class="mt-5" aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li><a href="/client">Client Details</a></li>
+                <li class="breadcrumbs"><a href="/client/billing/<%= billingClientID %> ">Show Billings</a></li>
+                <li class="breadcrumbs"><a href="/client/billing/confirm-deletion/<%= billingID %>">Delete Billing</a></li>
+            </ol>
+        </nav>
+
+        <form action="/client/billing/confirm-deletion/<%= billingID %>?_method=DELETE" method="POST">
+            <div class="row d-flex flex-column vh-100 align-content-center justify-content-center">
+                <div class="col-6">
+                    <div class="mb-3">
+                        <label class="form-label" for="reason">Reason:</label>
+                        <textarea class="form-control" id="reason" type="text" name="reason" required></textarea>
+                    </div>
+                    <button class="btn btn-danger" name="choice" type="submit" value="confirm">Confirm Deletion</button>
+                    <button class="btn btn-secondary" name="choice" type="submit" value="cancel">Cancel</button>
+                </div>
+            </div>
+        </form>
+    <% } %>

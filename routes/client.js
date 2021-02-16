@@ -1,4 +1,5 @@
 const express = require('express');
+const mongoose = require('mongoose');
 
 const Client = require('../models/clientDetails');
 const User = require('../models/user');
@@ -10,7 +11,7 @@ router = express.Router();
 
 
 // Renders a lists all the client details
-router.get('/', async (request, response) => {
+router.get('/', checkAuthentication, async (request, response) => {
 
     clients = await Client.find({ delRec: { $ne: true } });
     response.render('client/clientDetails', { title: "Client Details", clients })
@@ -37,13 +38,13 @@ router.post('/', checkAuthentication, accessGrant, validateClient, async (reques
 
 
 // Renders list of all the billings of a specific client
-router.get('/billing/:id', async (request, response) => {
+router.get('/billing/:id', checkAuthentication, async (request, response) => {
 
     const { id } = request.params;
     const clientDetail = await Client.findById(id).populate('billings');
 
     let amountPayable = 0;
-    for(let billing of clientDetail.billings) {
+    for (let billing of clientDetail.billings) {
         amountPayable += billing.grandTotal;
     };
     let payedAmount = 0;
@@ -108,6 +109,33 @@ router.post('/edit/:id', checkAuthentication, accessGrant, validateClient, async
 });
 
 
+// Renders a form to state reason for billing deletion
+router.get('/billing/confirm-deletion/:id', checkAuthentication, async (request, response) => {
+
+    const { id } = request.params;
+    const client = await Client.findOne({ billings: mongoose.Types.ObjectId(id) });
+    const clientID = client._id;
+
+    response.render('confirmDeletion', { title: "Confirm Deletion", purchaseID: false, profileID: false, transactionID: false, clientID: false, billingClientID: clientID, billingID: id });
+})
+
+
+// If confirmed, deletes an exisiting billing entry
+router.delete('/billing/confirm-deletion/:id', checkAuthentication, accessGrant, async (request, response) => {
+
+    const { id } = request.params;
+    const { reason, choice } = request.body;
+    const client = await Client.findOne({ billings: mongoose.Types.ObjectId(id) });
+    if (choice == "confirm") {
+
+        await Billing.findByIdAndUpdate(id, { deleteReason: reason, delRec: true });
+        request.flash('success', "Billing successfully deleted.")
+    }
+
+    response.redirect(`/client/billing/${client._id}`);
+})
+
+
 // Renders a form to state reason for client detail deletion
 router.get('/confirm-deletion/:id', checkAuthentication, (request, response) => {
 
@@ -117,7 +145,7 @@ router.get('/confirm-deletion/:id', checkAuthentication, (request, response) => 
 })
 
 
-// If confirmed, deletes an exisiting purchase detail entry
+// If confirmed, deletes an exisiting client detail entry
 router.delete('/confirm-deletion/:id', checkAuthentication, accessGrant, async (request, response) => {
 
     const { id } = request.params;

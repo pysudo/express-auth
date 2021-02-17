@@ -38,7 +38,7 @@ router.post('/', checkAuthentication, accessGrant, validateClient, async (reques
 
 
 // Renders list of all the billings of a specific client
-router.get('/billing/:id', async (request, response) => {
+router.get('/billing/:id', checkAuthentication, async (request, response) => {
 
     const { id } = request.params;
     const clientDetail = await Client.findById(id).populate('billings');
@@ -54,7 +54,7 @@ router.get('/billing/:id', async (request, response) => {
 
 
 // Renders a billing form for a specific client
-router.get('/billing/add/:id', async (request, response) => {
+router.get('/billing/add/:id', checkAuthentication, async (request, response) => {
 
     const { id } = request.params;
     const clientDetail = await Client.findById(id);

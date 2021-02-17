@@ -12,6 +12,7 @@ const profile = require('./routes/profile');
 const purchase = require('./routes/purchase');
 const admin = require('./routes/admin');
 const client = require('./routes/client');
+const payment = require('./routes/payment');
 const User = require('./models/user');
 const { checkAuthentication, accessGrant} = require('./utils/middlewares');
 
@@ -66,6 +67,7 @@ app.use('/profile', profile);
 app.use('/purchase', purchase);
 app.use('/admin', admin);
 app.use('/client', client);
+app.use('/payment', payment);
 
 
 // Renders home page

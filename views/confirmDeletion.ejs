@@ -10,7 +10,7 @@
             </ol>
         </nav>
 
-        <form action="/profile/confirm-deletion/<%= profileID %>?_method=DELETE" method="POST">
+        <form id="deleteForm" action="/profile/confirm-deletion/<%= profileID %>?_method=DELETE" method="POST">
             <div class="row d-flex flex-column vh-100 align-content-center justify-content-center">
                 <div class="col-6">
                     <div class="mb-3">
@@ -18,7 +18,7 @@
                         <textarea class="form-control" id="reason" type="text" name="reason" required></textarea>
                     </div>
                     <button class="btn btn-danger" name="choice" type="submit" value="confirm">Confirm Deletion</button>
-                    <button class="btn btn-secondary" name="choice" type="submit" value="cancel">Cancel</button>
+                    <button class="btn btn-secondary cancel" name="choice" type="submit" value="cancel">Cancel</button>
                 </div>
             </div>
         </form>
@@ -33,7 +33,7 @@
             </ol>
         </nav>
 
-        <form action="/purchase/confirm-deletion/<%= purchaseID %>?_method=DELETE" method="POST">
+        <form id="deleteForm" action="/purchase/confirm-deletion/<%= purchaseID %>?_method=DELETE" method="POST">
             <div class="row d-flex flex-column vh-100 align-content-center justify-content-center">
                 <div class="col-6">
                     <div class="mb-3">
@@ -41,7 +41,7 @@
                         <textarea class="form-control" id="reason" type="text" name="reason" required></textarea>
                     </div>
                     <button class="btn btn-danger" name="choice" type="submit" value="confirm">Confirm Deletion</button>
-                    <button class="btn btn-secondary" name="choice" type="submit" value="cancel">Cancel</button>
+                    <button class="btn btn-secondary cancel" name="choice" type="submit" value="cancel">Cancel</button>
                 </div>
             </div>
         </form>
@@ -56,7 +56,7 @@
             </ol>
         </nav> 
         
-        <form action="/purchase/purchase-transactions/confirm-deletion/<%= transactionID %>?_method=DELETE" method="POST">
+        <form id="deleteForm" action="/purchase/purchase-transactions/confirm-deletion/<%= transactionID %>?_method=DELETE" method="POST">
             <div class="row d-flex flex-column vh-100 align-content-center justify-content-center">
                 <div class="col-6">
                     <div class="mb-3">
@@ -64,7 +64,7 @@
                         <textarea class="form-control" id="reason" type="text" name="reason" required></textarea>
                     </div>
                     <button class="btn btn-danger" name="choice" type="submit" value="confirm">Confirm Deletion</button>
-                    <button class="btn btn-secondary" name="choice" type="submit" value="cancel">Cancel</button>
+                    <button class="btn btn-secondary cancel" name="choice" type="submit" value="cancel">Cancel</button>
                 </div>
             </div>
         </form>
@@ -79,7 +79,7 @@
             </ol>
         </nav>
 
-        <form action="/client/confirm-deletion/<%= clientID %>?_method=DELETE" method="POST">
+        <form id="deleteForm" action="/client/confirm-deletion/<%= clientID %>?_method=DELETE" method="POST">
             <div class="row d-flex flex-column vh-100 align-content-center justify-content-center">
                 <div class="col-6">
                     <div class="mb-3">
@@ -87,7 +87,7 @@
                         <textarea class="form-control" id="reason" type="text" name="reason" required></textarea>
                     </div>
                     <button class="btn btn-danger" name="choice" type="submit" value="confirm">Confirm Deletion</button>
-                    <button class="btn btn-secondary" name="choice" type="submit" value="cancel">Cancel</button>
+                    <button class="btn btn-secondary cancel" name="choice" type="submit" value="cancel">Cancel</button>
                 </div>
             </div>
         </form>
@@ -102,7 +102,7 @@
             </ol>
         </nav>
 
-        <form action="/client/billing/confirm-deletion/<%= billingID %>?_method=DELETE" method="POST">
+        <form id="deleteForm" action="/client/billing/confirm-deletion/<%= billingID %>?_method=DELETE" method="POST">
             <div class="row d-flex flex-column vh-100 align-content-center justify-content-center">
                 <div class="col-6">
                     <div class="mb-3">
@@ -110,8 +110,22 @@
                         <textarea class="form-control" id="reason" type="text" name="reason" required></textarea>
                     </div>
                     <button class="btn btn-danger" name="choice" type="submit" value="confirm">Confirm Deletion</button>
-                    <button class="btn btn-secondary" name="choice" type="submit" value="cancel">Cancel</button>
+                    <button class="btn btn-secondary cancel" name="choice" type="submit" value="cancel">Cancel</button>
                 </div>
             </div>
         </form>
     <% } %>
+
+
+    <script>
+        let deleteForm = document.getElementById('deleteForm');
+        document.addEventListener("DOMContentLoaded", function(){
+
+            let clickCancel = document.getElementsByClassName('cancel');
+            [...clickCancel].forEach(item => {
+            item.addEventListener('click', () => {
+                deleteForm.submit();
+            })
+        })
+        })
+    </script>

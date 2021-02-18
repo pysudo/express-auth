@@ -112,3 +112,15 @@ module.exports.clientSchema = Joi.object({
     }).required()
 });
 
+
+module.exports.paymentSchema = Joi.object({
+
+    payment: Joi.object({
+        amountPayed: Joi.number()
+            .required(),
+        mode: Joi.string()
+            .valid('neft', 'rtgs', 'cash', 'netBanking')
+            .required(),
+    }).required()
+});
+

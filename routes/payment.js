@@ -1,15 +1,16 @@
 const express = require('express');
 
 const User = require('../models/user');
+const Payment = require('../models/payment');
 const Billing = require('../models/billing');
-const { checkAuthentication, accessGrant } = require('../utils/middlewares');
+const { checkAuthentication, accessGrant, validatePayement } = require('../utils/middlewares');
 
 
 router = express.Router();
 
 
 // Lists all the payments to be made
-router.get('/:viewBy', async (request, response) => {
+router.get('/:viewBy', checkAuthentication, async (request, response) => {
 
     const { viewBy } = request.query;
 
@@ -38,14 +39,14 @@ router.get('/:viewBy', async (request, response) => {
 
 
 // Sort billings by either invoice wise or client wise 
-router.get('/sort', async (request, response) => {
+router.get('/sort', checkAuthentication, async (request, response) => {
 
     response.redirect(`/payment/${request.query.viewBy}`)
 })
 
 
 // Render form to make payment for a particular invoice
-router.get('/pay/:id', async (request, response) => {
+router.get('/pay/:id', checkAuthentication, async (request, response) => {
 
     const { id } = request.params;
     const billing = await Billing.findById({ _id: id }).populate('client');
@@ -55,12 +56,22 @@ router.get('/pay/:id', async (request, response) => {
 
 
 // Make payment for a particular invoice
-router.post('/pay/:id', async (request, response) => {
+router.post('/pay/:id', checkAuthentication, accessGrant, validatePayement, async (request, response) => {
 
     const { id } = request.params;
-    const payment = request.body.payment;
-    const billing = await Billing.findById(id);
-    const updatedBilling = await Billing.findByIdAndUpdate(id, { amountPayed: (billing.amountPayed + parseFloat(payment.amount))}, {new: true});
+    const billing = await Billing.findById(id).populate('client');
+
+
+    request.body.payment.client = billing.client;
+    request.body.payment.billing = billing;
+    request.body.payment.amountPayed = parseFloat(request.body.payment.amountPayed);
+    const payment = new Payment(request.body.payment);
+    const user = await User.findOne({ _id: request.session.userID });
+    payment.modified.by = `${user.firstname} ${user.lastname}`;
+    await payment.save();
+
+    // Updates client's overall balance 
+    const updatedBilling = await Billing.findByIdAndUpdate(id, { amountPayed: (billing.amountPayed + parseFloat(request.body.payment.amountPayed))}, {new: true});
     await updatedBilling.save();
     
     if (updatedBilling.grandTotal - updatedBilling.amountPayed === 0) {
@@ -68,6 +79,8 @@ router.post('/pay/:id', async (request, response) => {
     }
 
     response.redirect(`/payment/default`);
+
 })
+
 
 module.exports = router;

@@ -1,4 +1,4 @@
-const { userSchema, profileSchema, purchaseSchema, transactionSchema, clientSchema } = require('./schemasValidations');
+const { userSchema, profileSchema, purchaseSchema, transactionSchema, clientSchema, paymentSchema } = require('./schemasValidations');
 const User = require('../models/user');
 
 
@@ -192,7 +192,7 @@ module.exports.validateTransaction = (request, response, next) => {
 }
 
 
-// Server side transaction validation
+// Server side payment validation
 module.exports.validateClient = (request, response, next) => {
 
     const validateClient = clientSchema.validate(request.body);
@@ -229,6 +229,38 @@ module.exports.validateClient = (request, response, next) => {
 
         request.flash('error', modifiedErrorMessage);
         return response.redirect(`/client/add`);
+    }
+    else {
+        next();
+    }
+}
+
+
+// Server side transaction validation
+module.exports.validatePayement = (request, response, next) => {
+
+    const validatePayement = paymentSchema.validate(request.body);
+
+    if (validatePayement.error) {
+
+        const errorNames = validatePayement.error.details[0].path;
+        const originalMessage = validatePayement.error.details[0].message;
+        const noOfDots = errorNames.length - 1;
+        let errorName;
+        switch (errorNames[1]) {
+            case "amountPayed":
+                errorName = "Amount should not be blank and";
+                break;
+            case "mode":
+                errorName = "Mode of Payment";
+                break;
+        }
+
+        const slicedLength = `"${errorNames[0]} "`.length + errorNames[1].length + noOfDots;
+        const modifiedErrorMessage = `${errorName} ${originalMessage.slice(slicedLength)}`;
+
+        request.flash('error', modifiedErrorMessage);
+        return response.redirect(`/payment/pay/${request.params.id}`);
     }
     else {
         next();

@@ -44,9 +44,25 @@ div#invoiceForm {
     margin-bottom: 100px;
 }
 
-/* div#invoiceForm {
-    border-color: #cccc92 !important;
-} */
+.borderall {
+    border: 4px #cccc92 double;
+}
+
+.border-up {
+    border-top: 4px #cccc92 double;
+}
+
+.border-down {
+    border-bottom: 4px #cccc92 double;
+}
+
+.border-left {
+    border-left: 4px #cccc92 double;
+}
+
+.border-right {
+    border-right: 4px #cccc92 double;
+}
 
 @media (max-width: 820px) {
     td, th {

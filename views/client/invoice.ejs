@@ -8,51 +8,50 @@
                 </div>
             </div>
         </div>
-        <div class="container border border-4 p-0">
+        <div class="container borderall p-0">
             <div class="container">
                 <div class="row">
-                    <div class="col border-bottom border-4">
+                    <div class="col border-down">
                         <p class="fs-5 text-uppercase text-center pt-4 mb-0">invoice</p>
                     </div>
                 </div>
             </div>
             <div class="container">
                 <div class="row d-flex justify-content-center">
-                    <div class="col-4 border-start border-4">
+                    <div class="col-4 border-left">
                         <b>Consignee,</b> <br>
                         <%= billings.client.address %> <br>
                             M: <%= billings.client.contact %>
                     </div>
-                    <div class="col-4 border-start border-4">
+                    <div class="col-4 border-left">
                         Invoice No. : <%= billings.invoice %>
                     </div>
-                    <div class="col-3 border-start border-end border-4">
+                    <div class="col-3 border-left border-right">
                         Date : <%= billings.billingDate.toLocaleDateString() %>
                     </div>
                 </div>
             </div>
-            <!-- GAP -->
             <div class="container">
                 <div class="row">
-                    <div class="col border-top border-bottom border-4 py-4">
+                    <div class="col border-up border-down py-4">
                     </div>
                 </div>
             </div>
             <div class="container">
                 <div class="row p-0">
-                    <div class="col-1 border-end border-4">
+                    <div class="col-1 border-right">
                         Sl<br>No.
                     </div>
-                    <div class="col-4 d-flex align-items-center border-end border-4">
+                    <div class="col-4 d-flex align-items-center border-right">
                         Particulars
                     </div>
-                    <div class="col-2 d-flex align-items-center border-end border-4">
+                    <div class="col-2 d-flex align-items-center border-right">
                         Rate
                     </div>
-                    <div class="col-2 d-flex align-items-center border-end border-4">
+                    <div class="col-2 d-flex align-items-center border-right">
                         Qty
                     </div>
-                    <div class="col-3 d-flex align-items-center border-4">
+                    <div class="col-3 d-flex align-items-center">
                         Amount
                     </div>
                 </div>
@@ -61,19 +60,19 @@
                 <% for(let i=0; i < billings.items.length; i++) { %>
                     <div class="container p-0">
                         <div class="row p-0">
-                            <div class="col-1 border-end border-top border-4 p-3">
+                            <div class="col-1 border-right border-down p-3">
                                 <%= i + 1 %>
                             </div>
-                            <div class="col-4 border-end border-top border-4 p-3">
+                            <div class="col-4 border-right border-down p-3">
                                 <%= billings.items[i] %>
                             </div>
-                            <div class="col-2 border-end border-top border-4 p-3">
+                            <div class="col-2 border-right border-down p-3">
                                 <%= billings.price[i] %>
                             </div>
-                            <div class="col-2 border-end border-top border-4 p-3">
+                            <div class="col-2 border-right border-down p-3">
                                 <%= billings.quantity[i] %>
                             </div>
-                            <div class="col-3 border-top border-4 p-3">
+                            <div class="col-3 border-down p-3">
                                 <%= billings.quantity[i] %>
                             </div>
                         </div>
@@ -81,8 +80,8 @@
                     <% } %>
             </div>
             <div class="container">
-                <div class="row border-top border-4 py-0">
-                    <div class="col-9 border-end border-4 text-end">
+                <div class="row py-0">
+                    <div class="col-9 border-right text-end">
                         <b>Total Amount</b>
                     </div>
                     <div class="col text-end">
@@ -93,7 +92,7 @@
                 </div>
             </div>
         </div>
-        <div class="container border-start border-end border-bottom border-4">
+        <div class="container border-left border-right">
             <div class="row">
                 <div class="col">
                     <ul>
@@ -126,7 +125,7 @@
                 </div>
             </div>
         </div>
-        <div class="container border-start border-end border-4">
+        <div class="container borderall">
             <div class="row">
                 <div class="col-8">
                     <div class="row">
@@ -149,7 +148,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-4 text-center border-start border-4">
+                <div class="col-4 text-center border-left">
                     <div class="col">
                         <div class="row m-3">
                             <div class="col d-flex">
@@ -170,14 +169,14 @@
                 </div>
             </div>
         </div>
-        <div class="container border border-4">
+        <div class="container border-left border-right">
             <div class="row">
                 <div class="col">
                     Please feel free to contact on +91 9980010452 (Mon-Fri 10am to 5pm)
                 </div>
             </div>
         </div>
-        <div class="container border-start border-end border-4">
+        <div class="container borderall">
             <div class="row">
                 <div class="col text-center">
                     <b>Neela Software Technology</b>
@@ -194,7 +193,7 @@
                 </div>
             </div>
         </div>
-        <div class="container border border-4">
+        <div class="container border-left border-right border-down">
             <div class="row">
                 <div class="col text-center">
                     SUBJECT TO BANGALORE JURISDICTION

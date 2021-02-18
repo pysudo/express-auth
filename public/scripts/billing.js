@@ -44,7 +44,7 @@ const calcGrandTotal = () => {
         grandTotal += parseFloat(b);
     }
 
-    return parseFloat(grandTotal);
+    return parseFloat(grandTotal).toFixed(2);
 }
 
 

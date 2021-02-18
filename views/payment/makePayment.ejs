@@ -26,7 +26,7 @@
                     <td><%= billing.billingDate.toLocaleDateString() %></td>
                     <td><%= billing.invoice %></td>
                     <td><%= billing.itemList %></td>
-                    <td><%= billing.grandTotal - billing.amountPayed %></td>
+                    <td><%= (billing.grandTotal - billing.amountPayed).toFixed(2) %></td>
                     <td><%= billing.paymentDue %></td>
                 </tr> 
         </tbody>
@@ -43,9 +43,9 @@
                 </div>
                 <div class="mb-3">
                     <label class="form-label" for="amount">Amount</label>
-                    <input class="form-control" id="amount" type="number" name="payment[amount]" min="1" max="<%= billing.grandTotal - billing.amountPayed %>" step="0.01" autofocus required>
+                    <input class="form-control" id="amount" type="number" name="payment[amount]" min="0" max="<%= (billing.grandTotal - billing.amountPayed).toFixed(2) %>" step="0.01" autofocus required>
                     <div class="invalid-feedback">
-                        Must be between 0 and <%= billing.grandTotal - billing.amountPayed %> inclusive, with upto two decimal places!
+                        Must be between 0 and <%= (billing.grandTotal - billing.amountPayed).toFixed(2) %> inclusive, with upto two decimal places!
                     </div>
                 </div>
                 <div class="mb-5">

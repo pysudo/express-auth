@@ -35,6 +35,10 @@ tr.inactive {
     background-color: #dd7788;
 }
 
+tr.paid {
+    background-color: #7a9460;
+}
+
 
 @media (max-width: 820px) {
     td, th {

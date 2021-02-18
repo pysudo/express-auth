@@ -21,8 +21,8 @@
                     <th scope="col" id="address">Client Address</th>
                     <th scope="col" id="email">Client Email</th>
                     <th scope="col" id="contact">Client Contact</th>
-                    <th scope="col" id="contact">Amount Payable</th>
-                    <th scope="col" id="contact">Payed Amount</th>
+                    <th scope="col" id="contact">Total Amount Payable</th>
+                    <th scope="col" id="contact">Total Payed Amount</th>
                     <th scope="col" id="contact">Balance Due</th>
                   </tr>
                 </thead>
@@ -46,14 +46,14 @@
                         <th scope="col">Date</th>
                         <th scope="col">Invoice No</th>
                         <th scope="col">Items</th>
-                        <th scope="col">Grand Total</th>
+                        <th scope="col">Amount to be Payed</th>
                         <th scope="col">Payment Due</th>
                         <th scope="col">Modified By</th>
                     </tr>
                 </thead>
                 <tbody>
                     <% for(let billing of clientDetail.billings) { %>
-                        <tr class=<%= billing.delRec === true ? "inactive" : "" %>>
+                        <tr class=<%= billing.delRec === true ? "inactive" : "" %> <%= billing.paymentStatus === true ? "paid" : "" %>>
                             <td>
                                 <%= billing.billingDate.toLocaleDateString() %>
                             </td>
@@ -64,7 +64,7 @@
                                 <%= billing.itemList %>
                             </td>
                             <td>
-                                <%= billing.grandTotal %>
+                                <%= billing.grandTotal - billing.amountPayed %>
                             </td>
                             <td>
                                 <% if(billing.paymentStatus) { %>

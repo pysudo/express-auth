@@ -17,7 +17,7 @@
                         <th scope="col">Date</th>
                         <th scope="col">Invoice No</th>
                         <th scope="col">Items</th>
-                        <th scope="col">Grand Total</th>
+                        <th scope="col">Amount to be Payed</th>
                         <th scope="col">Payment Due</th>
                     </tr>
                 </thead>
@@ -28,10 +28,16 @@
                             <td><%= billing.billingDate.toLocaleDateString() %></td>
                             <td><%= billing.invoice %></td>
                             <td><%= billing.itemList %></td>
-                            <td><%= billing.grandTotal %></td>
-                            <td><%= billing.paymentDue %></td>
+                            <td><%= billing.grandTotal - billing.amountPayed %></td>
+                            <td>
+                                <% if(billing.paymentStatus) { %>
+                                    Paid
+                                <% } else { %>
+                                    <%= billing.paymentDue %>
+                                <% } %>   
+                            </td>
                             <td class="border-0">
-                              <form action="/payment/billing/pay/<%= billing._id %>">
+                              <form action="/payment/pay/<%= billing._id %>">
                                   <button class="btn btn-primary my-1" type="submit">Pay</button>
                               </form>
                             </td>

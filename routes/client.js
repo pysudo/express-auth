@@ -38,16 +38,17 @@ router.post('/', checkAuthentication, accessGrant, validateClient, async (reques
 
 
 // Renders list of all the billings of a specific client
-router.get('/billing/:id', checkAuthentication, async (request, response) => {
+router.get('/billing/:id', async (request, response) => {
 
     const { id } = request.params;
     const clientDetail = await Client.findById(id).populate('billings');
 
     let amountPayable = 0;
+    let payedAmount = 0;
     for (let billing of clientDetail.billings) {
         amountPayable += billing.grandTotal;
+        payedAmount += billing.amountPayed;
     };
-    let payedAmount = 0;
 
     response.render('client/billing', { title: "Billing", clientDetail, amountPayable, payedAmount })
 })

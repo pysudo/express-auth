@@ -1,0 +1,77 @@
+<% layout('layouts/base') -%>
+
+
+    <h1 class="text-center my-5">Make Payment</h1>
+    <nav class="mt-5" aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li><a href="/payment/<%= 'default' %> ">Client Payments</a></li>
+            <li class="breadcrumbs"><a href="/payment/pay/<%= billing._id %>">Make Payment</a></li>
+        </ol>
+    </nav>
+
+    <table class="table table-success align-middle text-center border-secondary table-striped my-5">
+        <thead>
+            <tr>
+                <th scope="col">Client ID</th>
+                <th scope="col">Billed Date</th>
+                <th scope="col">Invoice No</th>
+                <th scope="col">Items</th>
+                <th scope="col">Amount to be Payed</th>
+                <th scope="col">Payment Due</th>
+            </tr>
+        </thead>
+        <tbody>
+                <tr>
+                    <td><%= billing.client.name %></td>
+                    <td><%= billing.billingDate.toLocaleDateString() %></td>
+                    <td><%= billing.invoice %></td>
+                    <td><%= billing.itemList %></td>
+                    <td><%= billing.grandTotal - billing.amountPayed %></td>
+                    <td><%= billing.paymentDue %></td>
+                </tr> 
+        </tbody>
+    </table>
+
+
+    <div class="row m-3 mt-5">
+        <div class="col-xl-4 offset-xl-4 col-md-6 offset-md-3 col-sm-8 offset-sm-3">
+
+            <form class="needs-validation" action="/payment/pay/<%= billing._id %>" method="POST" novalidate>
+                <div class="input-group mb-3">
+                    <span class="input-group-text" id="basic-addon1">Payment Date</span>
+                    <input class="form-control text-center" id="date" type="text" name="payment[date]" value="<%= new Date().toLocaleDateString() %>" readonly required>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label" for="amount">Amount</label>
+                    <input class="form-control" id="amount" type="number" name="payment[amount]" min="1" max="<%= billing.grandTotal - billing.amountPayed %>" step="0.01" autofocus required>
+                    <div class="invalid-feedback">
+                        Must be between 0 and <%= billing.grandTotal - billing.amountPayed %> inclusive, with upto two decimal places!
+                    </div>
+                </div>
+                <div class="mb-5">
+                    <fieldset>
+                        <legend>Mode of Payment</legend>
+                        <div class="mb-3">
+                            <input class="form-check-input" id="neft" type="radio" name="payment[mode]" value="neft" required>
+                            <label class="form-check-label me-4" for="neft">NEFT</label>
+                        </div>
+                        <div class="mb-3">
+                            <input class="form-check-input" id="rtgs" type="radio" name="payment[mode]" value="rtgs" required>
+                            <label class="form-check-label me-4" for="rtgs">RTGS</label>
+                        </div>
+                        <div class="mb-3">
+                            <input class="form-check-input" id="cash" type="radio" name="payment[mode]" value="cash" required>
+                            <label class="form-check-label me-4" for="cash">Cash</label>
+                        </div>
+                        <div class="mb-3">
+                            <input class="form-check-input" id="netBanking" type="radio" name="payment[mode]" value="netBanking" required>
+                            <label class="form-check-label me-4" for="netBanking">Net Banking</label>
+                        </div>
+                    </fieldset>
+                </div>
+                <div class="d-grid gap-2">
+                <button class="btn btn-success" type="submit">Pay Amount</button>
+                </div>
+            </form>
+        </div>
+    </div>

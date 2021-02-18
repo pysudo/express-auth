@@ -22,6 +22,11 @@ const billingSchema = mongoose.Schema({
         type: [Number],
         required: true
     },
+    amountPayed: {
+        type: Number,
+        default: 0,
+        required: true
+    },
     billingDate: {
         type: Date,
         default: Date.now,

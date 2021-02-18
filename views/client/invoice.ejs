@@ -1,0 +1,204 @@
+<% layout('layouts/base') -%>
+
+    <div id="invoiceForm">
+        <div class="container">
+            <div class="row">
+                <div class="col my-5">
+                    <h1 class="text-start">COMPANY LOGO</h1>
+                </div>
+            </div>
+        </div>
+        <div class="container border border-4 p-0">
+            <div class="container">
+                <div class="row">
+                    <div class="col border-bottom border-4">
+                        <p class="fs-5 text-uppercase text-center pt-4 mb-0">invoice</p>
+                    </div>
+                </div>
+            </div>
+            <div class="container">
+                <div class="row d-flex justify-content-center">
+                    <div class="col-4 border-start border-4">
+                        <b>Consignee,</b> <br>
+                        <%= billings.client.address %> <br>
+                            M: <%= billings.client.contact %>
+                    </div>
+                    <div class="col-4 border-start border-4">
+                        Invoice No. : <%= billings.invoice %>
+                    </div>
+                    <div class="col-3 border-start border-end border-4">
+                        Date : <%= billings.billingDate.toLocaleDateString() %>
+                    </div>
+                </div>
+            </div>
+            <!-- GAP -->
+            <div class="container">
+                <div class="row">
+                    <div class="col border-top border-bottom border-4 py-4">
+                    </div>
+                </div>
+            </div>
+            <div class="container">
+                <div class="row p-0">
+                    <div class="col-1 border-end border-4">
+                        Sl<br>No.
+                    </div>
+                    <div class="col-4 d-flex align-items-center border-end border-4">
+                        Particulars
+                    </div>
+                    <div class="col-2 d-flex align-items-center border-end border-4">
+                        Rate
+                    </div>
+                    <div class="col-2 d-flex align-items-center border-end border-4">
+                        Qty
+                    </div>
+                    <div class="col-3 d-flex align-items-center border-4">
+                        Amount
+                    </div>
+                </div>
+            </div>
+            <div class="container">
+                <% for(let i=0; i < billings.items.length; i++) { %>
+                    <div class="container p-0">
+                        <div class="row p-0">
+                            <div class="col-1 border-end border-top border-4 p-3">
+                                <%= i + 1 %>
+                            </div>
+                            <div class="col-4 border-end border-top border-4 p-3">
+                                <%= billings.items[i] %>
+                            </div>
+                            <div class="col-2 border-end border-top border-4 p-3">
+                                <%= billings.price[i] %>
+                            </div>
+                            <div class="col-2 border-end border-top border-4 p-3">
+                                <%= billings.quantity[i] %>
+                            </div>
+                            <div class="col-3 border-top border-4 p-3">
+                                <%= billings.quantity[i] %>
+                            </div>
+                        </div>
+                    </div>
+                    <% } %>
+            </div>
+            <div class="container">
+                <div class="row border-top border-4 py-0">
+                    <div class="col-9 border-end border-4 text-end">
+                        <b>Total Amount</b>
+                    </div>
+                    <div class="col text-end">
+                        <b>
+                            <%= billings.grandTotal %>
+                        </b>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="container border-start border-end border-bottom border-4">
+            <div class="row">
+                <div class="col">
+                    <ul>
+                        <li class="list-unstyled">
+                            <b><u>Terms and payment</u></b>
+                        </li>
+                        <li>
+                            Payment option 1 (DD) : in favour of <b>Neela Software Technology, Bengaluru</b>
+                        </li>
+                        <li>
+                            Payment option 2 (IMPS/RTGS/NEFT) : Karnataka Bank, Jayanagar 4th Block Branch, Bengaluru.
+                        </li>
+                        <li class="list-unstyled">
+                            <b>Current A/No . 0842000100200901</b>
+                        </li>
+                        <li class="list-unstyled">
+                            <b>IFSC Code: KARB0000084.</b>
+                        </li>
+                        <li>
+                            Please call or email us the transaction details after the money transfer so as to help us
+                            track your transfer.
+                        </li>
+                        <li>
+                            Interest @18% p.a will be charged for overdue invoice (Max. 30 Days from Invoice date)
+                        </li>
+                        <li>
+                            Our business is less than 10 lakh per annum. GST registration not applicable
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="container border-start border-end border-4">
+            <div class="row">
+                <div class="col-8">
+                    <div class="row">
+                        <div class="col">
+                            <b>PAN No. AGDPG9060F</b>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            For Neela Software Technology, Bengaluru
+                        </div>
+                    </div>
+                    <div class="row p-5">
+                        <div class="col">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            Authorised Signatory
+                        </div>
+                    </div>
+                </div>
+                <div class="col-4 text-center border-start border-4">
+                    <div class="col">
+                        <div class="row m-3">
+                            <div class="col d-flex">
+                                Received above material with Good
+                                Condition.
+                            </div>
+                        </div>
+                        <div class="row m-4">
+                            <div class="col p-2">
+                            </div>
+                        </div>
+                        <div class="row pb-3">
+                            <div class="col">
+                                Seal and Signature
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="container border border-4">
+            <div class="row">
+                <div class="col">
+                    Please feel free to contact on +91 9980010452 (Mon-Fri 10am to 5pm)
+                </div>
+            </div>
+        </div>
+        <div class="container border-start border-end border-4">
+            <div class="row">
+                <div class="col text-center">
+                    <b>Neela Software Technology</b>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col text-center">
+                    #854,6th Main Road,2nd Phase JP Nagar, KSRTC Layout, Bengaluru - 560078
+                </div>
+            </div>
+            <div class="row">
+                <div class="col text-center">
+                    web : neelasoftware.com | Email : girish@trailroot.in
+                </div>
+            </div>
+        </div>
+        <div class="container border border-4">
+            <div class="row">
+                <div class="col text-center">
+                    SUBJECT TO BANGALORE JURISDICTION
+                </div>
+            </div>
+        </div>
+    </div>

@@ -53,7 +53,7 @@
                 </thead>
                 <tbody>
                     <% for(let billing of clientDetail.billings) { %>
-                        <tr class=<%= billing.delRec === true ? "inactive" : "" %> <%= billing.paymentStatus === true ? "paid" : "" %>>
+                        <tr class=<%= billing.delRec === true ? "inactive" : "" %> <%= billing.paymentStatus === true ? "paid" : "" %> id="<%= billing._id %>">
                             <td>
                                 <%= billing.billingDate.toLocaleDateString() %>
                             </td>
@@ -76,6 +76,11 @@
                             <td>
                                 <%= billing.modified.by %>
                             </td>
+                            <td class="border-0">
+                                <form action="/client/billing/<%= clientDetail._id %>/send/<%= billing._id %>" method="GET">
+                                    <button class="btn btn-primary my-1" type="submit" <%= billing.delRec === true ? "disabled" : "" %>>Send</button>
+                                </form>
+                              </td>
                             <td class="border-0">
                                 <form action="/client/billing/confirm-deletion/<%= billing._id %>" method="GET">
                                     <button class="btn-close" type="submit" <%= billing.delRec === true ? "disabled" : "" %>></button>

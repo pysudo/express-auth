@@ -39,6 +39,14 @@ tr.paid {
     background-color: #7a9460;
 }
 
+div#invoiceForm {
+    font-family: 'Courier New', monospace;
+    margin-bottom: 100px;
+}
+
+/* div#invoiceForm {
+    border-color: #cccc92 !important;
+} */
 
 @media (max-width: 820px) {
     td, th {

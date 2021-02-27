@@ -20,6 +20,10 @@
                     <textarea class="form-control" id="address" name="profile[address]" cols="30" rows="5" required></textarea>
                 </div>
                 <div class="mb-3">
+                    <label class="form-label" for="website">Website <span class="text-muted">(optional)</label>
+                    <input class="form-control" id="website" type="text" name="profile[website]">
+                </div>
+                <div class="mb-3">
                     <label class="form-label" for="pan">Permanent Account Number</label>
                     <input class="form-control" id="pan" type="text" name="profile[pan]" maxlength="10" minlength="10" required>
                 </div>
@@ -29,6 +33,12 @@
                 </div>
                 <fieldset class="contact mb-3">
                     <legend class="text-center">Contacts</legend>
+                    <div class="mb-3">
+                        <label class="form-label" for="email">
+                            Email
+                        </label>
+                        <input class="form-control" id="email" type="email" name="profile[contacts][email]" aria-label="Email" aria-describedby="email" required>
+                    </div>
                     <div class="mb-3">
                         <label class="form-label" for="landline">
                             Landline
@@ -42,6 +52,35 @@
                         </label>
                         <input class="form-control" id="phone" type="text" name="profile[contacts][phone]"
                             maxlength="10" minlength="10" aria-label="Phone" aria-describedby="phone" required>
+                    </div>
+                </fieldset>
+                <fieldset class="contact mb-3">
+                    <legend class="text-center">Bank Details</legend>
+
+                    <div class="mb-3">
+                        <label class="form-label" for="bankName">Bank Name</label>
+                        <input class="form-control" id="bankName" type="text" name="profile[bankDetails][bankName]" required>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label" for="bankAddress">Bank Address</label>
+                        <textarea class="form-control" id="bankAddress" name="profile[bankDetails][bankAddress]" cols="30" rows="5" required></textarea>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Account Number</label>
+                        <input type="number" class="form-control" aria-label="Account Number"
+                            name="profile[bankDetails][accountNumber]" required>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Type</label>
+                        <select class="form-select" id="accountType" name="profile[bankDetails][accountType]" required>
+                            <option value="savings">Savings</option>
+                            <option value="current">Current</option>
+                            <option value="others">Others</option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label" for="ifsc">IFSC Code</label>
+                        <input class="form-control" id="ifsc" type="text" name="profile[bankDetails][ifsc]" required>
                     </div>
                 </fieldset>
                 <button class="btn btn-success" type="submit">Submit</button>

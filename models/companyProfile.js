@@ -10,7 +10,14 @@ const profileSchema = mongoose.Schema({
         type: String,
         required: true,
     },
+    website: {
+        type: String,
+    },
     contacts: {
+        email: {
+            type: String,
+            required: true,
+        },
         landline: {
             type: String,
             required: true,
@@ -31,6 +38,29 @@ const profileSchema = mongoose.Schema({
     delRec: {
         type: Boolean,
         default: false,
+    },
+    bankDetails: {
+        bankName: {
+            type: String,
+            required: true
+        },
+        bankAddress: {
+            type: String,
+            required: true
+        },
+        accountType: {
+            type: String,
+            enum: ["savings", "current", "others"],
+
+        },
+        accountNumber: {
+            type: Number,
+            required: true
+        },
+        ifsc: {
+            type: String,
+            required: true
+        }
     },
     modified: {
         by: {

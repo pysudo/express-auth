@@ -62,6 +62,9 @@ const billingSchema = mongoose.Schema({
     client: {
         type: mongoose.Schema.Types.ObjectId, ref: 'Client'
     },
+    companyProfile: {
+        type: mongoose.Schema.Types.ObjectId, ref: 'Profile'
+    },
 });
 
 

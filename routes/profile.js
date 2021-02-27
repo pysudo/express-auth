@@ -27,7 +27,6 @@ router.get('/add', checkAuthentication, accessGrant, (request, response) => {
 router.post('/', checkAuthentication, accessGrant, validateProfile, async (request, response) => {
 
     const profile = new Profile(request.body.profile);
-    console.log(request.body);
     const user = await User.findOne({ _id: request.session.userID });
     profile.modified.by = `${user.firstname} ${user.lastname}`;
     await profile.save();

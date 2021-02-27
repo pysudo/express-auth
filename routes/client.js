@@ -1,6 +1,7 @@
 const express = require('express');
 const mongoose = require('mongoose');
 
+const Profile = require('../models/companyProfile');
 const Client = require('../models/clientDetails');
 const User = require('../models/user');
 const Billing = require('../models/billing');
@@ -41,7 +42,7 @@ router.post('/', checkAuthentication, accessGrant, validateClient, async (reques
 router.get('/billing/:clientID/send/:billingID', async (request, response) => {
 
     const { billingID } = request.params;
-    const billings = await Billing.findById(billingID).populate('client');
+    const billings = await Billing.findById(billingID).populate('client').populate('companyProfile');
 
     response.render('client/invoice', { title: "Invoice", billings })
 })
@@ -69,8 +70,9 @@ router.get('/billing/add/:id', checkAuthentication, async (request, response) =>
 
     const { id } = request.params;
     const clientDetail = await Client.findById(id);
+    const companyProfiles = await Profile.find({});
 
-    response.render('client/addBilling', { title: "Billing", clientDetail })
+    response.render('client/addBilling', { title: "Billing", clientDetail, companyProfiles })
 })
 
 

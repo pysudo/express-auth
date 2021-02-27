@@ -45,11 +45,29 @@ module.exports.validateProfile = (request, response, next) => {
                 break;
         }
         switch (errorNames[2]) {
+            case "email":
+                errorName = "Email Address";
+                break;
             case "landline":
                 errorName = "Landline";
                 break;
             case "phone":
                 errorName = "Phone";
+                break;
+            case "bankName":
+                errorName = "Bank Name";
+                break;
+            case "bankAddress":
+                errorName = "Bank Address";
+                break;
+            case "accountType":
+                errorName = "Account Type";
+                break;
+            case "accountNumber":
+                errorName = "Account Number";
+                break;
+            case "ifsc":
+                errorName = "IFSC";
                 break;
         }
 
@@ -64,7 +82,7 @@ module.exports.validateProfile = (request, response, next) => {
                 modifiedErrorMessage = `${errorName} ${originalMessage.slice(slicedLength)}`;
                 break;
         }
-        
+
         if (request.method === 'POST') {
             request.flash('error', modifiedErrorMessage);
             return response.redirect('/profile/add');
@@ -85,7 +103,7 @@ module.exports.validatePurchase = (request, response, next) => {
 
     const { id } = request.params;
     const validatedPurchase = purchaseSchema.validate(request.body);
-    
+
     if (validatedPurchase.error) {
 
         const errorNames = validatedPurchase.error.details[0].path;

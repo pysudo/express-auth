@@ -19,8 +19,26 @@
                     <label class="form-label" for="address">Company Address</label>
                     <textarea class="form-control" id="address" name="profile[address]" cols="30" rows="5" required><%= profile.address %></textarea>
                 </div>
-                <fieldset class="contact input-group mb-3">
+                <div class="mb-3">
+                    <label class="form-label" for="website">Website <span class="text-muted">(optional)</label>
+                    <input class="form-control" id="website" type="text" name="profile[website]" value="<%= profile.website %> ">
+                </div>
+                <div class="mb-3">
+                    <label class="form-label" for="pan">Permanent Account Number</label>
+                    <input class="form-control" id="pan" type="text" name="profile[pan]" value="<%= profile.pan %>" required>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label" for="gst">GST Identification Number</label>
+                    <input class="form-control" id="gst" type="text" name="profile[gst]" value="<%= profile.gst %>" required>
+                </div>
+                <fieldset class="mb-3">
                     <legend>Contacts</legend>
+                    <div class="mb-3 me-5">
+                        <label for="email">
+                            <label class="form-label">Email</label>
+                        </label>
+                        <input class="form-control" id="landline" type="text" name="profile[contacts][email]" aria-label="Email" aria-describedby="email" value="<%= profile.contacts.email %>" required>
+                    </div>
                     <div class="mb-3 me-5">
                         <label for="landline">
                             <label class="form-label">Landline</label>
@@ -34,14 +52,36 @@
                         <input class="form-control" id="phone" type="text" name="profile[contacts][phone]" maxlength="10" minlength="10" aria-label="Phone" aria-describedby="phone" value="<%= profile.contacts.phone %>" required>
                     </div>        
                 </fieldset>
-                <div class="mb-3">
-                    <label class="form-label" for="pan">Permanent Account Number</label>
-                    <input class="form-control" id="pan" type="text" name="profile[pan]" value="<%= profile.pan %>" required>
-                </div>
-                <div class="mb-3">
-                    <label class="form-label" for="gst">GST Identification Number</label>
-                    <input class="form-control" id="gst" type="text" name="profile[gst]" value="<%= profile.gst %>" required>
-                </div>
+                <fieldset class="contact mb-3">
+                    <legend class="text-center">Bank Details</legend>
+
+                    <div class="mb-3">
+                        <label class="form-label" for="bankName">Bank Name</label>
+                        <input class="form-control" id="bankName" type="text" name="profile[bankDetails][bankName]" value="<%= profile.bankDetails.bankName %>" required>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label" for="bankAddress">Bank Address</label>
+                        <textarea class="form-control" id="bankAddress" name="profile[bankDetails][bankAddress]" cols="30" rows="5" required><%= profile.bankDetails.bankAddress %></textarea>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Account Number</label>
+                        <input type="number" class="form-control" aria-label="Account Number"
+                            name="profile[bankDetails][accountNumber]" value="<%= profile.bankDetails.accountNumber %>" required>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Type</label>
+                        <select class="form-select" id="accountType" name="profile[bankDetails][accountType]" required>
+                            <option selected>Select</option>
+                            <option value="savings" <%= profile.bankDetails.accountType==="savings" ? "selected" : "" %>>Savings</option>
+                            <option value="current" <%= profile.bankDetails.accountType==="current" ? "selected" : "" %>>Current</option>
+                            <option value="others"  <%= profile.bankDetails.accountType==="others" ? "selected" : "" %>>Others</option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label" for="ifsc">IFSC Code</label>
+                        <input class="form-control" id="ifsc" type="text" name="profile[bankDetails][ifsc]" value="<%= profile.bankDetails.ifsc %>" required>
+                    </div>
+                </fieldset>
                 <button class="btn btn-success" type="submit">Edit Profile</button>
             </form>
         </div>

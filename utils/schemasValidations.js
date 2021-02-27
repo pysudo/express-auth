@@ -29,7 +29,17 @@ module.exports.profileSchema = Joi.object({
             .required(),
         address: Joi.string()
             .required(),
+        website: Joi.string()
+            .allow(''),
+        pan: Joi.string()
+            .length(10)
+            .required(),
+        gst: Joi.string()
+            .length(15)
+            .required(),
         contacts: Joi.object({
+            email: Joi.string().email()
+                .required(),
             landline: Joi.string()
                 .length(8)
                 .required(),
@@ -37,12 +47,19 @@ module.exports.profileSchema = Joi.object({
                 .length(10)
                 .required(),
         }).required(),
-        pan: Joi.string()
-            .length(10)
-            .required(),
-        gst: Joi.string()
-            .length(15)
-            .required()
+        bankDetails: Joi.object({
+            bankName: Joi.string()
+                .required(),
+            bankAddress: Joi.string()
+                .required(),
+            accountType: Joi.string()
+                .valid('savings', 'current', 'others')
+                .required(),
+            accountNumber: Joi.number()
+                .required(),
+            ifsc: Joi.string()
+                .required(),
+        }).required(),
     }).required()
 })
 

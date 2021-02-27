@@ -100,16 +100,16 @@
                             <b><u>Terms and payment</u></b>
                         </li>
                         <li>
-                            Payment option 1 (DD) : in favour of <b>Neela Software Technology, Bengaluru</b>
+                            Payment option 1 (DD) : in favour of <b><%= billings.companyProfile.name %></b>
                         </li>
                         <li>
-                            Payment option 2 (IMPS/RTGS/NEFT) : Karnataka Bank, Jayanagar 4th Block Branch, Bengaluru.
+                            Payment option 2 (IMPS/RTGS/NEFT) : <%= billings.companyProfile.bankDetails.bankAddress %>.
                         </li>
                         <li class="list-unstyled">
-                            <b>Current A/No . 0842000100200901</b>
+                            <b>Current A/No . <%= billings.companyProfile.bankDetails.accountNumber %></b>
                         </li>
                         <li class="list-unstyled">
-                            <b>IFSC Code: KARB0000084.</b>
+                            <b>IFSC Code: <%= billings.companyProfile.bankDetails.ifsc %>.</b>
                         </li>
                         <li>
                             Please call or email us the transaction details after the money transfer so as to help us
@@ -130,12 +130,12 @@
                 <div class="col-8">
                     <div class="row">
                         <div class="col">
-                            <b>PAN No. AGDPG9060F</b>
+                            <b>PAN No. <%= billings.companyProfile.pan %> </b>
                         </div>
                     </div>
                     <div class="row">
                         <div class="col">
-                            For Neela Software Technology, Bengaluru
+                            <%= billings.companyProfile.name %>
                         </div>
                     </div>
                     <div class="row p-5">
@@ -172,24 +172,24 @@
         <div class="container border-left border-right">
             <div class="row">
                 <div class="col">
-                    Please feel free to contact on +91 9980010452 (Mon-Fri 10am to 5pm)
+                    Please feel free to contact on <%= billings.companyProfile.contacts.landline %> or <%= billings.companyProfile.contacts.phone %> (Mon-Fri 10am to 5pm)
                 </div>
             </div>
         </div>
         <div class="container borderall">
             <div class="row">
                 <div class="col text-center">
-                    <b>Neela Software Technology</b>
+                    <b><%= billings.companyProfile.name %></b>
                 </div>
             </div>
             <div class="row">
                 <div class="col text-center">
-                    #854,6th Main Road,2nd Phase JP Nagar, KSRTC Layout, Bengaluru - 560078
+                    <%= billings.companyProfile.address %> 
                 </div>
             </div>
             <div class="row">
                 <div class="col text-center">
-                    web : neelasoftware.com | Email : girish@trailroot.in
+                    <%= billings.companyProfile.website ? "Website: " + billings.companyProfile.website + " | " : "" %></b> Email : <%= billings.companyProfile.contacts.email %> 
                 </div>
             </div>
         </div>

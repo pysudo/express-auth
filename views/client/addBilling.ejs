@@ -11,9 +11,49 @@
 
     <h1 class="text-center">New Billing</h1>
 
+    <div class="row main">
+
+        <div class="col-12 mb-5">
+            <table id="clientTable" class="table table-success align-middle text-center border-secondary table-striped">
+                <thead>
+                  <tr>
+                    <th scope="col" id="name">Client Name</th>
+                    <th scope="col" id="address">Client Address</th>
+                    <th scope="col" id="email">Client Email</th>
+                    <th scope="col" id="contact">Client Contact</th>
+                    <th scope="col" id="contact">GST</th>
+                    <th scope="col" id="contact">PAN</th>
+                  </tr>
+                </thead>
+                <tbody>
+                        <td><%= clientDetail.name %></td>
+                        <td><%= clientDetail.address %></td>
+                        <td><%= clientDetail.email %></td>
+                        <td><%= clientDetail.contact %></td>
+                        <td><%= clientDetail.gst %></td>
+                        <td><%= clientDetail.pan %></td>
+                    </tr>
+                </tbody>
+              </table>
+        </div>
+    </div>
+
     <div class="row m-3 mt-5">
-        <div class="col-12">
-            <form class="needs-validation" action="/client/billing/<%= clientDetail._id %>" method="POST" novalidate>
+        
+        <form class="needs-validation" action="/client/billing/<%= clientDetail._id %>" method="POST" novalidate>
+            <div class="col-3 mb-5">
+                <div class="input-group">
+                    <span class="input-group-text" id="basic-addon1">Company Name</span>
+                    <select class="form-select" name="billing[companyProfile]" id="company" aria-label="Company Names" >
+                        <% for(companyProfile of companyProfiles) { %>
+                            <% if(!companyProfile.delRec) { %>  
+                                <option value="<%= companyProfile._id %>"><%= companyProfile.name %> </option>
+                            <% } %> 
+                        <% } %> 
+                    </select>
+                </div>
+            </div>
+            <div>
                 <table id="hello" class="table text-center">
                     <thead>
                         <tr>
@@ -66,8 +106,8 @@
 
                 <button id="add-item" class="btn btn-secondary" type="button">Add Items</button>
                 <button id="add-item" class="btn btn-success" type="submit">Submit</button>
-            </form>
-        </div>
+            </div>
+        </form>
     </div>
 
     <script src="/scripts/billing.js"></script>

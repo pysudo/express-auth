@@ -12,7 +12,7 @@
     <table class="table table-success align-middle text-center border-secondary table-striped my-5">
         <thead>
             <tr>
-                <th scope="col">Client ID</th>
+                <th scope="col">Client Name</th>
                 <th scope="col">Billed Date</th>
                 <th scope="col">Invoice No</th>
                 <th scope="col">Items</th>
@@ -33,7 +33,7 @@
     </table>
 
 
-    <div class="row m-3 mt-5">
+    <div class="row m-3 mt-5 mb-5">
         <div class="col-xl-4 offset-xl-4 col-md-6 offset-md-3 col-sm-8 offset-sm-3">
 
             <form class="needs-validation" action="/payment/pay/<%= billing._id %>" method="POST" novalidate>
@@ -43,7 +43,7 @@
                 </div>
                 <div class="mb-3">
                     <label class="form-label" for="amountPayed">Amount</label>
-                    <input class="form-control" id="amountPayed" type="number" name="payment[amountPayed]" min="0" max="<%= (billing.grandTotal - billing.amountPayed).toFixed(2) %>" step="0.01" autofocus required>
+                    <input class="form-control" id="amountPayed" type="number" name="paymentDetails[payment][amountPayed]" min="0" max="<%= (billing.grandTotal - billing.amountPayed).toFixed(2) %>" step="0.01" autofocus required>
                     <div class="invalid-feedback">
                         Must be between 0 and <%= (billing.grandTotal - billing.amountPayed).toFixed(2) %> inclusive, with upto two decimal places!
                     </div>
@@ -52,22 +52,27 @@
                     <fieldset>
                         <legend>Mode of Payment</legend>
                         <div class="mb-3">
-                            <input class="form-check-input" id="neft" type="radio" name="payment[mode]" value="neft" required>
+                            <input class="form-check-input" id="neft" type="radio" name="paymentDetails[payment][mode]" value="neft" required>
                             <label class="form-check-label me-4" for="neft">NEFT</label>
                         </div>
                         <div class="mb-3">
-                            <input class="form-check-input" id="rtgs" type="radio" name="payment[mode]" value="rtgs" required>
+                            <input class="form-check-input" id="rtgs" type="radio" name="paymentDetails[payment][mode]" value="rtgs" required>
                             <label class="form-check-label me-4" for="rtgs">RTGS</label>
                         </div>
                         <div class="mb-3">
-                            <input class="form-check-input" id="cash" type="radio" name="payment[mode]" value="cash" required>
+                            <input class="form-check-input" id="cash" type="radio" name="paymentDetails[payment][mode]" value="cash" required>
                             <label class="form-check-label me-4" for="cash">Cash</label>
                         </div>
                         <div class="mb-3">
-                            <input class="form-check-input" id="netBanking" type="radio" name="payment[mode]" value="netBanking" required>
+                            <input class="form-check-input" id="netBanking" type="radio" name="paymentDetails[payment][mode]" value="netBanking" required>
                             <label class="form-check-label me-4" for="netBanking">Net Banking</label>
                         </div>
                     </fieldset>
+                    <textarea class="mb-3 form-control" name="paymentDetails[payment][additionalInfo]" cols="55" rows="5" placeholder="Additional Information"></textarea>
+                    
+                    <!-- TODO: Backend logic to send notification to a specific client -->
+                    <input class="form-check-input" type="checkbox" name="sendNotification" id="sendNotification">
+                    <label class="form-check-label" for="sendNotification">Send notifitcation to the client</label>
                 </div>
                 <div class="d-grid gap-2">
                 <button class="btn btn-success" type="submit">Pay Amount</button>

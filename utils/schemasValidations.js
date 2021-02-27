@@ -138,6 +138,8 @@ module.exports.paymentSchema = Joi.object({
         mode: Joi.string()
             .valid('neft', 'rtgs', 'cash', 'netBanking')
             .required(),
+        additionalInfo: Joi.string()
+            .allow('')
     }).required()
 });
 

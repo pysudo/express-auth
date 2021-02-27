@@ -17,6 +17,9 @@ const paymentSchema = mongoose.Schema({
         enum: ["neft", "rtgs", "cash", "netBanking"],
         required: true
     },
+    additionalInfo: {
+        type: String,
+    },
     modified: {
         by: {
             type: String,

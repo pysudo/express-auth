@@ -62,16 +62,16 @@ router.post('/pay/:id', checkAuthentication, accessGrant, validatePayement, asyn
     const billing = await Billing.findById(id).populate('client');
 
 
-    request.body.payment.client = billing.client;
-    request.body.payment.billing = billing;
-    request.body.payment.amountPayed = parseFloat(request.body.payment.amountPayed);
-    const payment = new Payment(request.body.payment);
+    request.body.paymentDetails.payment.client = billing.client;
+    request.body.paymentDetails.payment.billing = billing;
+    request.body.paymentDetails.payment.amountPayed = parseFloat(request.body.paymentDetails.payment.amountPayed);
+    const payment = new Payment(request.body.paymentDetails.payment);
     const user = await User.findOne({ _id: request.session.userID });
     payment.modified.by = `${user.firstname} ${user.lastname}`;
     await payment.save();
 
     // Updates client's overall balance 
-    const updatedBilling = await Billing.findByIdAndUpdate(id, { amountPayed: (billing.amountPayed + parseFloat(request.body.payment.amountPayed))}, {new: true});
+    const updatedBilling = await Billing.findByIdAndUpdate(id, { amountPayed: (billing.amountPayed + parseFloat(request.body.paymentDetails.payment.amountPayed))}, {new: true});
     await updatedBilling.save();
     
     if (updatedBilling.grandTotal - updatedBilling.amountPayed === 0) {

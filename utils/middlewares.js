@@ -257,7 +257,7 @@ module.exports.validateClient = (request, response, next) => {
 // Server side transaction validation
 module.exports.validatePayement = (request, response, next) => {
 
-    const validatePayement = paymentSchema.validate(request.body);
+    const validatePayement = paymentSchema.validate(request.body.paymentDetails);
 
     if (validatePayement.error) {
 

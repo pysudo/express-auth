@@ -50,8 +50,14 @@ router.get('/pay/:id', checkAuthentication, async (request, response) => {
 
     const { id } = request.params;
     const billing = await Billing.findById({ _id: id }).populate('client');
+    const payments = await Payment.find({billing: id});
+    let totalAmountPayed = 0;
 
-    response.render(`payment/makePayment`, { title: 'Make Payment', billing });
+    for(let i = 0; i < payments.length; i++) {
+        totalAmountPayed += payments[i].amountPayed;
+    }
+
+    response.render(`payment/makePayment`, { title: 'Make Payment', billing, payments, totalAmountPayed });
 })
 
 

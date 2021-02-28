@@ -1,7 +1,7 @@
 <% layout('layouts/base') -%>
 
 
-    <h1 class="text-center my-5">Make Payment</h1>
+    <h1 class="text-center mt-3">Payment</h1>
     <nav class="mt-5" aria-label="breadcrumb">
         <ol class="breadcrumb">
             <li><a href="/payment/<%= 'default' %> ">Client Payments</a></li>
@@ -9,14 +9,15 @@
         </ol>
     </nav>
 
-    <table class="table table-success align-middle text-center border-secondary table-striped my-5">
+    <table class="table table-success align-middle text-center border-secondary table-striped mb-5">
         <thead>
             <tr>
                 <th scope="col">Client Name</th>
                 <th scope="col">Billed Date</th>
                 <th scope="col">Invoice No</th>
                 <th scope="col">Items</th>
-                <th scope="col">Amount to be Payed</th>
+                <th scope="col">Total Amount to be Payed</th>
+                <th scope="col">Total Amount Due</th>
                 <th scope="col">Payment Due</th>
             </tr>
         </thead>
@@ -26,250 +27,48 @@
                     <td><%= billing.billingDate.toLocaleDateString() %></td>
                     <td><%= billing.invoice %></td>
                     <td><%= billing.itemList %></td>
+                    <td><%= (billing.grandTotal).toFixed(2) %></td>
                     <td><%= (billing.grandTotal - billing.amountPayed).toFixed(2) %></td>
                     <td><%= billing.paymentDue %></td>
                 </tr> 
         </tbody>
     </table>
 
-
-    <div class="row m-3 mt-5 mb-5">
-        <div class="col vh-100 overflow-scroll">
-            <!-- dummy data to check overflow -->
-            <table class="table table-success align-middle text-center border-secondary table-striped my-5">
+    <div class="row mb-sm-5">
+        
+        <div class="col-xl mb-5 overflow-auto" id="paymentHistory">
+            <div class="col"><h3 class="text-center mb-4">Payment History</h3></div>
+            <table class="table table-light text-center align-middle table-striped">
                 <thead>
                     <tr>
-                        <th scope="col">Client Name</th>
-                        <th scope="col">Billed Date</th>
-                        <th scope="col">Invoice No</th>
-                        <th scope="col">Items</th>
-                        <th scope="col">Amount to be Payed</th>
-                        <th scope="col">Payment Due</th>
+                        <th scope="col">Date</th>
+                        <th scope="col">Amount Payed</th>
+                        <th scope="col">Mode</th>
+                        <th scope="col">Additional Info</th>
                     </tr>
                 </thead>
-                <tbody>
+                <tbody class="text-center">
+                        <% for(let payment of payments) { %> 
+                            <tr>
+                                <td><%= payment.modified.at.toLocaleDateString() %></td>
+                                <td><%= payment.amountPayed %></td>
+                                <td><%= payment.mode %></td>
+                                <td><%= payment.additionalInfo %></td>
+                            </tr>
+                        <% } %> 
+                    <tfoot class="table-success border-secondary">
                         <tr>
-                            <td><%= billing.client.name %></td>
-                            <td><%= billing.billingDate.toLocaleDateString() %></td>
-                            <td><%= billing.invoice %></td>
-                            <td><%= billing.itemList %></td>
-                            <td><%= (billing.grandTotal - billing.amountPayed).toFixed(2) %></td>
-                            <td><%= billing.paymentDue %></td>
-                        </tr> 
-                        <tr>
-                            <td><%= billing.client.name %></td>
-                            <td><%= billing.billingDate.toLocaleDateString() %></td>
-                            <td><%= billing.invoice %></td>
-                            <td><%= billing.itemList %></td>
-                            <td><%= (billing.grandTotal - billing.amountPayed).toFixed(2) %></td>
-                            <td><%= billing.paymentDue %></td>
-                        </tr> 
-                        <tr>
-                            <td><%= billing.client.name %></td>
-                            <td><%= billing.billingDate.toLocaleDateString() %></td>
-                            <td><%= billing.invoice %></td>
-                            <td><%= billing.itemList %></td>
-                            <td><%= (billing.grandTotal - billing.amountPayed).toFixed(2) %></td>
-                            <td><%= billing.paymentDue %></td>
-                        </tr> 
-                        <tr>
-                            <td><%= billing.client.name %></td>
-                            <td><%= billing.billingDate.toLocaleDateString() %></td>
-                            <td><%= billing.invoice %></td>
-                            <td><%= billing.itemList %></td>
-                            <td><%= (billing.grandTotal - billing.amountPayed).toFixed(2) %></td>
-                            <td><%= billing.paymentDue %></td>
-                        </tr> 
-                        <tr>
-                            <td><%= billing.client.name %></td>
-                            <td><%= billing.billingDate.toLocaleDateString() %></td>
-                            <td><%= billing.invoice %></td>
-                            <td><%= billing.itemList %></td>
-                            <td><%= (billing.grandTotal - billing.amountPayed).toFixed(2) %></td>
-                            <td><%= billing.paymentDue %></td>
-                        </tr> 
-                        <tr>
-                            <td><%= billing.client.name %></td>
-                            <td><%= billing.billingDate.toLocaleDateString() %></td>
-                            <td><%= billing.invoice %></td>
-                            <td><%= billing.itemList %></td>
-                            <td><%= (billing.grandTotal - billing.amountPayed).toFixed(2) %></td>
-                            <td><%= billing.paymentDue %></td>
-                        </tr> 
-                        <tr>
-                            <td><%= billing.client.name %></td>
-                            <td><%= billing.billingDate.toLocaleDateString() %></td>
-                            <td><%= billing.invoice %></td>
-                            <td><%= billing.itemList %></td>
-                            <td><%= (billing.grandTotal - billing.amountPayed).toFixed(2) %></td>
-                            <td><%= billing.paymentDue %></td>
-                        </tr> 
-                        <tr>
-                            <td><%= billing.client.name %></td>
-                            <td><%= billing.billingDate.toLocaleDateString() %></td>
-                            <td><%= billing.invoice %></td>
-                            <td><%= billing.itemList %></td>
-                            <td><%= (billing.grandTotal - billing.amountPayed).toFixed(2) %></td>
-                            <td><%= billing.paymentDue %></td>
-                        </tr> 
-                        <tr>
-                            <td><%= billing.client.name %></td>
-                            <td><%= billing.billingDate.toLocaleDateString() %></td>
-                            <td><%= billing.invoice %></td>
-                            <td><%= billing.itemList %></td>
-                            <td><%= (billing.grandTotal - billing.amountPayed).toFixed(2) %></td>
-                            <td><%= billing.paymentDue %></td>
-                        </tr> 
-                        <tr>
-                            <td><%= billing.client.name %></td>
-                            <td><%= billing.billingDate.toLocaleDateString() %></td>
-                            <td><%= billing.invoice %></td>
-                            <td><%= billing.itemList %></td>
-                            <td><%= (billing.grandTotal - billing.amountPayed).toFixed(2) %></td>
-                            <td><%= billing.paymentDue %></td>
-                        </tr> 
-                        <tr>
-                            <td><%= billing.client.name %></td>
-                            <td><%= billing.billingDate.toLocaleDateString() %></td>
-                            <td><%= billing.invoice %></td>
-                            <td><%= billing.itemList %></td>
-                            <td><%= (billing.grandTotal - billing.amountPayed).toFixed(2) %></td>
-                            <td><%= billing.paymentDue %></td>
-                        </tr> 
-                        <tr>
-                            <td><%= billing.client.name %></td>
-                            <td><%= billing.billingDate.toLocaleDateString() %></td>
-                            <td><%= billing.invoice %></td>
-                            <td><%= billing.itemList %></td>
-                            <td><%= (billing.grandTotal - billing.amountPayed).toFixed(2) %></td>
-                            <td><%= billing.paymentDue %></td>
-                        </tr> 
-                        <tr>
-                            <td><%= billing.client.name %></td>
-                            <td><%= billing.billingDate.toLocaleDateString() %></td>
-                            <td><%= billing.invoice %></td>
-                            <td><%= billing.itemList %></td>
-                            <td><%= (billing.grandTotal - billing.amountPayed).toFixed(2) %></td>
-                            <td><%= billing.paymentDue %></td>
-                        </tr> 
-                        <tr>
-                            <td><%= billing.client.name %></td>
-                            <td><%= billing.billingDate.toLocaleDateString() %></td>
-                            <td><%= billing.invoice %></td>
-                            <td><%= billing.itemList %></td>
-                            <td><%= (billing.grandTotal - billing.amountPayed).toFixed(2) %></td>
-                            <td><%= billing.paymentDue %></td>
-                        </tr> 
-                        <tr>
-                            <td><%= billing.client.name %></td>
-                            <td><%= billing.billingDate.toLocaleDateString() %></td>
-                            <td><%= billing.invoice %></td>
-                            <td><%= billing.itemList %></td>
-                            <td><%= (billing.grandTotal - billing.amountPayed).toFixed(2) %></td>
-                            <td><%= billing.paymentDue %></td>
-                        </tr> 
-                        <tr>
-                            <td><%= billing.client.name %></td>
-                            <td><%= billing.billingDate.toLocaleDateString() %></td>
-                            <td><%= billing.invoice %></td>
-                            <td><%= billing.itemList %></td>
-                            <td><%= (billing.grandTotal - billing.amountPayed).toFixed(2) %></td>
-                            <td><%= billing.paymentDue %></td>
-                        </tr> 
-                        <tr>
-                            <td><%= billing.client.name %></td>
-                            <td><%= billing.billingDate.toLocaleDateString() %></td>
-                            <td><%= billing.invoice %></td>
-                            <td><%= billing.itemList %></td>
-                            <td><%= (billing.grandTotal - billing.amountPayed).toFixed(2) %></td>
-                            <td><%= billing.paymentDue %></td>
-                        </tr> 
-                        <tr>
-                            <td><%= billing.client.name %></td>
-                            <td><%= billing.billingDate.toLocaleDateString() %></td>
-                            <td><%= billing.invoice %></td>
-                            <td><%= billing.itemList %></td>
-                            <td><%= (billing.grandTotal - billing.amountPayed).toFixed(2) %></td>
-                            <td><%= billing.paymentDue %></td>
-                        </tr> 
-                        <tr>
-                            <td><%= billing.client.name %></td>
-                            <td><%= billing.billingDate.toLocaleDateString() %></td>
-                            <td><%= billing.invoice %></td>
-                            <td><%= billing.itemList %></td>
-                            <td><%= (billing.grandTotal - billing.amountPayed).toFixed(2) %></td>
-                            <td><%= billing.paymentDue %></td>
-                        </tr> 
-                        <tr>
-                            <td><%= billing.client.name %></td>
-                            <td><%= billing.billingDate.toLocaleDateString() %></td>
-                            <td><%= billing.invoice %></td>
-                            <td><%= billing.itemList %></td>
-                            <td><%= (billing.grandTotal - billing.amountPayed).toFixed(2) %></td>
-                            <td><%= billing.paymentDue %></td>
-                        </tr> 
-                        <tr>
-                            <td><%= billing.client.name %></td>
-                            <td><%= billing.billingDate.toLocaleDateString() %></td>
-                            <td><%= billing.invoice %></td>
-                            <td><%= billing.itemList %></td>
-                            <td><%= (billing.grandTotal - billing.amountPayed).toFixed(2) %></td>
-                            <td><%= billing.paymentDue %></td>
-                        </tr> 
-                        <tr>
-                            <td><%= billing.client.name %></td>
-                            <td><%= billing.billingDate.toLocaleDateString() %></td>
-                            <td><%= billing.invoice %></td>
-                            <td><%= billing.itemList %></td>
-                            <td><%= (billing.grandTotal - billing.amountPayed).toFixed(2) %></td>
-                            <td><%= billing.paymentDue %></td>
-                        </tr> 
-                        <tr>
-                            <td><%= billing.client.name %></td>
-                            <td><%= billing.billingDate.toLocaleDateString() %></td>
-                            <td><%= billing.invoice %></td>
-                            <td><%= billing.itemList %></td>
-                            <td><%= (billing.grandTotal - billing.amountPayed).toFixed(2) %></td>
-                            <td><%= billing.paymentDue %></td>
-                        </tr> 
-                        <tr>
-                            <td><%= billing.client.name %></td>
-                            <td><%= billing.billingDate.toLocaleDateString() %></td>
-                            <td><%= billing.invoice %></td>
-                            <td><%= billing.itemList %></td>
-                            <td><%= (billing.grandTotal - billing.amountPayed).toFixed(2) %></td>
-                            <td><%= billing.paymentDue %></td>
-                        </tr> 
-                        <tr>
-                            <td><%= billing.client.name %></td>
-                            <td><%= billing.billingDate.toLocaleDateString() %></td>
-                            <td><%= billing.invoice %></td>
-                            <td><%= billing.itemList %></td>
-                            <td><%= (billing.grandTotal - billing.amountPayed).toFixed(2) %></td>
-                            <td><%= billing.paymentDue %></td>
-                        </tr> 
-                        <tr>
-                            <td><%= billing.client.name %></td>
-                            <td><%= billing.billingDate.toLocaleDateString() %></td>
-                            <td><%= billing.invoice %></td>
-                            <td><%= billing.itemList %></td>
-                            <td><%= (billing.grandTotal - billing.amountPayed).toFixed(2) %></td>
-                            <td><%= billing.paymentDue %></td>
-                        </tr> 
-                        <tr>
-                            <td><%= billing.client.name %></td>
-                            <td><%= billing.billingDate.toLocaleDateString() %></td>
-                            <td><%= billing.invoice %></td>
-                            <td><%= billing.itemList %></td>
-                            <td><%= (billing.grandTotal - billing.amountPayed).toFixed(2) %></td>
-                            <td><%= billing.paymentDue %></td>
-                        </tr> 
-                </tbody>
+                            <th>Total Amount Payed</th>
+                            <td><%= billing.amountPayed %> </td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                    </tfoot>
             </table>
         </div>
 
-        <div class="col">
-
+        <div class="col-xl">
+            <h3 class="text-center mb-4">Make Payment</h3>
             <form class="needs-validation" action="/payment/pay/<%= billing._id %>" method="POST" novalidate>
                 <div class="input-group mb-3">
                     <span class="input-group-text" id="basic-addon1">Payment Date</span>
@@ -282,27 +81,27 @@
                         Must be between 0 and <%= (billing.grandTotal - billing.amountPayed).toFixed(2) %> inclusive, with upto two decimal places!
                     </div>
                 </div>
-                <div class="mb-5">
+                <div class="mb-3">
                     <fieldset>
                         <legend>Mode of Payment</legend>
                         <div class="mb-3">
-                            <input class="form-check-input" id="neft" type="radio" name="paymentDetails[payment][mode]" value="neft" required>
+                            <input class="form-check-input" id="neft" type="radio" name="paymentDetails[payment][mode]" value="NEFT" required>
                             <label class="form-check-label me-4" for="neft">NEFT</label>
                         </div>
                         <div class="mb-3">
-                            <input class="form-check-input" id="rtgs" type="radio" name="paymentDetails[payment][mode]" value="rtgs" required>
+                            <input class="form-check-input" id="rtgs" type="radio" name="paymentDetails[payment][mode]" value="RTGS" required>
                             <label class="form-check-label me-4" for="rtgs">RTGS</label>
                         </div>
                         <div class="mb-3">
-                            <input class="form-check-input" id="cash" type="radio" name="paymentDetails[payment][mode]" value="cash" required>
+                            <input class="form-check-input" id="cash" type="radio" name="paymentDetails[payment][mode]" value="Cash" required>
                             <label class="form-check-label me-4" for="cash">Cash</label>
                         </div>
                         <div class="mb-3">
-                            <input class="form-check-input" id="netBanking" type="radio" name="paymentDetails[payment][mode]" value="netBanking" required>
+                            <input class="form-check-input" id="netBanking" type="radio" name="paymentDetails[payment][mode]" value="Net Banking" required>
                             <label class="form-check-label me-4" for="netBanking">Net Banking</label>
                         </div>
                     </fieldset>
-                    <textarea class="mb-3 form-control" name="paymentDetails[payment][additionalInfo]" cols="55" rows="5" placeholder="Additional Information"></textarea>
+                    <textarea class="mb-2 form-control" name="paymentDetails[payment][additionalInfo]" cols="55" rows="2" placeholder="Additional Information"></textarea>
                     
                     <!-- TODO: Backend logic to send notification to a specific client -->
                     <input class="form-check-input" type="checkbox" name="sendNotification" id="sendNotification">
@@ -314,3 +113,17 @@
             </form>
         </div>
     </div>
+    <!-- <div class="row me-4 mb-5">
+        <div class="col">
+            <table class="table table-primary align-middle text-center border-secondary table-striped">
+                <tfoot>
+                    <td>Amount Payed</td>
+                    <td><%= billing.amountPayed %> </td>
+                    <td>Remaining Dues </td>
+                    <td><%= (billing.grandTotal - billing.amountPayed).toFixed(2) %> </td>
+                </tfoot>
+            </table>    
+        </div>
+        <div class="col"></div>
+    </div>
+     -->

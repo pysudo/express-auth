@@ -14,7 +14,7 @@ const paymentSchema = mongoose.Schema({
     },
     mode: {
         type: String,
-        enum: ["neft", "rtgs", "cash", "netBanking"],
+        enum: ["NEFT", "RTGS", "Cash", "Net Banking"],
         required: true
     },
     additionalInfo: {

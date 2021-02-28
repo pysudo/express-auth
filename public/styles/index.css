@@ -64,6 +64,10 @@ div#invoiceForm {
     border-right: 4px #cccc92 double;
 }
 
+#paymentHistory {
+    height: 550px;
+}
+
 @media (max-width: 820px) {
     td, th {
         font-size: 0.6em;

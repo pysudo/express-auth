@@ -51,5 +51,16 @@ const clientSchema = mongoose.Schema({
     ]
 });
 
+clientSchema.virtual('paidDues').get(function () {
+
+    for (let billing of this.billings) {
+        if (billing.paymentStatus === false) {
+            return false;
+        }
+    }
+    
+    return true;
+});
+
 
 module.exports = mongoose.model('Client', clientSchema);

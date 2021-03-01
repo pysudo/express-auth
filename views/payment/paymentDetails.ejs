@@ -5,59 +5,114 @@
     <div class="row main">
         <div class="col-12">
             <form id="sortBillingForm" action="/payment/sort" method="GET">
-                <input class="form-check-input sortBilling" id="invoice" type="radio" name="viewBy" value="invoice" <%= viewBy==='invoice' ? 'checked' : '' %>>
+                <input class="form-check-input sortBillingOptions" id="invoice" type="radio" name="viewBy" value="invoice" <%= viewBy==='invoice' ? 'checked' : '' %>>
                 <label class="form-check-label" for="invoice">Invoice</label>
-                <input class="form-check-input sortBilling" id="client" type="radio" name="viewBy" value="client" <%= viewBy==='client' ? 'checked' : '' %>>
+                <input class="form-check-input sortBillingOptions" id="client" type="radio" name="viewBy" value="client" <%= viewBy==='client' ? 'checked' : '' %>>
                 <label class="form-check-label" for="client">Client</label>
             </form>
-            <table class="table align-middle text-center border-secondary table-striped mt-5">
-                <thead>
-                    <tr>
-                        <th scope="col">Client ID</th>
-                        <th scope="col">Date</th>
-                        <th scope="col">Invoice No</th>
-                        <th scope="col">Items</th>
-                        <th scope="col">Amount to be Payed</th>
-                        <th scope="col">Payment Due</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <% for(let billing of billings) { %>
-                        <tr>
-                            <td><%= billing.client.name %></td>
-                            <td><%= billing.billingDate.toLocaleDateString() %></td>
-                            <td><%= billing.invoice %></td>
-                            <td><%= billing.itemList %></td>
-                            <td><%= (billing.grandTotal - billing.amountPayed).toFixed(2) %></td>
-                            <td>
-                                <% if(billing.paymentStatus) { %>
-                                    Paid
-                                <% } else { %>
-                                    <%= billing.paymentDue %>
-                                <% } %>   
-                            </td>
-                            <td class="border-0">
-                              <form action="/payment/pay/<%= billing._id %>">
-                                  <button class="btn btn-primary my-1" type="submit">Pay</button>
-                              </form>
-                            </td>
-                        </tr> 
-                        <% } %> 
+                <% if(viewBy === "invoice" || viewBy === "default" ) { %> 
+                    <table class="table align-middle text-center border-secondary table-striped mt-5">
+                        <thead>
+                            <tr>
+                                <th scope="col">Client ID</th>
+                                <th scope="col">Date</th>
+                                <th scope="col">Invoice No</th>
+                                <th scope="col">Items</th>
+                                <th scope="col">Amount to be Payed</th>
+                                <th scope="col">Payment Due</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <% for(let billing of billings) { %>
+                                <tr>
+                                    <td><%= billing.client.name %></td>
+                                    <td><%= billing.billingDate.toLocaleDateString() %></td>
+                                    <td><%= billing.invoice %></td>
+                                    <td><%= billing.itemList %></td>
+                                    <td><%= (billing.grandTotal - billing.amountPayed).toFixed(2) %></td>
+                                    <td>
+                                        <% if(billing.paymentStatus) { %>
+                                            Paid
+                                        <% } else { %>
+                                            <%= billing.paymentDue %>
+                                        <% } %>   
+                                    </td>
+                                    <td class="border-0">
+                                    <form action="/payment/pay/<%= billing._id %>">
+                                        <button class="btn btn-primary my-1" type="submit">Pay</button>
+                                    </form>
+                                    </td>
+                                </tr> 
+                            <% } %>
+                <% } else { %>
+                    <table class="table align-middle text-center border-secondary table-striped mt-5">
+                        <thead>
+                            <tr>
+                                <th scope="col">Client Name</th>
+                                <th scope="col">Address</th>
+                                <th scope="col">Email</th>
+                                <th scope="col">Contact</th>
+                                <th scope="col">GST</th>
+                                <th scope="col">PAN</th>
+                            </tr>
+                        </thead>
+                    <tbody>
+                        <% for(let client of clients) { %>
+                            <% if(!client.paidDues) { %> 
+                                <tr class="clientWiseSort" id="<%= client._id %>">
+                                    <td><%= client.name %></td>   
+                                    <td><%= client.address %></td>   
+                                    <td><%= client.email %></td>   
+                                    <td><%= client.contact %></td>   
+                                    <td><%= client.gst %></td>   
+                                    <td><%= client.pan %></td>   
+                                </tr>
+                                <tr class="<%= client._id %>">
+                                    <td id="clientPayments" colspan="6">
+                                        <table class="table align-middle table-primary text-center table-striped m-0">
+                                            <thead>
+                                                <tr>
+                                                    <th scope="col">Date</th>
+                                                    <th scope="col">Invoice No</th>
+                                                    <th scope="col">Items</th>
+                                                    <th scope="col">Amount to be Payed</th>
+                                                    <th scope="col">Payment Due</th>
+                                                    <th scope="col"></th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <% for(let billing of billings) { %>
+                                                    <% if (billing.client.name == client.name) { %> 
+                                                        <tr>
+                                                            <td><%= billing.billingDate.toLocaleDateString() %></td>
+                                                            <td><%= billing.invoice %></td>
+                                                            <td><%= billing.itemList %></td>
+                                                            <td><%= (billing.grandTotal - billing.amountPayed).toFixed(2) %></td>
+                                                            <td>
+                                                                <% if(billing.paymentStatus) { %>
+                                                                    Paid
+                                                                <% } else { %>
+                                                                    <%= billing.paymentDue %>
+                                                                <% } %>   
+                                                            </td>
+                                                            <td>
+                                                            <form action="/payment/pay/<%= billing._id %>">
+                                                                <button class="btn btn-primary my-1" type="submit">Pay</button>
+                                                            </form>
+                                                            </td>
+                                                        </tr> 
+                                                    <% } %> 
+                                                <% } %>
+                                            </tbody>
+                                        </table>
+                                    </td>
+                                </tr>
+                            <% } %> 
+                        <% } %>
+                <% } %>   
                 </tbody>
             </table>
         </div>
     </div>
 
-
-    <script>
-        let a = document.getElementById('sortBillingForm');
-        document.addEventListener("DOMContentLoaded", function(){
-
-            let b = document.getElementsByClassName('sortBilling');
-            [...b].forEach(item => {
-            item.addEventListener('click', () => {
-                a.submit();
-            })
-        })
-        })
-    </script>
+    <script src="/scripts/payment.js"></script>

@@ -53,7 +53,7 @@ module.exports.profileSchema = Joi.object({
             bankAddress: Joi.string()
                 .required(),
             accountType: Joi.string()
-                .valid('savings', 'current', 'others')
+                .valid("savings", "current", "others")
                 .required(),
             accountNumber: Joi.number()
                 .required(),
@@ -80,7 +80,7 @@ module.exports.purchaseSchema = Joi.object({
             bankName: Joi.string()
                 .required(),
             accountType: Joi.string()
-                .valid('savings', 'current', 'others')
+                .valid("savings", "current", "others")
                 .required(),
             accountNumber: Joi.number()
                 .required(),
@@ -102,7 +102,7 @@ module.exports.transactionSchema = Joi.object({
         description: Joi.string()
             .required(),
         mode: Joi.string()
-            .valid('cash', 'online', 'others')
+            .valid("cash", "online", "others")
             .required(),
         referenceNumber: Joi.string()
             .required()
@@ -136,7 +136,7 @@ module.exports.paymentSchema = Joi.object({
         amountPayed: Joi.number()
             .required(),
         mode: Joi.string()
-            .valid('neft', 'rtgs', 'cash', 'netBanking')
+            .valid("NEFT", "RTGS", "Cash", "Net Banking")
             .required(),
         additionalInfo: Joi.string()
             .allow('')

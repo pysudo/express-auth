@@ -52,7 +52,14 @@ router.get('/billing/:clientID/send/:billingID', async (request, response) => {
 router.get('/billing/:id', checkAuthentication, async (request, response) => {
 
     const { id } = request.params;
-    const clientDetail = await Client.findById(id).populate('billings');
+    let clientDetail = await Client.findById(id).populate(
+        {
+            path: 'billings',
+            match: {
+                delRec: false
+            }
+        }
+    );
 
     let amountPayable = 0;
     let payedAmount = 0;
@@ -60,6 +67,8 @@ router.get('/billing/:id', checkAuthentication, async (request, response) => {
         amountPayable += billing.grandTotal;
         payedAmount += billing.amountPayed;
     };
+
+    clientDetail = await Client.findById(id).populate('billings');
 
     response.render('client/billing', { title: "Billing", clientDetail, amountPayable, payedAmount })
 })

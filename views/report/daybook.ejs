@@ -1,0 +1,78 @@
+<% layout('layouts/base') -%>
+
+    <div class="row main">
+        <div class="col-12">
+            <table class="table align-middle text-center border-secondary table-hover">
+                <thead>
+                <tr>
+                    <th scope="col">Date</th>
+                    <th scope="col">Particulars</th>
+                    <th scope="col">Mode of Payments</th>
+                    <th scope="col">Debit Amount</th>
+                    <th scope="col">Credit amount</th>
+                    <th class="border-white" scope="col"></th>
+                </tr>
+                </thead>
+                <tbody> 
+                    <% let [transactionsLen, paymentsLen] = [Object.keys(transactions).length, Object.keys(payments).length]  %>
+                    <% let maxLen = transactionsLen > paymentsLen ? transactionsLen : paymentsLen %>
+                    <% let totalLen = transactionsLen + paymentsLen %>
+                    <% let i, j; i = j = 0 %>
+                    <% for(let k = 0; k < totalLen; k++) { %> 
+                            <% if((i < transactionsLen) && (j < paymentsLen)) { %>
+                                <% if(transactions[i].date < payments[j].modified.at) { %>
+                                    <tr class=<%= transactions[i].delRec===true ? "bg-secondary" :"bg-danger" %>>
+                                        <td><%= transactions[i].date.toDateString() %></td>
+                                        <td><%= transactions[i].description %></td>
+                                        <td><%= transactions[i].mode %></td>
+                                        <td><%= transactions[i].amount %></td>
+                                        <td></td>
+                                        <% if(transactions[i].delRec===true) { %> 
+                                            <td class="bg-white border-white text-danger">deleted</td>
+                                        <% } %> 
+                                        <% i++ %> 
+                                    </tr>
+                                <% } else { %>
+                                    <tr class=<%= payments[j].billing.delRec===true ? "bg-secondary" :"bg-success" %>>
+                                        <td><%= payments[j].modified.at.toDateString() %></td>    
+                                        <td><%= payments[j].billing.itemList %></td>    
+                                        <td><%= payments[j].mode %></td>    
+                                        <td></td>
+                                        <td><%= payments[j].amountPayed %></td>
+                                        <% if(payments[j].billing.delRec===true) { %> 
+                                            <td class="bg-white border-white text-danger">deleted</td>
+                                        <% } %>     
+                                        <% j++ %>
+                                    </tr>
+                                <% } %>
+                            <% } else if(i < transactionsLen) { %>
+                                <tr class=<%= transactions[i].delRec===true ? "bg-secondary" :"bg-danger" %>>
+                                    <td><%= transactions[i].date.toDateString() %></td>
+                                    <td><%= transactions[i].description %></td>
+                                    <td><%= transactions[i].mode %></td>
+                                    <td><%= transactions[i].amount %></td>
+                                    <td></td>
+                                    <% if(transactions[i].delRec===true) { %> 
+                                        <td class="bg-white border-white text-danger">deleted</td>
+                                    <% } %> 
+                                    <% i++ %>
+                                </tr>
+                            <% } else if(j < paymentsLen) { %>
+                                <tr class=<%= payments[j].billing.delRec===true ? "bg-secondary" :"bg-success" %>>
+                                    <td><%= payments[j].modified.at.toDateString() %></td>    
+                                    <td><%= payments[j].billing.itemList %></td>    
+                                    <td><%= payments[j].mode %></td>    
+                                    <td></td>
+                                    <td><%= payments[j].amountPayed %></td>
+                                    <% if(payments[j].billing.delRec===true) { %> 
+                                        <td class="bg-white border-white text-danger">deleted</td>
+                                    <% } %>   
+                                    <% j++ %>
+                                </tr>
+                            <% } %>   
+                        </tr>
+                    <% } %> 
+                </tbody>
+            </table>
+        </div>
+    </div>

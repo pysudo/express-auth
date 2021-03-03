@@ -58,7 +58,7 @@
                         </thead>
                     <tbody>
                         <% for(let client of clients) { %>
-                            <% if(!client.paidDues && client.billings.delRec) { %> 
+                            <% if(!client.paidDues && !client.billings.delRec) { %> 
                                 <tr class="clientWiseSort" id="<%= client._id %>">
                                     <td><%= client.name %></td>   
                                     <td><%= client.address %></td>   

@@ -7,13 +7,19 @@ const User = require('../models/user');
 
 prompt.start();
 
-mongoose.connect('mongodb://localhost:27017/portfolio', { useNewUrlParser: true, useUnifiedTopology: true, useFindAndModify: false });
+mongoose.connect('mongodb+srv://bearsterns:moonwalk123%23%25@portfoliodb.llzrs.mongodb.net/portfolioDB?retryWrites=true&w=majority',
+    {
+        useNewUrlParser: true,
+        useUnifiedTopology: true,
+        useFindAndModify: false,
+        useCreateIndex: true,
+    });
 const db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
 
 
 
-prompt.get([ 'username', 'password', 'firstname', 'lastname'], async function (err, user) {
+prompt.get(['username', 'password', 'firstname', 'lastname'], async function (err, user) {
     if (err) { return onErr(err); }
 
 

@@ -1,10 +1,13 @@
+require('dotenv').config()
+
 const express = require('express');
 const mongoose = require('mongoose');
 const engine = require('ejs-mate');
 const path = require('path');
 const flash = require('connect-flash');
 const session = require('express-session')
-var methodOverride = require('method-override')
+const methodOverride = require('method-override')
+const MongoStore = require('connect-mongo').default;
 
 
 const user = require('./routes/authentication');
@@ -15,16 +18,19 @@ const client = require('./routes/client');
 const report = require('./routes/report');
 const payment = require('./routes/payment');
 const User = require('./models/user');
-const { checkAuthentication, accessGrant} = require('./utils/middlewares');
+const { checkAuthentication, accessGrant } = require('./utils/middlewares');
 
 
-
-mongoose.connect('mongodb://localhost:27017/portfolio', {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-    useFindAndModify: false,
-    useCreateIndex: true
-});
+DB_URL = process.env.DB_URL;
+LOCAL_DB = "mongodb://localhost:27017/portfolio";
+const dbInstancePath = DB_URL || LOCAL_DB;
+mongoose.connect(`${dbInstancePath}`,
+    {
+        useNewUrlParser: true,
+        useUnifiedTopology: true,
+        useCreateIndex: true,
+        useFindAndModify: false,
+    });
 const db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
 db.once('open', function () {
@@ -41,15 +47,22 @@ app.set('view engine', 'ejs');
 
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.urlencoded({ extended: true }));
+
+const secret = process.env.SESSION_SECRET; 
 app.use(session({
-    secret: 'sample',
+    secret,
     resave: false,
     saveUninitialized: true,
     cookie: {
         expires: Date.now() + 1000 * 60 * 60 * 24,
         maxAge: 1000 * 60 * 60 * 24,
         httpOnly: true
-    }
+    },
+    store: MongoStore.create({
+        secret,
+        mongoUrl: dbInstancePath,
+        touchAfter: 24 * 60 * 60
+    })
 }))
 app.use(flash());
 app.use(async (request, response, next) => {

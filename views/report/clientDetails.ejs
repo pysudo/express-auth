@@ -1,0 +1,48 @@
+<% layout('layouts/base') -%>
+
+
+<div class="row main">
+    <div class="col-12">
+        <form class="mb-5" action="/report/clientDetails" method="GET">
+                <div class="col-6">
+                    <div class="input-group">
+                        <label for="fromRange">
+                            <span class="input-group-text">From</span>
+                        </label>
+                        <input class="form-control" type="date" name="fromRange" id="fromRange" value="<%= fromRange %>">
+                        <label for="toRange">
+                            <span class="input-group-text ms-5">From</span>
+                        </label>
+                        <input class="form-control" type="date" name="toRange" id="toRange" value="<%= toRange %>">
+                        <button class="btn btn-primary border-danger text-white ms-5" type="submit">Search</button>
+                    </div>
+                </div>
+        </form>
+        <table class="table align-middle text-center border-secondary table-hover">
+            <thead>
+            <tr>
+                <th scope="col">Date</th>
+                <th scope="col">Invoice</th>
+                <th scope="col">Items</th>
+                <th scope="col">Amount</th>
+                <th scope="col">Name</th>
+                <th scope="col">Email</th>
+                <th scope="col">Contact</th>
+            </tr>
+            </thead>
+            <tbody> 
+                <% for(let billing of billings) { %> 
+                    <tr>
+                        <td><%= billing.billingDate.toDateString() %></td>
+                        <td><%= billing.invoice %></td>
+                        <td><%= billing.itemList %></td>
+                        <td><%= billing.grandTotal %></td>
+                        <td><%= billing.client.name %></td>
+                        <td><%= billing.client.email %></td>
+                        <td><%= billing.client.contact %></td>
+                    </tr>
+                <% } %> 
+            </tbody>
+        </table>
+    </div>
+</div>

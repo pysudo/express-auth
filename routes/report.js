@@ -2,7 +2,8 @@ const express = require('express');
 
 const Transaction = require('../models/transaction');
 const Payment = require('../models/payment');
-const { checkAuthentication, accessGrant } = require('../utils/middlewares');
+const Billing = require('../models/billing');
+const { checkAuthentication } = require('../utils/middlewares');
 
 
 router = express.Router();
@@ -10,27 +11,57 @@ router = express.Router();
 
 router.get('/daybook', checkAuthentication, async (request, response) => {
 
-    
+
     const transactions = await Transaction.find({}).sort('date');
     const payments = await Payment.find({}).sort('modified.at').populate('billing');
 
-    console.log("TRANSACATION")
-    console.log(transactions)
-    console.log("PAYMENTS")
-    console.log(payments)
-    response.render("report/daybook", {title: 'Daybook', transactions, payments});
+    response.render("report/daybook", { title: 'Daybook', transactions, payments });
 });
 
 
-router.get('/clientDetails', (request, response) => {
+router.get('/clientDetails', checkAuthentication, async (request, response) => {
 
-    response.send("Client Details")
+    const { fromRange, toRange } = request.query;
+
+    let billings;
+    if (fromRange === "default" && toRange === "default") {
+        billings = await Billing.find({}).sort({ 'billingDate': 1 }).populate('client');
+    }
+    else {
+        billings = await Billing.find({ "billingDate": { $gte: fromRange, $lte: toRange } }).sort({ 'billingDate': 1 }).populate('client');
+    }
+
+    if (Object.keys(billings).length === 0) {
+        request.flash('error', "No records found. Enter a valid range!");
+        response.status(404);
+        response.redirect('/report/clientDetails/?fromRange=default&toRange=default');
+    }
+    else {
+        response.render("report/clientDetails", { title: 'Client Details', billings, fromRange, toRange });
+    }
 });
 
 
-router.get('/purchaseDetails', (request, response) => {
+router.get('/purchaseDetails', checkAuthentication, async (request, response) => {
 
-    response.send("Purchase Details")
+    const { fromRange, toRange } = request.query;
+
+    let payments;
+    if (fromRange === "default" && toRange === "default") {
+        payments = await Payment.find({}).sort({ 'modified.at': 1 }).populate('billing').populate('client');
+    }
+    else {
+        payments = await Payment.find({ "modified.at": { $gte: fromRange, $lte: toRange } }).sort({ 'modified.at': 1 }).populate('billing').populate('client');
+    }
+
+    if (Object.keys(payments).length === 0) {
+        request.flash('error', "No records found. Enter a valid range!");
+        response.status(404);
+        response.redirect('/report/clientDetails/?fromRange=default&toRange=default');
+    }
+    else {
+        response.render("report/purchaseDetails", { title: 'Purchase Details', payments, fromRange, toRange });
+    }
 });
 
 

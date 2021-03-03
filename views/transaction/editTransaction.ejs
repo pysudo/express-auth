@@ -31,19 +31,19 @@
                 <div class="mb-3">
                     <h6>Mode of Payments</h6>
                     <div class="form-check">
-                        <input class="form-check-input" type="radio" name="transaction[mode]" id="online" value="online" <%= transaction.mode === "online" ? "checked" : ""%> required>
+                        <input class="form-check-input" type="radio" name="transaction[mode]" id="online" value="Online" <%= transaction.mode === "online" ? "checked" : ""%> required>
                         <label class="form-check-label" for="online">
                             Online
                         </label>
                     </div>
                     <div class="form-check">
-                        <input class="form-check-input" type="radio" name="transaction[mode]" id="cash" value="cash" <%= transaction.mode === "cash" ? "checked" : ""%>>
+                        <input class="form-check-input" type="radio" name="transaction[mode]" id="cash" value="Cash" <%= transaction.mode === "cash" ? "checked" : ""%>>
                         <label class="form-check-label" for="cash">
                             Cash
                         </label>
                     </div>
                     <div class="form-check">
-                        <input class="form-check-input" type="radio" name="transaction[mode]" id="others" value="others" <%= transaction.mode === "others" ? "checked" : ""%>>
+                        <input class="form-check-input" type="radio" name="transaction[mode]" id="others" value="Others" <%= transaction.mode === "others" ? "checked" : ""%>>
                         <label class="form-check-label" for="others">
                             Others
                         </label>

@@ -16,7 +16,7 @@ const transactionSchema = mongoose.Schema({
     },
     mode: {
         type: String,
-        enum: ["cash", "online", "others"],
+        enum: ["Cash", "Online", "Others"],
         required: true
     },
     referenceNumber: {

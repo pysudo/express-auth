@@ -102,7 +102,7 @@ module.exports.transactionSchema = Joi.object({
         description: Joi.string()
             .required(),
         mode: Joi.string()
-            .valid("cash", "online", "others")
+            .valid("Cash", "Online", "Others")
             .required(),
         referenceNumber: Joi.string()
             .required()

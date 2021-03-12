@@ -22,6 +22,7 @@ router.get('/daybook', checkAuthentication, async (request, response) => {
 router.get('/clientDetails', checkAuthentication, async (request, response) => {
 
     const { fromRange, toRange } = request.query;
+    const billingsIsExists = (await Billing.countDocuments({}) > 0) ? true : false;
 
     let billings;
     if (fromRange === "default" && toRange === "default") {
@@ -31,7 +32,7 @@ router.get('/clientDetails', checkAuthentication, async (request, response) => {
         billings = await Billing.find({ "billingDate": { $gte: fromRange, $lte: toRange } }).sort({ 'billingDate': 1 }).populate('client');
     }
 
-    if (Object.keys(billings).length === 0) {
+    if (Object.keys(billings).length === 0 && billingsIsExists) {
         request.flash('error', "No records found. Enter a valid range!");
         response.status(404);
         response.redirect('/report/clientDetails/?fromRange=default&toRange=default');
@@ -45,6 +46,7 @@ router.get('/clientDetails', checkAuthentication, async (request, response) => {
 router.get('/purchaseDetails', checkAuthentication, async (request, response) => {
 
     const { fromRange, toRange } = request.query;
+    const paymentsIsExists = (await Payment.countDocuments({}) > 0) ? true : false;
 
     let payments;
     if (fromRange === "default" && toRange === "default") {
@@ -54,10 +56,10 @@ router.get('/purchaseDetails', checkAuthentication, async (request, response) =>
         payments = await Payment.find({ "modified.at": { $gte: fromRange, $lte: toRange } }).sort({ 'modified.at': 1 }).populate('billing').populate('client');
     }
 
-    if (Object.keys(payments).length === 0) {
+    if (Object.keys(payments).length === 0 && paymentsIsExists) {
         request.flash('error', "No records found. Enter a valid range!");
         response.status(404);
-        response.redirect('/report/clientDetails/?fromRange=default&toRange=default');
+        response.redirect('/report/purchaseDetails/?fromRange=default&toRange=default');
     }
     else {
         response.render("report/purchaseDetails", { title: 'Purchase Details', payments, fromRange, toRange });

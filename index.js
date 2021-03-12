@@ -48,7 +48,7 @@ app.set('view engine', 'ejs');
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.urlencoded({ extended: true }));
 
-const secret = process.env.SESSION_SECRET; 
+const secret = process.env.SESSION_SECRET || "local secret"; 
 app.use(session({
     secret,
     resave: false,

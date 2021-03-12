@@ -5,14 +5,13 @@
         <ol class="breadcrumb">
             <li><a href="/client">Client Details</a></li>
             <li class="breadcrumbs"><a href="/client/billing/<%= clientDetail._id %>">Show Billings</a></li>
-            <li class="breadcrumbs"><a href="/client/billing/add/<%= clientDetail._id %>">Add Billing</a></li>
+            <li class="breadcrumbs"><a href="/client/billing/edit/<%= clientDetail._id %>">Edit Billing</a></li>
         </ol>
     </nav>
 
-    <h1 class="text-center">Tax Invoice</h1>
+    <h1 class="text-center">Edit Tax Invoice</h1>
 
     <div class="row main">
-
         <div class="col-12 mb-5">
             <table id="clientTable" class="table table-success align-middle text-center border-secondary table-striped">
                 <thead>
@@ -40,7 +39,7 @@
 
     <div class="row m-3 mt-5">
         
-        <form class="needs-validation" action="/client/billing/<%= clientDetail._id %>" method="POST" novalidate>
+        <form class="needs-validation" action="/client/billing/<%= clientDetail._id %>/edit/<%= billings._id %>?_method=PATCH" method="POST" novalidate>
             <div class="col-3 mb-5">
                 <div class="input-group">
                     <span class="input-group-text" id="basic-addon1">Purchase Detail</span>
@@ -66,48 +65,51 @@
                         </tr>
                     </thead>
                     <tbody id="invoice">
-                        <tr id="1-item">
-                            <td>
-                                <input class="form-control" id="1-items" type="text" name="billing[items]" required>
-                                <div class="invalid-feedback">
-                                    Must not be blank!
-                                </div>
-                            </td>
-                            <td>
-                                <input class="form-control" id="1-hsn" type="number" name="billing[hsn]" min="1" step="1" min="0" required>
-                                <div class="invalid-feedback">
-                                    Must be a whole number greater than 0!
-                                </div>
-                            </td>
-                            <td>
-                                <input class="form-control" id="1-quantity" type="number" name="billing[quantity]" min="1" step="1" min="0" required>
-                                <div class="invalid-feedback">
-                                    Must be a whole number greater than 0!
-                                </div>
-                            </td>
-                            <td>
-                                <input class="form-control" id="1-price" type="number" name="billing[price]" min="0" step="0.01" required>
-                                <div class="invalid-feedback">
-                                    Must be greater than 0 and upto two decimal places!
-                                </div>
-                            </td>
-                            <td>
-                                <input class="form-control" id="1-gst" type="number" name="billing[gst]" min="0" max="100" step="0.01" required>
-                                <div class="invalid-feedback">
-                                    Should be between 0 to 100 and upto two decimal places!
-                                </div>
-                            </td>
-                            <td>
-                                <input class="form-control" id="1-grandPrice" type="number" name="billing[grandPrice]" step="0.01" readonly required>
-                            </td>
-                        </tr>
+                        <% for(let i = 0; i < billings.hsn.length; i++) { %>
+
+                            <tr id="<%= i + 1 %>-item">
+                                <td>
+                                    <input class="form-control" id="<%= i + 1 %>-items" type="text" name="billing[items]" value="<%= billings.items[i] %>" required>
+                                    <div class="invalid-feedback">
+                                        Must not be blank!
+                                    </div>
+                                </td>
+                                <td>
+                                    <input class="form-control" id="<%= i + 1 %>-hsn" type="number" name="billing[hsn]" min="1" step="1" min="0" value="<%= billings.hsn[i] %>" required>
+                                    <div class="invalid-feedback">
+                                        Must be a whole number greater than 0!
+                                    </div>
+                                </td>
+                                <td>
+                                    <input class="form-control" id="<%= i + 1 %>-quantity" type="number" name="billing[quantity]" min="1" step="1" min="0" value="<%= billings.quantity[i] %>" required>
+                                    <div class="invalid-feedback">
+                                        Must be a whole number greater than 0!
+                                    </div>
+                                </td>
+                                <td>
+                                    <input class="form-control" id="<%= i + 1 %>-price" type="number" name="billing[price]" min="0" step="0.01" value="<%= billings.price[i] %>" required>
+                                    <div class="invalid-feedback">
+                                        Must be greater than 0 and upto two decimal places!
+                                    </div>
+                                </td>
+                                <td>
+                                    <input class="form-control" id="<%= i + 1 %>-gst" type="number" name="billing[gst]" min="0" max="100" step="0.01" value="<%= billings.gst[i] %>" required>
+                                    <div class="invalid-feedback">
+                                        Should be between 0 to 100 and upto two decimal places!
+                                    </div>
+                                </td>
+                                <td>
+                                    <input class="form-control" id="<%= i + 1 %>-grandPrice" type="number" name="billing[grandPrice]" step="0.01" value="<%= billings.grandPrice[i] %>" readonly required>
+                                </td>
+                            </tr>
+                        <% } %>
                         <tr id="grandTotal">
                             <td></td>
                             <td></td>
                             <td></td>
                             <td></td>
                             <td class="text-end align-middle fw-bold">Grand Total:</td>
-                            <td><input class="form-control" id="1-grandPrice" type="number" step="0.01" readonly required></td>
+                            <td><input class="form-control" id="1-grandPrice" type="number" step="0.01" value="<%= billings.grandTotal %>" readonly required></td>
                         </tr>
                     </tbody>
                 </table>
@@ -118,4 +120,4 @@
         </form>
     </div>
 
-    <script src="/scripts/billing.js"></script>
+    <script src="/scripts/editBilling.js"></script>

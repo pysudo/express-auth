@@ -29,7 +29,7 @@
                                     <td><%= billing.billingDate.toLocaleDateString() %></td>
                                     <td><%= billing.invoice %></td>
                                     <td><%= billing.itemList %></td>
-                                    <td><%= (billing.grandTotal - billing.amountPayed).toFixed(2) %></td>
+                                    <td><%= Math.round(billing.grandTotal - billing.amountPayed) %></td>
                                     <td>
                                         <% if(billing.paymentStatus) { %>
                                             Paid
@@ -87,7 +87,7 @@
                                                             <td><%= billing.billingDate.toLocaleDateString() %></td>
                                                             <td><%= billing.invoice %></td>
                                                             <td><%= billing.itemList %></td>
-                                                            <td><%= (billing.grandTotal - billing.amountPayed).toFixed(2) %></td>
+                                                            <td><%= Math.round(billing.grandTotal - billing.amountPayed) %></td>
                                                             <td>
                                                                 <% if(billing.paymentStatus) { %>
                                                                     Paid

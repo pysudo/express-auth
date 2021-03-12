@@ -34,7 +34,7 @@
                     <tr>
                         <td><%= payment.modified.at.toDateString() %></td>
                         <td><%= payment.billing.itemList %></td>
-                        <td><%= payment.amountPayed %></td>
+                        <td><%= Math.round(payment.amountPayed) %></td>
                         <td><%= payment.client.name %></td>
                         <td><%= payment.client.email %></td>
                         <td><%= payment.client.contact %></td>

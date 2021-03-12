@@ -6,15 +6,19 @@ const billingSchema = mongoose.Schema({
         type: [String],
         required: true,
     },
+    hsn: {
+        type: [Number],
+        required: true,
+    },
     quantity: {
         type: [Number],
         required: true,
     },
-    gst: {
+    price: {
         type: [Number],
         required: true
     },
-    price: {
+    gst: {
         type: [Number],
         required: true
     },

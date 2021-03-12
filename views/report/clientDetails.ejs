@@ -36,7 +36,7 @@
                         <td><%= billing.billingDate.toDateString() %></td>
                         <td><%= billing.invoice %></td>
                         <td><%= billing.itemList %></td>
-                        <td><%= billing.grandTotal %></td>
+                        <td><%= Math.round(billing.grandTotal) %></td>
                         <td><%= billing.client.name %></td>
                         <td><%= billing.client.email %></td>
                         <td><%= billing.client.contact %></td>

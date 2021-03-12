@@ -31,9 +31,9 @@
                         <td><%= clientDetail.address %></td>
                         <td><%= clientDetail.email %></td>
                         <td><%= clientDetail.contact %></td>
-                        <td><%= amountPayable %></td>
-                        <td><%= payedAmount %></td>
-                        <td><%= amountPayable - payedAmount %></td>
+                        <td><%= Math.round(amountPayable) %></td>
+                        <td><%= Math.round(payedAmount) %></td>
+                        <td><%= Math.round(amountPayable - payedAmount) %></td>
                     </tr>
                 </tbody>
               </table>
@@ -64,7 +64,7 @@
                                 <%= billing.itemList %>
                             </td>
                             <td>
-                                <%= billing.grandTotal - billing.amountPayed %>
+                                <%= Math.round(billing.grandTotal - billing.amountPayed) %>
                             </td>
                             <td>
                                 <% if(billing.paymentStatus) { %>
@@ -77,10 +77,15 @@
                                 <%= billing.modified.by %>
                             </td>
                             <td class="border-0">
+                                <form action="/client/billing/<%= clientDetail._id %>/edit/<%= billing._id %>" method="GET">
+                                    <button class="btn btn-primary my-1" type="submit" <%= billing.delRec === true ? "disabled" : "" %>>Edit</button>
+                                </form>
+                            </td>
+                            <td class="border-0">
                                 <form action="/client/billing/<%= clientDetail._id %>/send/<%= billing._id %>" method="GET">
                                     <button class="btn btn-primary my-1" type="submit" <%= billing.delRec === true ? "disabled" : "" %>>Invoice</button>
                                 </form>
-                              </td>
+                            </td>
                             <td class="border-0">
                                 <form action="/client/billing/confirm-deletion/<%= billing._id %>" method="GET">
                                     <button class="btn-close" type="submit" <%= billing.delRec === true ? "disabled" : "" %>></button>

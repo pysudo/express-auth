@@ -47,6 +47,17 @@ router.get('/billing/:clientID/send/:billingID', async (request, response) => {
     response.render('client/invoice', { title: "Invoice", billings })
 })
 
+// Renders prefilled exisiting billing form for edit
+router.get('/billing/:clientID/edit/:billingID', async (request, response) => {
+
+    const { clientID, billingID } = request.params;
+
+    const billings = await Billing.findById(billingID).populate('client').populate('companyProfile');
+    const companyProfiles = await Profile.find({});
+
+    response.render('client/editBilling', { title: "Edit Billing", billings, clientDetail: billings.client, companyProfiles})
+})
+
 
 // Renders list of all the billings of a specific client
 router.get('/billing/:id', checkAuthentication, async (request, response) => {
@@ -103,6 +114,19 @@ router.post('/billing/:id', checkAuthentication, accessGrant, async (request, re
     await billing.save()
 
     response.redirect(`/client/billing/${id}`)
+}
+)
+// Edits and stoes the edited billing data for a specific client
+router.patch('/billing/:clientID/edit/:billingID', checkAuthentication, accessGrant, async (request, response) => {
+
+    const { clientID, billingID } = request.params;
+
+    const billing = await Billing.findByIdAndUpdate(billingID, request.body.billing);
+    const user = await User.findOne({ _id: request.session.userID });
+    billing.modified.by = `${user.firstname} ${user.lastname}`;
+    await billing.save()
+
+    response.redirect(`/client/billing/${clientID}`)
 })
 
 

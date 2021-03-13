@@ -1,6 +1,8 @@
 <% layout('layouts/base') -%>
 
-    <div id="invoiceForm">
+
+        <b><input class="btn btn-info mt-4" type=button onClick=window.print() value='Print this Invoice'></b><br /><br />
+        <div class="mb-5" id="form">
         <div class="container border p-0 mt-5">
             <div class="container">
                 <div class="row d-flex justify-content-center">
@@ -43,7 +45,11 @@
             <div class="container">
                 <div class="row">
                     <div class="col border-top border-bottom">
-                        <p class="fs-5   mb-0"><b>To: </b></p>
+                        <p class="fs-5 mb-0"><b>To: </b></p>
+                        <p class="fs-5 mb-0 ps-5"><b><%= billings.purchaseDetail.name %>  </b></p>
+                        <p class="fs-5 mb-0 ps-5"><b><%= billings.purchaseDetail.address %>  </b></p>
+                        <p class="fs-5 mb-0 ps-5"><b>email: <%= billings.purchaseDetail.email %>  </b></p>
+                        <p class="fs-5 mb-0 ps-5"><b>Ph: <%= billings.purchaseDetail.contact %>  </b></p>
                     </div>
                     <div class="col border-top border-bottom">
                         <div class="row">
@@ -57,6 +63,8 @@
                         <div class="row">
                             <div class="col border-top border-bottom border-start">
                                 <p class="mb-0 pb-5"><b>Your Ref:</b></p>
+                                <div class="mb-0 pb-5"></div>
+                                <div class="mb-0 pb-3"></div>
                             </div>  
                         </div>
                         <div class="row">
@@ -74,7 +82,7 @@
             <div class="container">
                 <div class="row">
                     <div class="col border-bottom">
-                        <p class="text-center mb-0"><b>Please supply the following items with reference to your Quotation cited above as per terms given below.</b></p>
+                        <p class="mb-0 ms-5 ps-5"><b>Please supply the following items with reference to your Quotation cited above as per terms given below.</b></p>
                     </div>
                 </div>
             </div>
@@ -114,10 +122,10 @@
                                 <%= billings.quantity[i] %>
                             </div>
                             <div class="col-1 border-end border-bottom p-3">
-                                <%= billings.price[i] * (1 - (5 / 100)) %>
+                                <%= Math.round(billings.price[i] / (1 + (5 / 100))) %>
                             </div>
                             <div class="col-2 border-bottom border-end p-3">
-                                <%= (billings.quantity[i] * billings.price[i]) * (1 - (5 / 100)) %>
+                                <%= Math.round((billings.quantity[i] * billings.price[i]) / (1 + (5 / 100))) %>
                             </div>
                             <div class="col-2 p-3">
                             </div>
@@ -132,7 +140,7 @@
                     </div>
                     <div class="col-2 border-end border-bottom text-end">
                         <b>
-                            <%= Math.round(billings.total * (1 - (5 / 100))) %>
+                            <%= Math.round(billings.total / (1 + (5 / 100))) %>
                         </b>
                     </div>
                 </div>
@@ -141,7 +149,7 @@
                         <b>Add: CGST <%= billings.gst[0] / 2 %>%</b>
                     </div>
                     <div class="col-2 border-end border-bottom text-end">
-                            <%= Math.round((billings.total * (1 - (5 / 100))) * ((billings.gst[0] / 2) / 100)) %>
+                            <%= Math.round((billings.total / (1 + (5 / 100))) * ((billings.gst[0] / 2) / 100)) %>
                     </div>
                 </div>
                 <div class="row py-0">
@@ -149,7 +157,7 @@
                         <b>Add: SGST <%= billings.gst[0] / 2 %>%</b>
                     </div>
                     <div class="col-2 border-end border-bottom text-end">
-                            <%= Math.round((billings.total * (1 - (5 / 100))) * ((billings.gst[0] / 2) / 100)) %>
+                            <%= Math.round((billings.total / (1 + (5 / 100))) * ((billings.gst[0] / 2) / 100)) %>
                     </div>
                 </div>
                 <div class="row py-0">
@@ -167,7 +175,7 @@
                     </div>
                     <div class="col-2 border-end border-bottom text-end">
                         <b>
-                            <% let totalTaxAmount = (((billings.total * (1 - (5 / 100))) * ((billings.gst[0] / 2) / 100)) + ((billings.total * (1 - (5 / 100))) * ((billings.gst[0] / 2) / 100))) %>
+                            <% let totalTaxAmount = (((billings.total / (1 + (5 / 100))) * ((billings.gst[0] / 2) / 100)) + ((billings.total / (1 + (5 / 100))) * ((billings.gst[0] / 2) / 100))) %>
                             <%= Math.round(totalTaxAmount) %> 
                         </b>
                     </div>
@@ -181,7 +189,7 @@
                     </div>
                     <div class="col-2 border-end text-end">
                         <b>
-                            <%= Math.round(totalTaxAmount + (billings.total * (1 - (5 / 100)))) %> 
+                            <%= Math.round(totalTaxAmount + (billings.total / (1 + (5 / 100)))) %> 
                         </b>
                     </div>
                 </div>
@@ -202,7 +210,13 @@
                     </div>
                 </div>
                 <div class="col border-top border-bottom border-start">
-                    <b>Delivery to:</b>
+                    <b>Delivery to:</b> <br>
+                    <b>
+                        <%= billings.client.name %> <br>
+                        <%= billings.client.address %> <br>
+                        email: <%= billings.client.email %> <br>
+                        Ph: <%= billings.client.contact %>
+                    </b> 
                 </div>
             </div>
             <div class="row">

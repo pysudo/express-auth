@@ -1,6 +1,8 @@
 <% layout('layouts/base') -%>
 
-    <div id="invoiceForm">
+
+    <b><input class="btn btn-info mt-4" type=button onClick=window.print() value='Print this Invoice'></b><br /><br />
+    <div class="mb-5" id="form">
         <div class="container border p-0 mt-5">
             <div class="container">
                 <div class="row d-flex justify-content-center">
@@ -43,7 +45,7 @@
             <div class="container border-top">
                 <div class="row d-flex justify-content-center">
                     <div class="col-6">
-                        <b>Invoice No: <%= billings.invoice %>%</b>
+                        <b>Invoice No: <%= billings.invoice %></b>
                     </div>
                     <div class="col-6 border-start">
                         <b>Transport Mode: Lorry</b>
@@ -85,7 +87,12 @@
                     <div class="col border-top border-bottom">
                         <div class="row">
                             <div class="col">
-                                <b><%= billings.purchaseDetail.address %></b> 
+                                <b>
+                                    <%= billings.client.name %> <br>
+                                    <%= billings.client.address %> <br>
+                                    email: <%= billings.client.email %> <br>
+                                    Ph: <%= billings.client.contact %> <br>
+                                </b>
                             </div>
                         </div>
                     </div>

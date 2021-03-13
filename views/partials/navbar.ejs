@@ -8,7 +8,7 @@
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav me-auto">
                 <li class="nav-item">
-                    <a class="nav-link" href="/profile">Company Profile</a>
+                    <a class="nav-link" href="/profile">Profile</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="/purchase">Purchase Details</a>
@@ -16,8 +16,15 @@
                 <li class="nav-item">
                     <a class="nav-link" href="/client">Client Details</a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/payment/<%= "default" %>">Payment Details</a>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        Payments
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <li><a class="dropdown-item" href="/payment/<%= "default" %>">Client</a></li>
+                        <!-- TODO: Implment payment details to the purchaser from the company profile  -->
+                        <li><a class="dropdown-item" href="#">Purchase</a></li>
+                    </ul>
                 </li>
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">

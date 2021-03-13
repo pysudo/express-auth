@@ -2,6 +2,7 @@ const express = require('express');
 const mongoose = require('mongoose');
 
 const Profile = require('../models/companyProfile');
+const Purchase = require('../models/purchaseDetails');
 const Client = require('../models/clientDetails');
 const User = require('../models/user');
 const Billing = require('../models/billing');
@@ -39,12 +40,32 @@ router.post('/', checkAuthentication, accessGrant, validateClient, async (reques
 
 
 // Renders a billing form for a specific client
-router.get('/billing/:clientID/send/:billingID', async (request, response) => {
+router.get('/billing/:clientID/invoice/:billingID', async (request, response) => {
 
     const { billingID } = request.params;
-    const billings = await Billing.findById(billingID).populate('client').populate('companyProfile');
+    const billings = await Billing.findById(billingID).populate('client').populate('companyProfile').populate('purchaseDetail');
 
     response.render('client/invoice', { title: "Invoice", billings })
+})
+
+
+// Renders a billing form for a specific client
+router.get('/billing/:clientID/purchaseOrder/:billingID', async (request, response) => {
+
+    const { billingID } = request.params;
+    const billings = await Billing.findById(billingID).populate('client').populate('companyProfile').populate('purchaseDetail');
+
+    response.render('client/purchaseOrder', { title: "Purchase Order", billings })
+})
+
+
+// Renders a billing form for a specific client
+router.get('/billing/:clientID/deliveryNote/:billingID', async (request, response) => {
+
+    const { billingID } = request.params;
+    const billings = await Billing.findById(billingID).populate('client').populate('companyProfile').populate('purchaseDetail');
+
+    response.render('client/deliveryNote', { title: "Delivery Note", billings })
 })
 
 // Renders prefilled exisiting billing form for edit
@@ -52,10 +73,11 @@ router.get('/billing/:clientID/edit/:billingID', async (request, response) => {
 
     const { clientID, billingID } = request.params;
 
-    const billings = await Billing.findById(billingID).populate('client').populate('companyProfile');
+    const billings = await Billing.findById(billingID).populate('client').populate('companyProfile').populate('purchaseDetail');
+    const purchaseDetails = await Purchase.find({});
     const companyProfiles = await Profile.find({});
 
-    response.render('client/editBilling', { title: "Edit Billing", billings, clientDetail: billings.client, companyProfiles})
+    response.render('client/editBilling', { title: "Edit Billing", billings, clientDetail: billings.client, companyProfiles, purchaseDetails})
 })
 
 
@@ -90,9 +112,10 @@ router.get('/billing/add/:id', checkAuthentication, async (request, response) =>
 
     const { id } = request.params;
     const clientDetail = await Client.findById(id);
+    const purchaseDetails = await Purchase.find({});
     const companyProfiles = await Profile.find({});
 
-    response.render('client/addBilling', { title: "Billing", clientDetail, companyProfiles })
+    response.render('client/addBilling', { title: "Billing", clientDetail, companyProfiles, purchaseDetails })
 })
 
 

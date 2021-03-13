@@ -69,6 +69,9 @@ const billingSchema = mongoose.Schema({
     companyProfile: {
         type: mongoose.Schema.Types.ObjectId, ref: 'Profile'
     },
+    purchaseDetail: {
+        type: mongoose.Schema.Types.ObjectId, ref: 'Purchase'
+    },
 });
 
 
@@ -83,6 +86,14 @@ billingSchema.virtual('itemList').get(function () {
 
 billingSchema.virtual('grandTotal').get(function () {
     return this.grandPrice.reduce((x, y) => x + y, 0);
+});
+
+billingSchema.virtual('total').get(function () {
+    let sum = 0;
+    for (let i = 0; i < this.price.length; i++) {
+        sum += ((this.price[i]) * (this.quantity[i]));
+      }
+    return sum;
 });
 
 

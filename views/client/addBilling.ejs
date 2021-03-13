@@ -42,12 +42,13 @@
         
         <form class="needs-validation" action="/client/billing/<%= clientDetail._id %>" method="POST" novalidate>
             <div class="col-3 mb-5">
+
                 <div class="input-group">
-                    <span class="input-group-text" id="basic-addon1">Purchase Detail</span>
-                    <select class="form-select" name="billing[companyProfile]" id="company" aria-label="Company Names" >
-                        <% for(companyProfile of companyProfiles) { %>
-                            <% if(!companyProfile.delRec) { %>  
-                                <option value="<%= companyProfile._id %>"><%= companyProfile.name %> </option>
+                    <span class="input-group-text">Purchase Detail</span>
+                    <select class="form-select" name="billing[purchaseDetail]" id="purchaser" aria-label="Purchaser Name" >
+                        <% for(purchaseDetail of purchaseDetails) { %>
+                            <% if(!purchaseDetail.delRec) { %>  
+                                <option value="<%= purchaseDetail._id %>"><%= purchaseDetail.name %> </option>
                             <% } %> 
                         <% } %> 
                     </select>

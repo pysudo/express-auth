@@ -43,7 +43,8 @@
             <div class="container">
                 <div class="row">
                     <div class="col border-top border-bottom">
-                        <p class="fs-5   mb-0"><b>To: </b></p>
+                        <p class="fs-5 mb-0"><b>To: </b></p>
+                        <p class="fs-5 text-center mb-0"><b><%= billings.purchaseDetail.address %>  </b></p>
                     </div>
                     <div class="col border-top border-bottom">
                         <div class="row">
@@ -114,10 +115,10 @@
                                 <%= billings.quantity[i] %>
                             </div>
                             <div class="col-1 border-end border-bottom p-3">
-                                <%= billings.price[i] * (1 - (5 / 100)) %>
+                                <%= Math.round(billings.price[i] * (1 - (5 / 100))) %>
                             </div>
                             <div class="col-2 border-bottom border-end p-3">
-                                <%= (billings.quantity[i] * billings.price[i]) * (1 - (5 / 100)) %>
+                                <%= Math.round((billings.quantity[i] * billings.price[i]) * (1 - (5 / 100))) %>
                             </div>
                             <div class="col-2 p-3">
                             </div>
@@ -202,7 +203,8 @@
                     </div>
                 </div>
                 <div class="col border-top border-bottom border-start">
-                    <b>Delivery to:</b>
+                    <b>Delivery to:</b> <br>
+                    <b><%= billings.client.address %></b> 
                 </div>
             </div>
             <div class="row">

@@ -55,7 +55,7 @@
                     <div class="col border-top border-bottom">
                         <div class="row">
                             <div class="col">
-                                <b><%= billings.purchaseDetail.address %></b> 
+                                <b><%= billings.client.address %></b> 
                             </div>
                         </div>
                     </div>
@@ -70,7 +70,7 @@
             <div class="container">
                 <div class="row">
                     <div class="col border-bottom">
-                        <p class="fs-5 pb-4 mb-0"><b>Kindly receive the under mentioned articles supplied against your supply Order No.</b></p>
+                        <p class="fs-5 pb-4 mb-0"><b>Kindly receive the under mentioned articles supplied against your supply Order No. <%= billings.invoice %> <br> Date: <%= billings.billingDate.toLocaleDateString() %> </b></p>
                     </div>
                 </div>
             </div>

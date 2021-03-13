@@ -1,3 +1,5 @@
+require('dotenv').config()
+
 const prompt = require('prompt');
 const mongoose = require("mongoose");
 
@@ -7,7 +9,10 @@ const User = require('../models/user');
 
 prompt.start();
 
-mongoose.connect('mongodb+srv://bearsterns:moonwalk123%23%25@portfoliodb.llzrs.mongodb.net/portfolioDB?retryWrites=true&w=majority',
+DB_URL = process.env.DB_URL;
+LOCAL_DB = "mongodb://localhost:27017/portfolio";
+const dbInstancePath = DB_URL || LOCAL_DB;
+mongoose.connect(`${dbInstancePath}`,
     {
         useNewUrlParser: true,
         useUnifiedTopology: true,

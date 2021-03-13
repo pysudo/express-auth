@@ -27,12 +27,24 @@
                     <label class="form-label" for="contact">Contact</label>
                     <input class="form-control" id="contact" type="text" name="purchase[contact]" maxlength="10" minlength="10" value="<%= purchase.contact %>" required>
                 </div>
+                <div class="mb-3">
+                    <label class="form-label" for="pan">Permanent Account Number</label>
+                    <input class="form-control" id="pan" type="text" name="purchase[pan]" value="<%= purchase.pan %>" required>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label" for="gst">GST Identification Number</label>
+                    <input class="form-control" id="gst" type="text" name="purchase[gst]" value="<%= purchase.gst %>" required>
+                </div>
                 <fieldset class="contact mb-3">
                     <legend class="text-center">Bank Details</legend>
 
                     <div class="mb-3">
                         <label class="form-label" for="bankName">Bank Name</label>
                         <input class="form-control" id="bankName" type="text" name="purchase[bankDetails][bankName]" value="<%= purchase.bankDetails.bankName %>" required>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label" for="bankAddress">Bank Address</label>
+                        <textarea class="form-control" id="bankAddress" name="purchase[bankDetails][bankAddress]" cols="30" rows="5" required><%= purchase.bankDetails.bankAddress %></textarea>
                     </div>
                     <div class="mb-3">
                         <label class="form-label" for="accountNumber">Account Number</label>

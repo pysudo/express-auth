@@ -1,0 +1,159 @@
+<% layout('layouts/base') -%>
+
+    <div id="invoiceForm">
+        <div class="container border p-0 mt-5">
+            <div class="container">
+                <div class="row d-flex justify-content-center">
+                    <div class="col-2 d-flex justify-content-center">
+                        <img src="/images/logo.jpg" width="150" height="150" alt="">
+                    </div>
+                    <div class="col-8 border-start text-center pt-5">
+                        <b>
+                            <%= billings.companyProfile.name %> <br>
+                            <%= billings.companyProfile.address %> 
+                        </b>
+                    </div>
+                    <div class="col-2 border-start pt-5">
+                        <b>
+                            <div class="row">
+                                    Ph:
+                                    <div class="col">
+                                            +91 <%= billings.companyProfile.contacts.phone %> <br>
+                                            080-<%= billings.companyProfile.contacts.landline %>
+                                    </div>
+                            </div>
+                        </b>
+                    </div>
+                </div>
+            </div>
+            <div class="container">
+                <div class="row">
+                    <div class="col border-top">
+                        <p class="fs-5 text-uppercase text-center mb-0"><b>GST NO: <%= billings.companyProfile.gst %></b></p>
+                    </div>
+                </div>
+            </div>
+            <div class="container">
+                <div class="row">
+                    <div class="col border-top pb-4 mb-0">
+                        <p class="fs-1 text-uppercase text-center m-0"><b>DELIVERY NOTE <br> <span class="fs-5">Customer Copy/ H.O. Copy/Branch Copy/Extra Copy</span></b></p>
+                    </div>
+                </div>
+            </div>
+            <div class="container border-top">
+                <div class="row d-flex justify-content-center">
+                    <div class="col-6 text-center">
+                        <b>BILLING TO</b>
+                    </div>
+                    <div class="col-6 border-start text-center">
+                        <b>DELIVERY AT</b>
+                    </div>
+                </div>
+            </div>
+            <div class="container">
+                <div class="row">
+                    <div class="col border-top border-bottom">
+                        <div class="row">
+                            <div class="col">
+                                <b><%= billings.purchaseDetail.address %></b> 
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col border-start border-top border-bottom">
+                        <div class="row">
+                            <div class="col">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="container">
+                <div class="row">
+                    <div class="col border-bottom">
+                        <p class="fs-5 pb-4 mb-0"><b>Kindly receive the under mentioned articles supplied against your supply Order No.</b></p>
+                    </div>
+                </div>
+            </div>
+            <div class="container">
+                <div class="row p-0">
+                    <div class="col-1 border-end border-bottom">
+                        <b>Sl<br>No.</b>
+                    </div>
+                    <div class="col-5 d-flex align-items-center border-end border-bottom">
+                        <b>Particulars</b>
+                    </div>
+                    <div class="col-2 d-flex align-items-center border-end border-bottom">
+                        <b>HSN code</b>
+                    </div>
+                    <div class="col-1 d-flex align-items-center border-end border-bottom">
+                        <b>Qty</b>
+                    </div>
+                    <div class="col-3 d-flex align-items-center border-bottom">
+                        <b>Remarks</b>
+                    </div>
+                </div>
+            </div>
+            <div class="container">
+                <% for(let i=0; i < billings.items.length; i++) { %>
+                    <div class="container p-0">
+                        <div class="row p-0">
+                            <div class="col-1 border-end border-bottom p-3">
+                                <b><%= i + 1 %></b>
+                            </div>
+                            <div class="col-5 border-end border-bottom p-3">
+                                <%= billings.items[i] %>
+                            </div>
+                            <div class="col-2 border-end border-bottom p-3">
+                                <b><%= billings.hsn[i] %></b>
+                            </div>
+                            <div class="col-1 border-end border-bottom p-3">
+                                <%= billings.quantity[i] %>
+                            </div>
+                            <div class="col-3 border-bottom p-3">
+                            </div>
+                        </div>
+                    </div>
+                    <% } %>
+            </div>
+        <div class="container border">
+            <div class="row">
+                <div class="col-6 text-center border-end">
+                    <div class="col">
+                        <div class="row m-3">
+                            <div class="col pb-5">
+                                <b>
+                                    Received the above in good Condition
+                                </b>	
+                            </div>
+                        </div>
+                        <div class="row m-3">
+                            <div class="col pt-5">
+                                <b>
+                                    Receiver’s Signature
+                                </b>	
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-6 text-center m-0 p-0">
+                    <div class="col">
+                        <div class="row m-0">
+                            <div class="col  border-bottom pt-3 pb-5">
+                                <b>
+                                    For KARNATAKA STATE COIR CO-OPERATIVE
+                                    FEDERATION LIMITED
+                                </b>	
+                            </div>
+                        </div>
+                        <div class="row m-3">
+                            <div class="col pt-5">
+                                <b>
+                                    Authorized Signatory
+                                </b>	
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>

@@ -1,0 +1,341 @@
+<% layout('layouts/base') -%>
+
+    <div id="invoiceForm">
+        <div class="container border p-0 mt-5">
+            <div class="container">
+                <div class="row d-flex justify-content-center">
+                    <div class="col-2 d-flex justify-content-center">
+                        <img src="/images/logo.jpg" width="150" height="150" alt="">
+                    </div>
+                    <div class="col-8 border-start text-center pt-5">
+                        <b>
+                            <%= billings.companyProfile.name %> <br>
+                            <%= billings.companyProfile.address %> 
+                        </b>
+                    </div>
+                    <div class="col-2 border-start pt-5">
+                        <b>
+                            <div class="row">
+                                    Ph:
+                                    <div class="col">
+                                            +91 <%= billings.companyProfile.contacts.phone %> <br>
+                                            080-<%= billings.companyProfile.contacts.landline %>
+                                    </div>
+                            </div>
+                        </b>
+                    </div>
+                </div>
+            </div>
+            <div class="container">
+                <div class="row">
+                    <div class="col border-top">
+                        <p class="fs-5 text-uppercase text-center mb-0"><b>GST NO: <%= billings.companyProfile.gst %></b></p>
+                    </div>
+                </div>
+            </div>
+            <div class="container">
+                <div class="row">
+                    <div class="col border-top border-bottom">
+                        <p class="fs-1 text-uppercase text-center mb-0"><b>PURCHASE ORDER</b></p>
+                    </div>
+                </div>
+            </div>
+            <div class="container">
+                <div class="row">
+                    <div class="col border-top border-bottom">
+                        <p class="fs-5   mb-0"><b>To: </b></p>
+                    </div>
+                    <div class="col border-top border-bottom">
+                        <div class="row">
+                            <div class="col border-top border-bottom border-start">
+                                <p class="text-uppercase text-center mb-0"><b>IN YOUR INVOICE PLEASE INDICATE OUR <br> GST: 29AAGAK2375K1Z7</b></p>
+                            </div>  
+                            <div class="col border-top border-bottom border-start">
+                                <p class="text-center mb-0"><b>P.O. No.: 8 <br> Date: <%= new Date().toLocaleDateString() %> </b></p>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col border-top border-bottom border-start">
+                                <p class="mb-0 pb-5"><b>Your Ref:</b></p>
+                            </div>  
+                        </div>
+                        <div class="row">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="container">
+                <div class="row">
+                    <div class="col border-top">
+                        <p class="fs-5 mb-0"><b>Dear Sir,</b></p>
+                    </div>
+                </div>
+            </div>
+            <div class="container">
+                <div class="row">
+                    <div class="col border-bottom">
+                        <p class="text-center mb-0"><b>Please supply the following items with reference to your Quotation cited above as per terms given below.</b></p>
+                    </div>
+                </div>
+            </div>
+            <div class="container">
+                <div class="row p-0">
+                    <div class="col-1 border-end border-bottom">
+                        <b>Sl<br>No.</b>
+                    </div>
+                    <div class="col-5 d-flex align-items-center border-end border-bottom">
+                        <b>Particulars</b>
+                    </div>
+                    <div class="col-1 d-flex align-items-center border-end border-bottom">
+                        <b>Qty</b>
+                    </div>
+                    <div class="col-1 d-flex align-items-center border-end border-bottom">
+                        <b>Rate</b>
+                    </div>
+                    <div class="col-2 d-flex align-items-center border-end border-bottom">
+                        <b>Amount</b>
+                    </div>
+                    <div class="col-2 d-flex align-items-center border-bottom">
+                        <b>Remarks</b>
+                    </div>
+                </div>
+            </div>
+            <div class="container">
+                <% for(let i=0; i < billings.items.length; i++) { %>
+                    <div class="container p-0">
+                        <div class="row p-0">
+                            <div class="col-1 border-end border-bottom p-3">
+                                <b><%= i + 1 %></b>
+                            </div>
+                            <div class="col-5 border-end border-bottom p-3">
+                                <%= billings.items[i] %>
+                            </div>
+                            <div class="col-1 border-end border-bottom p-3">
+                                <%= billings.quantity[i] %>
+                            </div>
+                            <div class="col-1 border-end border-bottom p-3">
+                                <%= billings.price[i] * (1 - (5 / 100)) %>
+                            </div>
+                            <div class="col-2 border-bottom border-end p-3">
+                                <%= (billings.quantity[i] * billings.price[i]) * (1 - (5 / 100)) %>
+                            </div>
+                            <div class="col-2 p-3">
+                            </div>
+                        </div>
+                    </div>
+                    <% } %>
+            </div>
+            <div class="container">
+                <div class="row py-0">
+                    <div class="col-8 border-bottom border-end text-end">
+                        <b>Total</b>
+                    </div>
+                    <div class="col-2 border-end border-bottom text-end">
+                        <b>
+                            <%= Math.round(billings.total * (1 - (5 / 100))) %>
+                        </b>
+                    </div>
+                </div>
+                <div class="row py-0">
+                    <div class="col-8 border-bottom border-end text-end">
+                        <b>Add: CGST <%= billings.gst[0] / 2 %>%</b>
+                    </div>
+                    <div class="col-2 border-end border-bottom text-end">
+                            <%= Math.round((billings.total * (1 - (5 / 100))) * ((billings.gst[0] / 2) / 100)) %>
+                    </div>
+                </div>
+                <div class="row py-0">
+                    <div class="col-8 border-bottom border-end text-end">
+                        <b>Add: SGST <%= billings.gst[0] / 2 %>%</b>
+                    </div>
+                    <div class="col-2 border-end border-bottom text-end">
+                            <%= Math.round((billings.total * (1 - (5 / 100))) * ((billings.gst[0] / 2) / 100)) %>
+                    </div>
+                </div>
+                <div class="row py-0">
+                    <div class="col-8 border-bottom border-end text-end">
+                        <b>Add: IGST <%= billings.gst[0] %>%</b>
+                    </div>
+                    <div class="col-2 border-end border-bottom text-end">
+                        <b>
+                        </b>
+                    </div>
+                </div>
+                <div class="row py-0">
+                    <div class="col-8 border-bottom border-end text-end">
+                        <b>Total Tax Amount</b>
+                    </div>
+                    <div class="col-2 border-end border-bottom text-end">
+                        <b>
+                            <% let totalTaxAmount = (((billings.total * (1 - (5 / 100))) * ((billings.gst[0] / 2) / 100)) + ((billings.total * (1 - (5 / 100))) * ((billings.gst[0] / 2) / 100))) %>
+                            <%= Math.round(totalTaxAmount) %> 
+                        </b>
+                    </div>
+                </div>
+                <div class="row py-0">
+                    <div class="col-6 border-end text-start">
+                        <b>(Rupees: IN WORDS)</b>
+                    </div>
+                    <div class="col-2 border-end text-end">
+                        <b>Grand Total</b>
+                    </div>
+                    <div class="col-2 border-end text-end">
+                        <b>
+                            <%= Math.round(totalTaxAmount + (billings.total * (1 - (5 / 100)))) %> 
+                        </b>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="container">
+            <div class="row">
+                <div class="col border-top">
+                    <div class="row">
+                        <div class="col border-top border-bottom border-start">
+                            <p class="mb-0"><b>1. DISPATCH / DELIVERY INSTRUCTION CONSIGNEE &amp;  DESTINATION </b></p>
+                        </div>  
+                    </div>
+                    <div class="row">
+                        <div class="col border-top border-bottom border-start">
+                            <p class="mb-0 pb-5"><b>2. GST</b></p>
+                        </div>  
+                    </div>
+                </div>
+                <div class="col border-top border-bottom border-start">
+                    <b>Delivery to:</b>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col border-top border-bottom">
+                    <div class="row">
+                        <div class="col border-bottom border-start">
+                            <p class="mb-0"><b>3. INSURANCE</b></p>
+                        </div>  
+                    </div>
+                </div>
+                <div class="col border-top border-bottom border-start">
+                    Insurance covered by supplier
+                </div>
+            </div>
+            <div class="row">
+                <div class="col border-top border-bottom">
+                    <div class="row">
+                        <div class="col border-bottom border-start">
+                            <p class="mb-0"><b>4. DELIVERY TERMS &amp; CONDITIONS</b></p>
+                        </div>  
+                    </div>
+                </div>
+                <div class="col border-top border-bottom border-start">
+                    Delivery cost borne by the supplier
+                </div>
+            </div>
+            <div class="row">
+                <div class="col border-top border-bottom">
+                    <div class="row">
+                        <div class="col border-bottom border-start">
+                            <p class="mb-0"><b>5. TERMS OF PAYMENT</b></p>
+                        </div>  
+                    </div>
+                </div>
+                <div class="col border-top border-bottom border-start">
+                    30 days from the date of delivery
+                </div>
+            </div>
+            <div class="row">
+                <div class="col border-top border-bottom">
+                    <div class="row">
+                        <div class="col border-bottom border-start">
+                            <p class="mb-0"><b>6. INSPECTION REQUIREMENT</b></p>
+                        </div>  
+                    </div>
+                </div>
+                <div class="col border-top border-bottom border-start">
+                    100% inspection at your site along with production of in house test report.
+                </div>
+            </div>
+            <div class="row">
+                <div class="col border-top border-bottom">
+                    <div class="row">
+                        <div class="col border-bottom border-start">
+                            <p class="mb-0"><b>7. PLEASE QUOTE OUR P.O. NUMBER IN YOUR BILL</b></p>
+                        </div>  
+                    </div>
+                </div>
+                <div class="col border-top border-bottom border-start">
+                    As per description / remarks given by us
+                </div>
+            </div>
+            <div class="row">
+                <div class="col border-top border-bottom">
+                    <div class="row">
+                        <div class="col border-bottom border-start">
+                            <p class="mb-0"><b>8. PLEASE RETURN IN DUPLICATE DULY
+                                SIGNED AND STAMPED WITH CONFIRMATION
+                                AND ACCEPTANCE OF GOODS</b></p>
+                        </div>  
+                    </div>
+                </div>
+                <div class="col border-top border-bottom border-start">
+                    As per instructions
+                </div>
+            </div>
+            <div class="row">
+                <div class="col border-top border-bottom">
+                    <div class="row">
+                        <div class="col border-bottom border-start">
+                            <p class="mb-0"><b>9. Specification &amp; Quality should comply as per Federation empanel Members approval. Please obtain Federation EOI Members
+                                approval before dispatch of the Coir Products to the Govt. Department. Otherwise you are solely responsible for the
+                                consequences.</b></p>
+                        </div>  
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col border-top border-bottom">
+                    <div class="row">
+                        <div class="col border-bottom border-start">
+                            <p class="mb-0"><b>10. NOTE: The Societies hereby strictly instructed to buy coir ply sheet compulsorily from the Federation Produced at Composite
+                                Coir Unit, Kengeri, otherwise Amount of Coir ply sheet will be deducted as per specification.</b></p>
+                        </div>  
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="container border">
+            <div class="row">
+                <div class="col text-center border-start">
+                    <div class="col">
+                        <div class="row m-3">
+                            <div class="col pt-5">
+                                <b>
+                                    PREPARED BY
+                                </b>	
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col text-center border-start">
+                    <div class="col">
+                        <div class="row m-3">
+                            <div class="col pt-5">
+                                <b>
+                                    CHECKED BY
+                                </b>	
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col text-center border-start">
+                    <div class="col">
+                        <div class="row m-3">
+                            <div class="col pt-5">
+                                <b>
+                                    AUTHORISED SIGNATORY
+                                </b>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>

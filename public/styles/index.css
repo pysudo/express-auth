@@ -44,25 +44,6 @@ div#invoiceForm {
     margin-bottom: 100px;
 }
 
-.borderall {
-    border: 4px #cccc92 double;
-}
-
-.border-up {
-    border-top: 4px #cccc92 double;
-}
-
-.border-down {
-    border-bottom: 4px #cccc92 double;
-}
-
-.border-left {
-    border-left: 4px #cccc92 double;
-}
-
-.border-right {
-    border-right: 4px #cccc92 double;
-}
 
 #paymentHistory {
     height: 550px;

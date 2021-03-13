@@ -1,58 +1,122 @@
 <% layout('layouts/base') -%>
 
     <div id="invoiceForm">
-        <div class="container">
-            <div class="row">
-                <div class="col my-5">
-                    <h1 class="text-start">COMPANY LOGO</h1>
-                </div>
-            </div>
-        </div>
-        <div class="container borderall p-0">
-            <div class="container">
-                <div class="row">
-                    <div class="col border-down">
-                        <p class="fs-5 text-uppercase text-center pt-4 mb-0">invoice</p>
-                    </div>
-                </div>
-            </div>
+        <div class="container border p-0 mt-5">
             <div class="container">
                 <div class="row d-flex justify-content-center">
-                    <div class="col-4 border-left">
-                        <b>Consignee,</b> <br>
-                        <%= billings.client.address %> <br>
-                            M: <%= billings.client.contact %>
+                    <div class="col-2 d-flex justify-content-center">
+                        <img src="/images/logo.jpg" width="150" height="150" alt="">
                     </div>
-                    <div class="col-4 border-left">
-                        Invoice No. : <%= billings.invoice %>
+                    <div class="col-8 border-start text-center pt-5">
+                        <b>
+                            <%= billings.companyProfile.name %> <br>
+                            <%= billings.companyProfile.address %> 
+                        </b>
                     </div>
-                    <div class="col-3 border-left border-right">
-                        Date : <%= billings.billingDate.toLocaleDateString() %>
+                    <div class="col-2 border-start pt-5">
+                        <b>
+                            <div class="row">
+                                    Ph:
+                                    <div class="col">
+                                            +91 <%= billings.companyProfile.contacts.phone %> <br>
+                                            080-<%= billings.companyProfile.contacts.landline %>
+                                    </div>
+                            </div>
+                        </b>
                     </div>
                 </div>
             </div>
             <div class="container">
                 <div class="row">
-                    <div class="col border-up border-down py-4">
+                    <div class="col border-top">
+                        <p class="fs-5 text-uppercase text-center mb-0"><b>GST NO: <%= billings.companyProfile.gst %></b></p>
+                    </div>
+                </div>
+            </div>
+            <div class="container">
+                <div class="row">
+                    <div class="col border-top">
+                        <p class="fs-1 text-uppercase text-center mb-0"><b>TAX INVOICE</b></p>
+                    </div>
+                </div>
+            </div>
+            <div class="container border-top">
+                <div class="row d-flex justify-content-center">
+                    <div class="col-6">
+                        <b>Invoice No: <%= billings.invoice %>%</b>
+                    </div>
+                    <div class="col-6 border-start">
+                        <b>Transport Mode: Lorry</b>
+                    </div>
+                </div>
+            </div>
+            <div class="container border-top">
+                <div class="row d-flex justify-content-center">
+                    <div class="col-6">
+                        <b>Invoice Date: <%= billings.billingDate.toLocaleDateString() %> </b>
+                    </div>
+                    <div class="col-6 border-start">
+                        <b>Vehicle Number:</b>
+                    </div>
+                </div>
+            </div>
+            <div class="container border-top">
+                <div class="row d-flex justify-content-center">
+                    <div class="col-6">
+                        <b>Purchase Order: <%= billings.purchaseDetail.name %> </b>
+                    </div>
+                    <div class="col-6 border-start">
+                        <b>E. Way Bill No.</b>
+                    </div>
+                </div>
+            </div>
+            <div class="container border-top">
+                <div class="row d-flex justify-content-center">
+                    <div class="col-6 text-center">
+                        <b>Billing Address</b>
+                    </div>
+                    <div class="col-6 border-start text-center">
+                        <b>Delivery Address</b>
+                    </div>
+                </div>
+            </div>
+            <div class="container">
+                <div class="row">
+                    <div class="col border-top border-bottom">
+                        <div class="row">
+                            <div class="col">
+                                <b><%= billings.purchaseDetail.address %></b> 
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col border-start border-top border-bottom">
+                        <div class="row">
+                            <div class="col">
+                                
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
             <div class="container">
                 <div class="row p-0">
-                    <div class="col-1 border-right border-down">
-                        Sl<br>No.
+                    <div class="col-1 border-end border-bottom">
+                        <b>Sl<br>No.</b>
                     </div>
-                    <div class="col-4 d-flex align-items-center border-right border-down">
-                        Particulars
+                    <div class="col-5 d-flex align-items-center border-end border-bottom">
+                        <b>Particulars</b>
                     </div>
-                    <div class="col-2 d-flex align-items-center border-right border-down">
-                        Rate
+                    <div class="col-1 d-flex align-items-center border-end border-bottom">
+                        <b>HSN code</b>
                     </div>
-                    <div class="col-2 d-flex align-items-center border-right border-down">
-                        Qty
+                    <div class="col-1 d-flex align-items-center border-end border-bottom">
+                        <b>Qty</b>
                     </div>
-                    <div class="col-3 d-flex align-items-center border-down">
-                        Amount
+                    <div class="col-2 d-flex align-items-center border-end border-bottom">
+                        <b>Rate</b>
+                    </div>
+                    <div class="col-2 d-flex align-items-center border-bottom">
+                        <b>Amount</b>
                     </div>
                 </div>
             </div>
@@ -60,20 +124,23 @@
                 <% for(let i=0; i < billings.items.length; i++) { %>
                     <div class="container p-0">
                         <div class="row p-0">
-                            <div class="col-1 border-right border-down p-3">
-                                <%= i + 1 %>
+                            <div class="col-1 border-end border-bottom p-3">
+                                <b><%= i + 1 %></b>
                             </div>
-                            <div class="col-4 border-right border-down p-3">
+                            <div class="col-5 border-end border-bottom p-3">
                                 <%= billings.items[i] %>
                             </div>
-                            <div class="col-2 border-right border-down p-3">
-                                <%= billings.price[i] %>
+                            <div class="col-1 border-end border-bottom p-3">
+                                <b><%= billings.hsn[i] %></b>
                             </div>
-                            <div class="col-2 border-right border-down p-3">
+                            <div class="col-1 border-end border-bottom p-3">
                                 <%= billings.quantity[i] %>
                             </div>
-                            <div class="col-3 border-down p-3">
-                                <%= billings.grandPrice[i] %>
+                            <div class="col-2 border-end border-bottom p-3">
+                                <%= billings.price[i] %>
+                            </div>
+                            <div class="col-2 border-bottom p-3">
+                                <%= billings.quantity[i] * billings.price[i] %>
                             </div>
                         </div>
                     </div>
@@ -81,122 +148,227 @@
             </div>
             <div class="container">
                 <div class="row py-0">
-                    <div class="col-9 border-right text-end">
-                        <b>Total Amount</b>
+                    <div class="col-6 border-end text-end">
+                        <div class="row border-bottom border-bottom py-0">
+                            <div class="col text-center">
+                                <b>
+                                    Bank Details
+                                </b>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-4 border-end text-end">
+                        <b>Total</b>
                     </div>
                     <div class="col text-end">
                         <b>
-                            <%= billings.grandTotal %>
+                            <%= Math.round(billings.total) %>
+                        </b>
+                    </div>
+                </div>
+                <div class="row py-0">
+                    <div class="col-6 border-end text-end">
+                        <div class="row border-bottom py-0">
+                            <div class="col text-start">
+                                <b>
+                                    Bank Name: <%= billings.purchaseDetail.bankDetails.bankName %>
+                                </b> 
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-4 border-bottom border-end text-end">
+                    </div>
+                    <div class="col border-bottom text-end">
+                    </div>
+                </div>
+                <div class="row py-0">
+                    <div class="col-6 border-end text-end">
+                        <div class="row border-bottom py-0">
+                            <div class="col text-start">
+                                <b>
+                                    Branch: <%= billings.purchaseDetail.bankDetails.bankAddress %>
+                                </b>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-4 border-bottom border-end text-end">
+                        <b>Add: CGST <%= billings.gst[0] / 2 %>%</b>
+                    </div>
+                    <div class="col border-bottom text-end">
+                            <%= Math.round(billings.total * ((billings.gst[0] / 2) / 100)) %>
+                    </div>
+                </div>
+                <div class="row py-0">
+                    <div class="col-6 border-end text-end">
+                        <div class="row border-bottom py-0">
+                            <div class="col text-start">
+                                <b>
+                                    A/C No. <%= billings.purchaseDetail.bankDetails.accountNumber %>
+                                </b>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-4 border-bottom border-end text-end">
+                        <b>Add: SGST <%= billings.gst[0] / 2 %>%</b>
+                    </div>
+                    <div class="col border-bottom text-end">
+                            <%= Math.round(billings.total * ((billings.gst[0] / 2) / 100)) %>
+                    </div>
+                </div>
+                <div class="row py-0">
+                    <div class="col-6 border-end text-end">
+                        <div class="row border-bottom py-0">
+                            <div class="col text-start">
+                                <b>
+                                    IFSC CODE: <%= billings.purchaseDetail.bankDetails.ifsc %>
+                                </b>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-4 border-bottom border-end text-end">
+                        <b>Add: IGST <%= billings.gst[0] %>%</b>
+                    </div>
+                    <div class="col border-bottom text-end">
+                        <b>
+                        </b>
+                    </div>
+                </div>
+                <div class="row py-0">
+                    <div class="col-6 border-end text-end">
+                        <div class="row border-bottom py-0">
+                            <div class="col text-start">
+                                <b>
+                                    Treasury K2 R.I’D. 2900235396
+                                </b>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-4 border-bottom border-end text-end">
+                        <b>Total Tax Amount</b>
+                    </div>
+                    <div class="col border-bottom text-end">
+                        <b>
+                            <% let totalTaxAmount = ((billings.total * ((billings.gst[0] / 2) / 100)) + (billings.total * ((billings.gst[0] / 2) / 100))) %>
+                            <%= Math.round(totalTaxAmount) %> 
+                        </b>
+                    </div>
+                </div>
+                <div class="row py-0">
+                    <div class="col-6 border-end text-end">
+                        <div class="row py-0">
+                            <div class="col text-start">
+                                <b>
+                                    (Rupees: IN WORDS)
+                                </b>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-4 border-end text-end">
+                        <b>Grand Total</b>
+                    </div>
+                    <div class="col text-end">
+                        <b>
+                            <%= Math.round(totalTaxAmount + billings.total) %> 
                         </b>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="container border-left border-right">
+        <div class="container border">
             <div class="row">
-                <div class="col">
-                    <ul>
-                        <li class="list-unstyled">
-                            <b><u>Terms and payment</u></b>
-                        </li>
-                        <li>
-                            Payment option 1 (DD) : in favour of <b><%= billings.companyProfile.name %></b>
-                        </li>
-                        <li>
-                            Payment option 2 (IMPS/RTGS/NEFT) : <%= billings.companyProfile.bankDetails.bankAddress %>.
-                        </li>
-                        <li class="list-unstyled">
-                            <b>Current A/No . <%= billings.companyProfile.bankDetails.accountNumber %></b>
-                        </li>
-                        <li class="list-unstyled">
-                            <b>IFSC Code: <%= billings.companyProfile.bankDetails.ifsc %>.</b>
-                        </li>
-                        <li>
-                            Please call or email us the transaction details after the money transfer so as to help us
-                            track your transfer.
-                        </li>
-                        <li>
-                            Interest @18% p.a will be charged for overdue invoice (Max. 30 Days from Invoice date)
-                        </li>
-                        <li>
-                            Our business is less than 10 lakh per annum. GST registration not applicable
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-        <div class="container borderall">
-            <div class="row">
-                <div class="col-8">
-                    <div class="row">
-                        <div class="col">
-                            <b>PAN No. <%= billings.companyProfile.pan %> </b>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col">
-                            <%= billings.companyProfile.name %>
-                        </div>
-                    </div>
-                    <div class="row p-5">
-                        <div class="col">
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col">
-                            Authorised Signatory
-                        </div>
-                    </div>
-                </div>
-                <div class="col-4 text-center border-left">
+                <div class="col-2 text-center border-start">
                     <div class="col">
                         <div class="row m-3">
-                            <div class="col d-flex">
-                                Received above material with Good
-                                Condition.
-                            </div>
-                        </div>
-                        <div class="row m-4">
-                            <div class="col p-2">
-                            </div>
-                        </div>
-                        <div class="row pb-3">
                             <div class="col">
-                                Seal and Signature
+                                <b>
+                                    Prepared by
+                                </b>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-2 text-center border-start">
+                    <div class="col">
+                        <div class="row m-3">
+                            <div class="col">
+                                <b>
+                                    Verified by
+                                </b>	
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col text-center border-start">
+                    <div class="col">
+                        <div class="row m-3">
+                            <div class="col">
+                                <b>
+                                    Received the above
+                                    goods in condition
+                                </b>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col text-center border-start">
+                    <div class="col">
+                        <div class="row m-3">
+                            <div class="col">
+                                <b>
+                                    For Karnataka State Coir Co-Operative
+                                    Federation Limited
+                                </b>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="container border-left border-right">
+        <div class="container border">
             <div class="row">
-                <div class="col">
-                    Please feel free to contact on <%= billings.companyProfile.contacts.landline %> or <%= billings.companyProfile.contacts.phone %> (Mon-Fri 10am to 5pm)
+                <div class="col-2 text-center border-start">
+                    <div class="col">
+                        <div class="row m-3">
+                            <div class="col pt-5">
+                                <b>
+                                    Signature
+                                </b>	
+                            </div>
+                        </div>
+                    </div>
                 </div>
-            </div>
-        </div>
-        <div class="container borderall">
-            <div class="row">
-                <div class="col text-center">
-                    <b><%= billings.companyProfile.name %></b>
+                <div class="col-2 text-center border-start">
+                    <div class="col">
+                        <div class="row m-3">
+                            <div class="col pt-5">
+                                <b>
+                                    Signature
+                                </b>	
+                            </div>
+                        </div>
+                    </div>
                 </div>
-            </div>
-            <div class="row">
-                <div class="col text-center">
-                    <%= billings.companyProfile.address %> 
+                <div class="col text-center border-start">
+                    <div class="col">
+                        <div class="row m-3">
+                            <div class="col pt-5">
+                                <b>
+                                    Signature
+                                </b>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-            </div>
-            <div class="row">
-                <div class="col text-center">
-                    <%= billings.companyProfile.website ? "Website: " + billings.companyProfile.website + " | " : "" %></b> Email : <%= billings.companyProfile.contacts.email %> 
-                </div>
-            </div>
-        </div>
-        <div class="container border-left border-right border-down">
-            <div class="row">
-                <div class="col text-center">
-                    SUBJECT TO BANGALORE JURISDICTION
+                <div class="col text-center border-start">
+                    <div class="col">
+                        <div class="row m-3">
+                            <div class="col pt-5">
+                                <b>
+                                    Authorised Signature
+                                </b>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

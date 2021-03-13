@@ -41,7 +41,7 @@
         
         <form class="needs-validation" action="/client/billing/<%= clientDetail._id %>/edit/<%= billings._id %>?_method=PATCH" method="POST" novalidate>
             <div class="col-3 mb-5">
-                <div class="input-group">
+                <div class="input-group mb-3">
                     <span class="input-group-text">Company Profile</span>
                     <select class="form-select" name="billing[companyProfile]" id="company" aria-label="Company Name" >
                         <% for(companyProfile of companyProfiles) { %>
@@ -52,7 +52,7 @@
                     </select>
                 </div>
                 <div class="input-group">
-                    <span class="input-group-text" id="basic-addon1">Purchase Detail</span>
+                    <span class="input-group-text">Purchase Detail</span>
                     <select class="form-select" name="billing[purchaseDetail]" id="company" aria-label="Company Names" >
                         <% for(purchaseDetail of purchaseDetails) { %>
                             <% if(!purchaseDetail.delRec) { %>  

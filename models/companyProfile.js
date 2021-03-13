@@ -28,12 +28,10 @@ const profileSchema = mongoose.Schema({
         }
     },
     pan: {
-        type: String,
-        required: true,
+        type: String
     },
     gst: {
-        type: String,
-        required: true
+        type: String
     },
     delRec: {
         type: Boolean,

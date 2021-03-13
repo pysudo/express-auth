@@ -19,12 +19,10 @@ const purchaseSchema = mongoose.Schema({
         required: true
     },
     pan: {
-        type: String,
-        required: true,
+        type: String
     },
     gst: {
-        type: String,
-        required: true
+        type: String
     },
     bankDetails: {
         bankName: {

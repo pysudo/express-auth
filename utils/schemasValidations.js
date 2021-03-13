@@ -32,11 +32,9 @@ module.exports.profileSchema = Joi.object({
         website: Joi.string()
             .allow(''),
         pan: Joi.string()
-            .length(10)
-            .required(),
+            .length(10),
         gst: Joi.string()
-            .length(15)
-            .required(),
+            .length(15),
         contacts: Joi.object({
             email: Joi.string().email()
                 .required(),
@@ -77,11 +75,9 @@ module.exports.purchaseSchema = Joi.object({
             .length(10)
             .required(),
         pan: Joi.string()
-            .length(10)
-            .required(),
+            .length(10),
         gst: Joi.string()
-            .length(15)
-            .required(),
+            .length(15),
         bankDetails: Joi.object({
             bankName: Joi.string()
                 .required(),
@@ -130,10 +126,8 @@ module.exports.clientSchema = Joi.object({
         contact: Joi.string()
             .length(10)
             .required(),
-        gst: Joi.string()
-            .required(),
-        pan: Joi.string()
-            .required(),
+        gst: Joi.string(),
+        pan: Joi.string(),
     }).required()
 });
 

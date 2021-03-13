@@ -24,11 +24,9 @@ const clientSchema = mongoose.Schema({
     },
     gst: {
         type: String,
-        required: true
     },
     pan: {
         type: String,
-        required: true,
     },
     modified: {
         by: {

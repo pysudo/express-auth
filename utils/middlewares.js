@@ -124,10 +124,19 @@ module.exports.validatePurchase = (request, response, next) => {
             case "contact":
                 errorName = "Vendor Contact";
                 break;
+            case "pan":
+                errorName = "Permanent Account Number";
+                break;
+            case "gst":
+                errorName = "GST Identification Number";
+                break;
         }
         switch (errorNames[2]) {
             case "bankName":
                 errorName = "Bank Name";
+                break;
+            case "bankAddress":
+                errorName = "Bank Address";
                 break;
             case "accountType":
                 errorName = "Account Type";

@@ -76,8 +76,16 @@ module.exports.purchaseSchema = Joi.object({
         contact: Joi.string()
             .length(10)
             .required(),
+        pan: Joi.string()
+            .length(10)
+            .required(),
+        gst: Joi.string()
+            .length(15)
+            .required(),
         bankDetails: Joi.object({
             bankName: Joi.string()
+                .required(),
+            bankAddress: Joi.string()
                 .required(),
             accountType: Joi.string()
                 .valid("savings", "current", "others")

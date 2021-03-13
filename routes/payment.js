@@ -10,6 +10,16 @@ const { checkAuthentication, accessGrant, validatePayement } = require('../utils
 router = express.Router();
 
 
+// List all the purchase orders to be paid depending on client acknowledgement
+router.get('/purchaseOrders', checkAuthentication, async (request, response) => {
+
+
+    const billings = await Billing.find({}).populate('purchaseDetail');
+
+    response.render(`payment/purchaseOrders`, { title: "Purchase Orders Payments", billings})
+})
+
+
 // Sort billings by either invoice wise or client wise 
 router.get('/sort', checkAuthentication, async (request, response) => {
 

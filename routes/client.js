@@ -85,6 +85,7 @@ router.get('/billing/:clientID/edit/:billingID', async (request, response) => {
 router.get('/billing/:id', checkAuthentication, async (request, response) => {
 
     const { id } = request.params;
+    
     let clientDetail = await Client.findById(id).populate(
         {
             path: 'billings',
@@ -101,9 +102,9 @@ router.get('/billing/:id', checkAuthentication, async (request, response) => {
         payedAmount += billing.amountPayed;
     };
 
-    clientDetail = await Client.findById(id).populate('billings');
+    const billings = await Billing.find({client: clientDetail._id}).populate('purchaseDetail'); 
 
-    response.render('client/billing', { title: "Billing", clientDetail, amountPayable, payedAmount })
+    response.render('client/billing', { title: "Billing", clientDetail, billings, amountPayable, payedAmount })
 })
 
 
@@ -131,6 +132,10 @@ router.post('/billing/:id', checkAuthentication, accessGrant, async (request, re
     const user = await User.findOne({ _id: request.session.userID });
     billing.modified.by = `${user.firstname} ${user.lastname}`;
 
+    if (!billing.isAcknowledged) {
+        billing.isAcknowledged = "off";
+    }
+
     client.billings.push(billing);
     billing.client = client;
     await client.save();
@@ -147,6 +152,9 @@ router.patch('/billing/:clientID/edit/:billingID', checkAuthentication, accessGr
     const billing = await Billing.findByIdAndUpdate(billingID, request.body.billing);
     const user = await User.findOne({ _id: request.session.userID });
     billing.modified.by = `${user.firstname} ${user.lastname}`;
+    if (request.body.billing.isAcknowledged != "on") {
+        billing.isAcknowledged = "off";
+    }
     await billing.save()
 
     response.redirect(`/client/billing/${clientID}`)

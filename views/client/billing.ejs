@@ -52,7 +52,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <% for(let billing of clientDetail.billings) { %>
+                    <% for(let billing of billings) { %>
                         <tr class=<%= billing.delRec === true ? "inactive" : "" %> <%= billing.paymentStatus === true ? "paid" : "" %> id="<%= billing._id %>">
                             <td>
                                 <%= billing.billingDate.toLocaleDateString() %>
@@ -101,6 +101,59 @@
                                     <button class="btn-close" type="submit" <%= billing.delRec === true ? "disabled" : "" %>></button>
                                 </form>
                               </td>
+                        </tr>
+                        <% } %>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Purchaser billing -->
+        <div class="col-12 mt-5">
+            <table class="table align-middle text-center border-secondary">
+                <thead>
+                    <tr>
+                        <th scope="col">Date</th>
+                        <th scope="col">Invoice No</th>
+                        <th scope="col">Purchaser</th>
+                        <th scope="col">Address</th>
+                        <th scope="col">Email</th>
+                        <th scope="col">Contact</th>
+                        <th scope="col">Items</th>
+                        <th scope="col">Payable</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% for(let billing of billings) { %>
+                        <tr class=<%= billing.delRec === true ? "inactive" : "" %> <%= billing.paymentStatus === true ? "paid" : "" %> id="<%= billing._id %>">
+                            <td>
+                                <%= billing.billingDate.toLocaleDateString() %>
+                            </td>
+                            <td>
+                                <%= billing.invoice %>
+                            </td>
+                            <td>
+                                <%= billing.purchaseDetail.name %>
+                            </td>
+                            <td>
+                                <%= billing.purchaseDetail.address %>
+                            </td>
+                            <td>
+                                <%= billing.purchaseDetail.email %>
+                            </td>
+                            <td>
+                                <%= billing.purchaseDetail.contact %>
+                            </td>
+                            <td>
+                                <%= billing.itemList %>
+                            </td>
+                            <td>
+                                <%= Math.round((billing.total) / (1 + (5 / 100))) %>
+                            </td>
+                            <td class="border-0">
+                                <form action="/payment/pay/<%= billing._id %>">
+                                    <button class="btn btn-primary my-1" type="submit" <%= billing.isAcknowledged == "off" ? "disabled" : "" %>>Pay</button>
+                                </form>
+                            </td>
                         </tr>
                         <% } %>
                 </tbody>

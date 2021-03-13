@@ -63,6 +63,10 @@ const billingSchema = mongoose.Schema({
     deleteReason: {
         type: String,
     },
+    isAcknowledged: {
+        type: String,
+        default: "off",
+    },
     client: {
         type: mongoose.Schema.Types.ObjectId, ref: 'Client'
     },
